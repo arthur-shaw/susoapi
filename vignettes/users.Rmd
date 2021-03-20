@@ -1,0 +1,129 @@
+---
+title: "Managing users"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Managing users}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup, include = FALSE, echo=FALSE}
+library(susoapi)
+```
+
+Survey managers interact with users--that is, supervisors and interviewers--throughout the lifecycle of a survey. 
+
+Before the survey starts, they create accounts, designating field staff as supervisors and interviewers. During survey operations, they may may need to modify accounts, archiving and unarchiving user accounts. During that same period, they may need to monitor users, through data on user attributes and actions. Similarly, they may want to compile a list of all users--all supervisors, all interviewers, or both--for other monitoring scripts.
+
+# Creating
+
+
+
+## Supervisors
+
+```{r create_supervisor}
+create_user(
+  user_name = "TestSup000",
+  user_password = "Test!Sup!000!",
+  role = "Supervisor"
+)
+```
+
+
+## Interviewers
+
+```{r create_interviewer}
+create_user(
+  user_name = "TestInt007",
+  user_password = "Test!Int!007!",
+  role = "Interviewer",
+  supervisor = "TestSup000"
+)
+```
+
+## Users in batch
+
+```{r create_in_batch}
+# suppose you have a dataframe of user details
+# this might be drawn from an external file
+users <- data.frame(
+  user_name = c("TestSup123", "TestInt123", "TestInt456"),
+  user_password = c("Test!Sup!123!", "Test!Int!123!", "Test!Int!456!"),
+  role = c("Supervisor", "Interviewer", "Interviewer"),
+  supervisor = c(NA_character_, "TestSup123", "TestSup123")
+)
+
+# create each user in the dataframe
+# looping over users
+purrr::pwalk(
+  .l = users,
+  .f = create_user
+)
+
+```
+
+# Modifying
+
+During data collection, user accounts may need to be decommissioned if associated field staff leave the survey--for example, get sick, are fired, or find another job. In Survey Solutions' terminology, managers may archive an account.
+
+Similarly, those who leave the survey may come back in some capacity, and consequently need their account reactivated. In the jargon of Survey Solutions, managers may need to unarchive an account.
+
+See below how to accomplish action.
+
+## Archive
+
+```{r archive_user}
+archive_user(id = "cf3134dc-83da-42b4-8671-37ccb598d9be")
+```
+
+## Unarchive
+
+```{r unarchive_user}
+unarchive_user(id = "cf3134dc-83da-42b4-8671-37ccb598d9be")
+```
+
+# Monitoring
+
+To monitor users, managers may want to access their user profile or to view their activity on the tablet. Here is how to accomplish those actions
+
+```{r get_user_info}
+# get user profile on the server
+# this includes account details and personal details
+get_user_details(user_id = "cf3134dc-83da-42b4-8671-37ccb598d9be")
+```
+
+```{r, get_tablet_activity}
+# collect a log of activity on the tablet within specified dates
+get_user_action_log(
+  user_id = "cf3134dc-83da-42b4-8671-37ccb598d9be",
+  start = "2020-02-15",
+  end = "2020-03-15"
+)
+
+```
+
+# Collecting
+
+To produce monitoring reports--for example, response rate by team--survey managers may need a list of all supervisors or all interviewers.
+
+```{r get_supervisors}
+# collect the list of all supervisors and their user profile info
+get_supervisors()
+```
+
+```{r get_interviewers}
+# collect the list of all interviewers and their user profile info,
+# including the supervisor for each interviewer
+get_interviewers()
+```
+
+
+

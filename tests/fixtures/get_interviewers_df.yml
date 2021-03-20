@@ -1,0 +1,151 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>/api/v1/supervisors/?limit=1&offset=1
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:41 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Users":[{"IsLocked":false,"CreationDate":"2021-03-15T17:34:37.249493Z","UserId":"9ca0a4a3-2f25-487e-9220-0a3df8238481","UserName":"ArthurSup123"}],"Order":null,"Limit":1,"TotalCount":1,"Offset":1}'
+  recorded_at: 2021-03-18 17:47:41 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
+- request:
+    method: get
+    uri: <<<fake_server>>>/api/v1/supervisors/?limit=40&offset=1
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:41 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Users":[{"IsLocked":false,"CreationDate":"2021-03-15T17:34:37.249493Z","UserId":"9ca0a4a3-2f25-487e-9220-0a3df8238481","UserName":"ArthurSup123"}],"Order":null,"Limit":40,"TotalCount":1,"Offset":1}'
+  recorded_at: 2021-03-18 17:47:41 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
+- request:
+    method: get
+    uri: <<<fake_server>>>/api/v1/supervisors/9ca0a4a3-2f25-487e-9220-0a3df8238481/interviewers?limit=1&offset=1
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:41 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Users":[{"IsLocked":false,"CreationDate":"2021-03-15T17:34:56.769589Z","UserId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","UserName":"ArthurInt123"}],"Order":null,"Limit":1,"TotalCount":1,"Offset":1}'
+  recorded_at: 2021-03-18 17:47:41 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
+- request:
+    method: get
+    uri: <<<fake_server>>>/api/v1/supervisors/9ca0a4a3-2f25-487e-9220-0a3df8238481/interviewers?limit=40&offset=1
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:41 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Users":[{"IsLocked":false,"CreationDate":"2021-03-15T17:34:56.769589Z","UserId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","UserName":"ArthurInt123"}],"Order":null,"Limit":40,"TotalCount":1,"Offset":1}'
+  recorded_at: 2021-03-18 17:47:41 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
+- request:
+    method: get
+    uri: <<<fake_server>>>/api/v1/users/cc78158d-e987-4d7e-9cfb-fb4546d2c895
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:41 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"IsArchived":false,"UserId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","UserName":"ArthurInt123","Role":"Interviewer","IsLocked":false,"CreationDate":"2021-03-15T17:34:56.769589Z"}'
+  recorded_at: 2021-03-18 17:47:41 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

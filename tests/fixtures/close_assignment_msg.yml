@@ -1,0 +1,28 @@
+http_interactions:
+- request:
+    method: post
+    uri: <<<fake_server>>>/api/v1/assignments/1/close
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 409
+      category: Client error
+      reason: Conflict
+      message: 'Client error: (409) Conflict'
+    headers:
+      content-language: en-US
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:35 GMT
+      content-length: '0'
+    body:
+      encoding: UTF-8
+      file: no
+      string: ''
+  recorded_at: 2021-03-18 17:47:36 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

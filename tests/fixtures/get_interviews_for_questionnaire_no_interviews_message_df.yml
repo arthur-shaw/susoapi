@@ -1,0 +1,31 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>/api/v1/questionnaires/5ab793ff-c84a-4211-858d-f168bbd90cf9/1/interviews?limit=1&offset=1
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:41 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Interviews":[],"Order":null,"Limit":1,"TotalCount":0,"Offset":1}'
+  recorded_at: 2021-03-18 17:47:42 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

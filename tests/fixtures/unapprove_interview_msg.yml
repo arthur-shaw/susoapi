@@ -1,0 +1,28 @@
+http_interactions:
+- request:
+    method: patch
+    uri: <<<fake_server>>>/api/v1/interviews/7bdf95abab1b4d46b818cdf7546e049f/hqunapprove?id=7bdf95abab1b4d46b818cdf7546e049f&comment=
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      content-language: en-US
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:47 GMT
+      content-length: '0'
+    body:
+      encoding: UTF-8
+      file: no
+      string: ''
+  recorded_at: 2021-03-18 17:47:47 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

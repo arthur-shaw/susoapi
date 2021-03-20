@@ -1,0 +1,33 @@
+http_interactions:
+- request:
+    method: patch
+    uri: <<<fake_server>>>/api/v1/assignments/1/archive
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:34 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"IdentifyingData":[{"Identity":"167a2b44fce91e33476eb158e6616154","Variable":null,"Answer":"1"},{"Identity":"8071e455d26428b5f7f72cfa505a1a03","Variable":null,"Answer":"1"},{"Identity":"442fecea5ce1664fd340a2780b3671ba","Variable":null,"Answer":"3"},{"Identity":"48aa58a76675483f487e79ec24a404b3","Variable":null,"Answer":"Arthur
+        Shaw"},{"Identity":"03b3efa6812073c2a6060791c40865b3","Variable":null,"Answer":"123
+        Fake Street"}],"Id":1,"ResponsibleId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","ResponsibleName":"ArthurInt123","QuestionnaireId":"5495bfd5f2324b3a8a75c80056f1898e$1","InterviewsCount":1,"Quantity":1,"Archived":true,"CreatedAtUtc":"2021-03-15T17:35:54.255419Z","UpdatedAtUtc":"2021-03-18T17:47:35.206156Z","Email":null,"Password":null,"WebMode":false,"ReceivedByTabletAtUtc":null,"IsAudioRecordingEnabled":true}'
+  recorded_at: 2021-03-18 17:47:35 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

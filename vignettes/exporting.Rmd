@@ -1,0 +1,92 @@
+---
+title: "Exporting"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Exporting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE, echo=FALSE}
+library(susoapi)
+```
+
+# User interface
+
+In Survey Solutions's user interface, exporting involves a few sequential steps:
+
+- Select a template
+- Select a version of that template
+- Specify the status of interviews to export (default: all)
+- Select:
+  - Data type: microdata or paradata
+  - Whether to include questionnaire paradata
+  - Data export format: tab-separated, Stata, or SPSS
+- Click on `ADD TO QUEUE`
+- Cick on `DOWNLOAD` when the export files are available
+
+# API
+
+Via the API, the steps are similar but different:
+
+- Submit an export job
+- Check whether the job is complete
+- Download the file when the job is complete
+
+# `susoapi`
+
+With `susoapi`, this translates to the following sequence of function calls.
+
+First, start an export job, by specifying all of the particulars:
+
+```{r start_job}
+# set server authentication credentials
+set_credentials(
+  server = "https://exampleserver.com",
+  user = "My_API_user10",
+  password = "MySecretPassword2Day123"
+)
+
+# start an export job
+# specifying same same options as in user interface
+# optionally specifying other options--including some not available in the UI
+start_export(
+  qnr_id = "72f7160c-12dc-4dd4-9df1-66af819e434d$1",
+  export_type = "STATA",
+  interview_status = "All",
+  include_meta = TRUE
+) -> started_job_id
+```
+
+Then, check on the job's status:
+
+```{r check_job}
+# check export job progess,
+# specifying ID of job started in prior step
+get_export_job_details(job_id = started_job_id)
+```
+
+Repeat job status queries until the job is complete.
+
+Next, download the file produced by the completed job:
+
+```{r download_file}
+# download the export file, 
+# specifying:
+# - job ID
+# - where to download the file
+get_export_file(
+    job_id = started_job_id,
+    path = "C:/your/file/path/"
+)
+```
+
+Alternatively, see `susoflows` for functions that automate this and similar export worflows.

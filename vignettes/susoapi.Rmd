@@ -1,0 +1,159 @@
+---
+title: "Introduction to susoapi"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to susoapi}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup, include = FALSE, echo=FALSE}
+library(susoapi)
+```
+
+# Overview
+
+The `susoapi` package aims to provide an R wrapper function for each Survey Solutions API endpoint, and in so doing enable users to take all API actions without leaving R.
+
+# Set credentials
+
+Before any of these functions can be used, the user must set their credentails to be authenticated by the server.
+
+While authentication could be provided separately for each function call as part of its arguments, it is better and more efficient to use the `set_credentials()` function to capture the credentials and make them available to all function calls. For example:
+
+```{r set_credentials}
+# first, set credentials for connecting with the server
+set_credentials(
+  server = "https://example.server",
+  user = "My_API_user1",
+  password = "MySecretPassword2Day"
+)
+
+# then, get all questionnaires
+# the arguments of this function are: server, user, and password
+# but they are provided to the function by the values stored by `set_credentials()`
+get_questionnaires()
+
+```
+
+# Take actions
+
+To take an individual action, one simply needs to find the appropriate function. The reference arranges functions according to their area:
+
+- Questionnaires
+- Assignments
+- Interviews
+- Users
+- Export
+
+For example, to gather all questionnaires loaded on the server:
+
+```{r get_questionnaires}
+# collect all questionnaires and data about them,
+# using previously set server credentials
+get_questionnaires()
+```
+
+# Chain actions
+
+To take a series of related actions, users have two choices:
+
+1. Chain commands explicitly
+2. Use other tools that do this implicitly
+
+## Examples of explicitly chained commands
+
+### Export data
+
+To export data, one needs to make a sequence of function calls.
+
+First, start an export job, by specifying all of the particulars:
+
+```{r start_job}
+# set server authentication credentials
+set_credentials(
+  server = "https://exampleserver.com",
+  user = "My_API_user10",
+  password = "MySecretPassword2Day123"
+)
+
+# start an export job
+# specifying same same options as in user interface
+# optionally specifying other options--including some not available in the UI
+start_export(
+  qnr_id = "72f7160c-12dc-4dd4-9df1-66af819e434d$1",
+  export_type = "STATA",
+  interview_status = "All",
+  include_meta = TRUE
+) -> started_job_id
+```
+
+Then, check on the job's status:
+
+```{r check_job}
+# check export job progess,
+# specifying ID of job started in prior step
+get_export_job_details(job_id = started_job_id)
+```
+
+Repeat job status queries until the job is complete.
+
+Next, download the file produced by the completed job:
+
+```{r download_file}
+# download the export file, 
+# specifying:
+# - job ID
+# - where to download the file
+get_export_file(
+    job_id = started_job_id,
+    path = "C:/your/file/path/"
+)
+```
+
+### Monitor user
+
+To monitor user activity on tablets, one needs to follow these steps.
+
+First, collect the list of users and their profile details
+
+```{r get_users}
+# collect all interviewers, their supervisors, and their attributes
+# this includes both account details and personal details
+all_users <- get_interviewers()
+```
+
+Then, identify the user of interest by filtering the data.
+
+```{r filter_users}
+library(dplyr)
+
+# extract the user ID for the target user
+# this will be used as a parameter for the next step
+target_user_id <- filter(all_users, UserName == "TestInt007") %>%
+  pull(UserId)
+
+```
+
+Next, request the action log of all tablet activity for the target user.
+
+```{r, get_tablet_activity}
+# collect a log of activity on the tablet within specified dates
+tablet_activity <- get_user_action_log(
+  user_id = target_user_id,
+  start = "2020-02-15",
+  end = "2020-03-15"
+)
+```
+
+## Other tools
+
+Alternatively, for certain tasks, users can rely on `susoflows`, a package that aims to wrap common workflows in single functions (e.g., download data).

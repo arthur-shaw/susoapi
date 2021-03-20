@@ -1,0 +1,31 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>/api/v1/interviews/7bdf95abab1b4d46b818cdf7546e049f/stats
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:40 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Answered":12,"NotAnswered":93,"Flagged":0,"NotFlagged":105,"Valid":111,"Invalid":0,"WithComments":0,"ForInterviewer":91,"ForSupervisor":0,"InterviewId":"7bdf95ab-ab1b-4d46-b818-cdf7546e049f","InterviewKey":"15-80-14-14","Status":"ApprovedByHeadquarters","ResponsibleId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","ResponsibleName":"ArthurInt123","NumberOfInterviewers":1,"NumberRejectionsBySupervisor":0,"NumberRejectionsByHq":0,"InterviewDuration":"00:00:35.2724274","AssignmentId":1,"UpdatedAtUtc":"2021-03-18T17:47:34.519175Z"}'
+  recorded_at: 2021-03-18 17:47:40 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

@@ -1,0 +1,61 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>/api/v1/assignments?SearchBy=no%20match&QuestionnaireId=&Responsible=&SupervisorId=&ShowArchive=&Order=&Offset=&Limit=40
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:37 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Assignments":[],"Order":null,"Limit":20,"TotalCount":0,"Offset":1}'
+  recorded_at: 2021-03-18 17:47:38 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
+- request:
+    method: get
+    uri: <<<fake_server>>>/api/v1/assignments?SearchBy=no%20match&QuestionnaireId=&Responsible=&SupervisorId=&ShowArchive=&Order=&Offset=0&Limit=40
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:37 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Assignments":[],"Order":null,"Limit":20,"TotalCount":0,"Offset":1}'
+  recorded_at: 2021-03-18 17:47:38 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

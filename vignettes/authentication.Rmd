@@ -1,0 +1,175 @@
+---
+title: "Authentication"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Authentication}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo=FALSE, include=FALSE}
+library(susoapi)
+```
+
+# Why
+
+When connecting to a Survey Solutions server, users are asked for their login and password. These details, taken together, are authentication.
+
+When an API user tries to interact with a Survey Solutions server, the same details are required. That is, each call to the server needs to provide a valid API user name and password.
+
+# How
+
+There are two ways to provide authentication:
+
+1. Manually
+2. Programmatically
+
+## Manually
+
+Every `susoapi` function that interacts with a server requires the same core parameters: `server`, `user`, and `password`. 
+
+The function user could specify those parameters separately for time such a function is used. For example:
+
+```{r, eval = FALSE}
+# first, get all questionnaires
+get_questionnaires(
+  server = "https://example.server",
+  user = "My_API_user1",
+  password = "MySecretPassword2Day"
+)
+
+# then, active audio capture for a questionnaire
+set_questionnaire_audio(
+  qnr_id = "72f7160c-12dc-4dd4-9df1-66af819e434d",
+  qnr_version = 1,
+  server = "https://example.server",
+  user = "My_API_user1",
+  password = "MySecretPassword2Day"  
+)
+
+```
+
+The code works. But it is not without a few noteworthy problems. First, this solution involves needless repetition. For a few function calls, this is fairly manageable. For more functiton calls, this becomes tedious and error-prone.
+
+Second, this solution requires these details to be provided each time a function needs them. Put another way, authentication does not persist across R sessions.
+
+Third, this solution stores sensitive information in an unsafe media: a plain-text script or an R session's memory. If one shares scripts containing these function calls, one of two problems would arise. Either authentication would be shared with all who can access the code (e.g., GitHub repo) or the script would need to be "sanitized" before being shared (e.g., replace the `user` and `password` parameter values with `"XXXXX"`). 
+
+
+## Programmatically
+
+The `susoapi` package offers a better solution that addresses all these problems simultaneously. Rather than provide authentication separately for each function, `set_credentials()` captures authentication once, provides it to each function, and store those sensitive details somewhere safe. Contrast the code below with the code above:
+
+```{r, eval=FALSE}
+# first, set credentials for connecting with the server
+set_credentials(
+  server = "https://example.server",
+  user = "My_API_user1",
+  password = "MySecretPassword2Day"
+)
+
+# then, get all questionnaires
+get_questionnaires()
+
+# next, active audio capture for a questionnaire
+set_questionnaire_audio(
+  qnr_id = "72f7160c-12dc-4dd4-9df1-66af819e434d",
+  qnr_version = 1
+)
+
+```
+
+The `set_credentials()` function captures authentication and makes it available in two secure places. For the current session, the function loads the parameters to R environment variables: `SUSO_SERVER` for the server address, `SUSO_USER` for the API user name, and `SUSO_PASSWORD` for the API user password. For future sessions, the function writes credentials to the .Renviron and loaded the credentials upon session startup. 
+
+The `susoapi` functions that communicate with the server load source those values from R environment variables. For example, see the default arguments for `get_questionnaires`:
+
+```{r eval=FALSE}
+get_questionnaires(
+  server = Sys.getenv("SUSO_SERVER"),
+  user = Sys.getenv("SUSO_USER"),
+  password = Sys.getenv("SUSO_PASSWORD")
+)
+
+```
+
+This allows function users to set credentials once an use them several times without any effort.
+
+## Typical workflow
+
+When setting credentials for server authentification, the typical workflow is to:
+
+- Set
+- Inspect
+- Check
+- Correct (optionally)
+
+### Set
+
+To set credentials, one simply uses `set_credentials()` as below:
+
+```{r, eval=FALSE}
+set_credentials(
+  server = "https://example.server",
+  user = "My_API_user1",
+  password = "MySecretPassword2Day"
+)
+```
+
+### Inspect
+
+To make sure that the function recorded the intended values, one can inspect via `show_credentials()` as here:
+
+```{r, eval = FALSE}
+show_credentials()
+```
+
+Alternatively, one could fetch individual credentials from R environment variables.
+
+```{r, eval = FALSE}
+# Fetch elements of the credentials
+
+# Server address
+Sys.getenv("SUSO_SERVER")
+
+# API user name
+Sys.getenv("SUSO_USER")
+
+# API user password
+Sys.getenv("SUSO_PASSWORD")
+
+```
+
+The `show_credentials()` function makes this process easier and more streamlined.
+
+### Check
+
+To check the validity of credentails for authentication, one can use `check_credentials()` as below:
+
+```{r, eval = FALSE}
+# check that credentials for the fake server are valid (they are not)
+check_credentials()
+```
+
+### Correct
+
+To correct incorrect credentials, simply use `set_credentials()` again, specifying the correct credentials for authenication.
+
+```{r}
+# correct incorrect credentials
+# set the correct ones
+set_credentials(
+  server = "https://exampleserver.com",
+  user = "My_API_user10",
+  password = "MySecretPassword2Day123"
+)
+
+```
+

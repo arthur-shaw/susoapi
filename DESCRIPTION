@@ -1,0 +1,33 @@
+Package: susoapi
+Title: Interface for Survey Solutions' APIs
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Arthur",
+           family = "Shaw",
+           role = c("aut", "cre"),
+           email = "jashaw2002@gmail.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Provides a user-friendly interface for Survey Solutions RESTful and GraphQL APIs.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    httr,
+    purrr,
+    jsonlite,
+    dplyr,
+    tidyr,
+    stringr,
+    assertthat,
+    curl,
+    fs
+Suggests: 
+    rmarkdown,
+    knitr,
+    testthat (>= 3.0.0),
+    vcr,
+    withr
+Config/testthat/edition: 3
+VignetteBuilder: knitr

@@ -1,0 +1,64 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>/api/v1/questionnaires?offset=1&limit=1
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:44 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Questionnaires":[{"QuestionnaireIdentity":"5495bfd5f2324b3a8a75c80056f1898e$1","QuestionnaireId":"5495bfd5-f232-4b3a-8a75-c80056f1898e","Version":1,"Title":"EHCVM
+        2 - qnr modèle ménage","Variable":"menage","LastEntryDate":"2021-03-12T12:43:12.37157","IsAudioRecordingEnabled":true,"WebModeEnabled":false}],"Order":"","Limit":1,"TotalCount":2,"Offset":1}'
+  recorded_at: 2021-03-18 17:47:44 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
+- request:
+    method: get
+    uri: <<<fake_server>>>/api/v1/questionnaires?offset=1&limit=40
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Thu, 18 Mar 2021 17:47:44 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Questionnaires":[{"QuestionnaireIdentity":"5495bfd5f2324b3a8a75c80056f1898e$1","QuestionnaireId":"5495bfd5-f232-4b3a-8a75-c80056f1898e","Version":1,"Title":"EHCVM
+        2 - qnr modèle ménage","Variable":"menage","LastEntryDate":"2021-03-12T12:43:12.37157","IsAudioRecordingEnabled":true,"WebModeEnabled":false},{"QuestionnaireIdentity":"5ab793ffc84a4211858df168bbd90cf9$1","QuestionnaireId":"5ab793ff-c84a-4211-858d-f168bbd90cf9","Version":1,"Title":"nesting
+        test","Variable":"nesting","LastEntryDate":"2021-01-19T20:12:11.690377","IsAudioRecordingEnabled":false,"WebModeEnabled":false}],"Order":"","Limit":40,"TotalCount":2,"Offset":1}'
+  recorded_at: 2021-03-18 17:47:44 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

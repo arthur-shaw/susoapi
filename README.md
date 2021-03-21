@@ -17,7 +17,7 @@ The package is not yet on CRAN, but can be installed via the following
 command:
 
 ``` r
-devtools::install_github("arthur_shaw/susoapi")
+devtools::install_github("arthur-shaw/susoapi")
 ```
 
 ## Usage

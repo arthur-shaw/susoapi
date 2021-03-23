@@ -557,16 +557,16 @@ get_export_file <- function(
         # follow redirect url and download file
         response <- httr::GET(
             url = redirect_url,
-            write_disk(fs::path(path, file_name), overwrite = TRUE)
+            write_disk(fs::path(path, "temp.zip"), overwrite = TRUE)
         )
 
         # extract file name from response header
-        # file_name <- stringr::str_extract(
-        #     string = headers(response)$`content-disposition`, # header component with file name
-        #     pattern = '(?<=\\").+(?=\\")') # name between quotes
+        file_name <- stringr::str_extract(
+            string = headers(response)$`content-disposition`, # header component with file name
+            pattern = '(?<=\\").+(?=\\")') # name between quotes
 
         # rename downloaded file to name from the response header
-        # file.rename(from = fs::path(path, "temp.zip"), to = fs::path(path, file_name))
+        file.rename(from = fs::path(path, "temp.zip"), to = fs::path(path, file_name))
 
         # emit message about outcome, path, and file name
         message(paste0(

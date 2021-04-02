@@ -5,8 +5,7 @@ Authors@R:
     person(given = "Arthur",
            family = "Shaw",
            role = c("aut", "cre"),
-           email = "jashaw2002@gmail.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "jashaw2002@gmail.com")
 Description: Provides a user-friendly interface for Survey Solutions RESTful and GraphQL APIs.
 License: MIT + file LICENSE
 Encoding: UTF-8

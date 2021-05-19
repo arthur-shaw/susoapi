@@ -363,7 +363,7 @@ qnr_get_interviews_batch <- function(
     df <- jsonlite::fromJSON(content(response, as = "text"), flatten = TRUE)$Interviews
 
     # if any interviews returned, transform nested df into tidy df, making FeaturedQuestions into columns
-    if (length(df) > 0) {
+    if (length(df) > 0 & length(df$FeaturedQuestions[[1]]) > 0) {
         df_identifying <- df %>%
             tidyr::unnest(cols = .data$FeaturedQuestions) %>%
             tidyr::pivot_wider(
@@ -371,6 +371,10 @@ qnr_get_interviews_batch <- function(
                 names_from = .data$Question,
                 values_from = .data$Answer
                 )
+    # else if there is an interview with no identifying questions
+    } else if (length(df > 0) & length(df$FeaturedQuestions[[1]]) == 0) {
+        df_identifying <- df %>%
+            select(-.data$FeaturedQuestions)
     # else, if no interviews returned, create an empty df
     } else {
         df_identifying <- data.frame(
@@ -475,7 +479,6 @@ get_interviews_for_questionnaire <- function(
 
 # GET ​/api​/v1​/questionnaires​/statuses
 # Gets list of possible interview statuses
-# NOTE: not worth doing, since don't see value of this endpoint
 
 #' Get possible interview statuses
 #' 

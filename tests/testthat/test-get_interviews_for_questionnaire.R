@@ -54,7 +54,7 @@ test_that("If no interviews found, emit a message", {
 
     vcr::use_cassette("get_interviews_for_questionnaire_no_interviews_message", {
         expect_message(get_interviews_for_questionnaire(
-                qnr_id = "5ab793ff-c84a-4211-858d-f168bbd90cf9",
+                qnr_id = "b4382cca-8231-4e8a-87b0-b1acf8e1ac6c",
                 qnr_version = 1
         ))
     })
@@ -66,7 +66,7 @@ test_that("If no interviews found, return empty df with expected columns", {
 
     vcr::use_cassette("get_interviews_for_questionnaire_no_interviews_message_df", {
         x <- suppressMessages(get_interviews_for_questionnaire(
-                qnr_id = "5ab793ff-c84a-4211-858d-f168bbd90cf9",
+                qnr_id = "b4382cca-8231-4e8a-87b0-b1acf8e1ac6c",
                 qnr_version = 1
             ))
     })

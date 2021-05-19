@@ -471,6 +471,8 @@ get_assignment_quantity_setting <- function(
 #' 
 #' @import httr
 #' @importFrom jsonlite fromJSON
+#' 
+#' @export 
 get_assignment_history <- function(
     id,
     server = Sys.getenv("SUSO_SERVER"),     # full server address
@@ -774,6 +776,8 @@ archive_assignment <- function(
 #' @importFrom assertthat assert_that is.count is.string
 #' @import httr
 #' @importFrom jsonlite toJSON
+#' 
+#' @export 
 reassign_assignment <- function(
     id,
     responsible,

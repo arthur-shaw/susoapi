@@ -118,7 +118,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/arthur-shaw/susoapi/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -133,7 +138,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Leave a comment on a question</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/arthur-shaw/susoapi/blob/master/R/interviews.R'><code>R/interviews.R</code></a></small>
     <div class="hidden name"><code>comment_question.Rd</code></div>
     </div>
 
@@ -144,7 +149,7 @@
     <pre class="usage"><span class='fu'>comment_question</span><span class='op'>(</span>
   <span class='va'>interview_id</span>,
   <span class='va'>variable_name</span>,
-  row_number <span class='op'>=</span> <span class='st'>""</span>,
+  roster_vector <span class='op'>=</span> <span class='st'>""</span>,
   <span class='va'>comment</span>,
   verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
   server <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"SUSO_SERVER"</span><span class='op'>)</span>,
@@ -164,8 +169,8 @@
       <td><p>Variable name. User name from Designer.</p></td>
     </tr>
     <tr>
-      <th>row_number</th>
-      <td><p>Row number. Use roster-specific row code.</p></td>
+      <th>roster_vector</th>
+      <td><p>Character. Row code(s) of variable. If a single row code, a single character value (e.g., "102"). If multiple row codes, a character containing a comma-separated list (e.g, "1, 2").</p></td>
     </tr>
     <tr>
       <th>comment</th>

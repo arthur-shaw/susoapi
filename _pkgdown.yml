@@ -10,6 +10,24 @@ reference:
   - show_credentials
   - check_credentials
 
+- title: "Workspaces"
+  desc: >
+    Functions for taking actions on workspaces, including assigning users to them
+- contents:
+- subtitle: "Get info"
+  contents:
+  - get_workspaces
+  - get_workspace_details
+  - get_workspace_status
+- subtitle: "Modify"
+  contents:
+  - create_workspace
+  - update_workspace
+  - delete_workspace
+  - disable_workspace
+  - enable_workspace
+  - assign_users_to_workspaces
+
 - title: "Questionnaires"
   desc: >
     Functions for compiling them, getting associated interviews, setting options, and getting their JSON respresentation.
@@ -40,6 +58,14 @@ reference:
 - subtitle: "Review"
   contents:
   - get_interview_stats
+  - get_interview_history
+  - get_interview_transcript
+- subtitle: "Remove"
+  contents:
+  - delete_interview
+- subtitle: "Info"
+  contents:
+  - get_possible_interview_statuses
 
 - title: "Assignments"
   desc: >
@@ -47,6 +73,7 @@ reference:
 - subtitle: "Inspect"
   contents:
   - get_assignment_details
+  - get_assignment_history
 - subtitle: "Collect"
   contents:
   - get_assignments
@@ -56,6 +83,8 @@ reference:
   - unarchive_assignment
   - close_assignment
   - get_assignment_quantity_setting
+  - change_assignment_quantity
+  - reassign_assignment
 - subtitle: "Adjust audio"
   contents:
   - check_assignment_audio
@@ -91,3 +120,11 @@ reference:
 - subtitle: "Download"
   contents:
   - get_export_file
+
+- title: "Settings"
+  desc: >
+    Functions for modify the global notice (i.e., the information banner at the top of site).
+- contents:
+  - set_global_notice
+  - get_global_notice
+  - delete_global_notice

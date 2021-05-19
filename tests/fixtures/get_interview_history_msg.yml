@@ -1,0 +1,27 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>api/v1/interviews/a781b96d-fddb-4e36-96ad-233b694a155d/history
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 500
+      category: Server error
+      reason: Internal Server Error
+      message: 'Server error: (500) Internal Server Error'
+    headers:
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Tue, 18 May 2021 22:36:18 GMT
+      content-length: '0'
+    body:
+      encoding: UTF-8
+      file: no
+      string: ''
+  recorded_at: 2021-05-18 22:36:19 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

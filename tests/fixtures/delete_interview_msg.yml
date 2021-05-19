@@ -1,0 +1,28 @@
+http_interactions:
+- request:
+    method: delete
+    uri: <<<fake_server>>>/api/v1/interviews/636cb27a-b826-11eb-80a6-bdbdee1a727d
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 404
+      category: Client error
+      reason: Not Found
+      message: 'Client error: (404) Not Found'
+    headers:
+      content-language: en-US
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Tue, 18 May 2021 22:14:18 GMT
+      content-length: '0'
+    body:
+      encoding: UTF-8
+      file: no
+      string: ''
+  recorded_at: 2021-05-18 22:14:18 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

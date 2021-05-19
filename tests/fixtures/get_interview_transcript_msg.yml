@@ -1,0 +1,31 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>api/v1/interviews/bd482d09-82fa-46c1-a539-a09076bdf9a8/pdf
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 404
+      category: Client error
+      reason: Not Found
+      message: 'Client error: (404) Not Found'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Tue, 18 May 2021 22:27:45 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '"bd482d09-82fa-46c1-a539-a09076bdf9a8"'
+  recorded_at: 2021-05-18 22:27:46 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

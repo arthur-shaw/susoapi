@@ -4,6 +4,79 @@
 # DELETE ​/api​/v1​/interviews​/{id}
 # Deletes interview
 
+#' Delete an interview
+#' 
+#' Delete the target interview.
+#' 
+#' Wrapper for the `DELETE ​/api​/v1​/interviews​/{id}` endpoint.
+#' 
+#' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
+#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user API user name
+#' @param password API password
+#' 
+#' @import httr
+#' 
+#' @export 
+delete_interview <- function(
+    interview_id,
+    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")  # API password       
+) {
+
+    # check inputs:
+    # interview_id
+    check_guid(
+        guid = interview_id, 
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+
+    # form the base URL
+    base_url <- paste0(server, "/api/v1/interviews/", interview_id)
+
+    # get stats from the server
+    response <- httr::DELETE(
+        url = base_url,
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
+    )
+
+    status <- httr::status_code(response)
+
+    # success
+    if (status == 200) {
+
+        message("Interview successfully deleted.")
+
+    # Interview not found
+    } else if (status == 404) {
+
+        message(paste0(
+            "Interview not deleted.\n",
+            "Reasons: Interview not found. HTTP code: 404"
+        ))
+
+    # Target interview was in status that was not ready to be deleted
+    } else if (status == 406) {
+
+        message(paste0(
+            "Interview not deleted.\n",
+            "Reasons: Target interview not in status such that it could be deleted. HTTP code: 406"
+        ))
+
+    # unknown error
+    } else if (!status %in% c(200, 404, 406)) {
+
+        message(paste0(
+            "Interview not deleted.\n",
+            "Reasons: Unknown error. HTTP code: ", status, "."
+        ))
+
+    }
+
+}
+
 # GET ​/api​/v1​/interviews​/{id}​/history
 # Get interivew history for interview (?)
 
@@ -872,5 +945,168 @@ comment_question <- function(
     if (verbose == TRUE) {
         return(result)
     }
+
+}
+
+# GET ​/api​/v1​/interviews​/{id}​/pdf
+# Get interview transcript in pdf file
+
+#' Get interview transcript
+#' 
+#' Get a PDF transcript of interview responses.
+#' 
+#' Wrapper for the `GET ​/api​/v1​/interviews​/{id}​/pdf` endpoint.
+#' 
+#' @param interview_id Character. GUID for interview.
+#' @param path Character. Path to folder where transcript should be downloaded.
+#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user API user name
+#' @param password API password
+#' 
+#' @return Side-effect of generating and downloading the interview transcript for the target question.
+#' 
+#' @import httr
+#' @importFrom stringr str_match
+#' @importFrom fs path
+#' 
+#' @export 
+get_interview_transcript <- function(
+    interview_id,
+    path,
+    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")  # API password      
+) {
+
+    # check inputs:
+    # interview_id
+    check_guid(
+        guid = interview_id, 
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+
+    # form base URL
+    base_url <- paste0(server, "/api/v1/interviews/", interview_id, "/pdf")
+
+    # make request
+    response <- httr::GET(
+        url = base_url,
+        httr::authenticate(user = user, password = password),
+        httr::accept_json(),
+        httr::content_type_json()
+    )    
+
+    status <- httr::status_code(response)
+
+    # success
+    if (status == 200) {
+
+        # extract the file name from the prior response
+        file_name <- stringr::str_match(httr::headers(response)$`content-disposition`, "(?<=filename=).+(?=;)")
+
+        # download file
+        response <- httr::GET(
+            url = base_url,
+            httr::authenticate(user = user, password = password),
+            httr::accept_json(),
+            httr::content_type_json(),
+            httr::write_disk(fs::path(path, file_name), overwrite = TRUE)
+        )
+
+        message(paste0(
+            "File ", file_name, " successfully downloaded to ", path
+        ))
+    
+    # Authorised user has no access to interview
+    } else if (status == 403) {
+
+        message(paste0(
+            "Unable to get the interview transcript.\n",
+            "Reason: User does not have authorized access to this interview.\n",
+            "HTTP code: 403."
+        ))
+
+    # Interview not found or pdf cannot be generated
+    } else if (status == 404) {
+
+        message(paste0(
+            "Unable to get the interview transcript.\n",
+            "Reason: Interview not found or pdf cannot be generated.\n",
+            "HTTP code: 404."
+        ))
+
+    # unknown error
+    } else if (!status %in% c(200, 403, 404)) {
+
+        message(paste0(
+            "Unable to get the interview transcript.\n",
+            "Reason: Unknown error.\n",
+            "HTTP code: ", status, "."
+        ))
+
+    }
+
+}
+
+# GET ​/api​/v1​/interviews​/{id}​/history
+
+#' Get interview history
+#' 
+#' Get the history of interview actions for the target interview.
+#' 
+#' Wrapper for the `GET ​/api​/v1​/interviews​/{id}​/history` endpoint.
+#' 
+#' @param interview_id Character. GUID for interview.
+#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user API user name
+#' @param password API password
+#' 
+#' @return List
+#' 
+#' @import httr
+#' @importFrom jsonlite fromJSON
+#' 
+#' @export 
+get_interview_history <- function(
+    interview_id,
+    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")  # API password    
+) {
+
+    # check inputs:
+    # interview_id
+    check_guid(
+        guid = interview_id, 
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+
+    # form base URL
+    base_url <- paste0(server, "/api/v1/interviews/", interview_id, "/history")
+
+    # make request
+    response <- httr::GET(
+        url = base_url,
+        httr::authenticate(user = user, password = password),
+        httr::accept_json(),
+        httr::content_type_json()
+    )    
+
+    status <- httr::status_code(response)
+
+    # success
+    if (status == 200) {
+
+        df <- jsonlite::fromJSON(content(response, as = "text"))
+        return(df)
+
+    # unknown error
+    } else if (status != 200) {
+
+        message(paste0(
+            "Unable to get interview history.\n",
+            "Reason: Unknown error. HTTP code: ", status, "."
+        ))
+
+    }
+
 
 }

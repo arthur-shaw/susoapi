@@ -1,1 +1,30 @@
-
+http_interactions:
+- request:
+    method: post
+    uri: <<<fake_server>>>/api/v1/workspaces/assign
+    body:
+      encoding: ''
+      string: '{"UserIds":["7bdf95abab1b4d46b818cdf7546e049f"],"Workspaces":["primary"],"Mode":"Assign"}'
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 400
+      category: Client error
+      reason: Bad Request
+      message: 'Client error: (400) Bad Request'
+    headers:
+      content-length: '276'
+      content-type: application/problem+json; charset=utf-8
+      content-language: en-US
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Wed, 19 May 2021 16:01:07 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Errors":{"UserIds":["User not found"]},"Type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","Title":"One
+        or more validation errors occurred.","Status":400,"Detail":null,"Instance":null,"Extensions":{"traceId":"00-5664b6e88abfc44fb67edaeb76e71e7b-683e1354b4364c4c-00"}}'
+  recorded_at: 2021-05-19 16:01:07 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

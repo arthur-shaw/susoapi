@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: get
-    uri: <<<fake_server>>>/api/v1/interviewers/cc78158d-e987-4d7e-9cfb-fb4546d2c895/actions-log?start=&end=
+    uri: <<<fake_server>>>api/v1/interviewers/cc78158d-e987-4d7e-9cfb-fb4546d2c895/actions-log?start=&end=
     body:
       encoding: ''
       string: ''
@@ -22,10 +22,10 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Thu, 18 Mar 2021 17:47:45 GMT
+      date: Tue, 18 May 2021 01:44:43 GMT
     body:
       encoding: UTF-8
       file: no
       string: '[]'
-  recorded_at: 2021-03-18 17:47:45 GMT
+  recorded_at: 2021-05-18 01:44:43 GMT
   recorded_with: vcr/0.6.0, webmockr/0.8.0

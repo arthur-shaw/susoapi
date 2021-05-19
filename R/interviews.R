@@ -174,7 +174,7 @@ get_interview_stats <- function(
 #' Wrapper for \code{PATCH /api/v1/interviews/{id}/approve} endpoint.
 #'
 #' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
-#' @param comment Comment to post upon approval.
+#' @param comment Character. Comment to post upon approval.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name

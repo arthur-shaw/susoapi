@@ -205,7 +205,6 @@ approve_interview_as_sup <- function(
 
     # form query portion of request
     query <- list(
-        id = interview_id,
         comment = comment
     )
 

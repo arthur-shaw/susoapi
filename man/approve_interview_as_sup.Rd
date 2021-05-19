@@ -16,7 +16,7 @@ approve_interview_as_sup(
 \arguments{
 \item{interview_id}{Interview ID. GUID from server or \code{interview__id} from exported data}
 
-\item{comment}{Comment to post upon approval.}
+\item{comment}{Character. Comment to post upon approval.}
 
 \item{verbose}{Logical. If \code{verbose == TRUE}, return logical outcome.}
 

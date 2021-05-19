@@ -13,7 +13,12 @@ test_that("Issues error if `interview_id` is invalid form", {
 test_that("Issues message if `interview_id` is invalid form", {
 
     vcr::use_cassette("approve_interview_as_sup_msg", {
-        expect_message(approve_interview_as_sup(interview_id = "7bdf95abab1b4d46b818cdf7546e049f"))
+        expect_message(
+            approve_interview_as_sup(
+                interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+                comment = "Comment"
+            )
+        )
     })
 
 })
@@ -22,13 +27,16 @@ test_that("Issues message if `interview_id` is invalid form", {
 
 # logical if `verbose = TRUE`
 
-test_that("Issues message if `interview_id` is invalid form", {
+test_that("Returns logical value if `verbose = TRUE`", {
 
     vcr::use_cassette("approve_interview_as_sup_logical", {
-        x <- suppressMessages(approve_interview_as_sup(
+        x <- suppressMessages(
+            approve_interview_as_sup(
                 interview_id = "7bdf95abab1b4d46b818cdf7546e049f", 
+                comment = "Comment",
                 verbose = TRUE
-            ))
+            )
+        )
     })
 
     expect_type(x, "logical")

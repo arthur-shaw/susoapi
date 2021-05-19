@@ -477,6 +477,55 @@ get_interviews_for_questionnaire <- function(
 # Gets list of possible interview statuses
 # NOTE: not worth doing, since don't see value of this endpoint
 
+#' Get possible interview statuses
+#' 
+#' Wrapper for the `GET ​/api​/v1​/questionnaires​/statuses` endpoint.
+#' 
+#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user API user name
+#' @param password API password
+#' 
+#' @return Character vector. Names of all possible interview statuses
+#' 
+#' @import httr
+#' @importFrom jsonlite fromJSON
+get_possible_interview_statuses <- function(
+    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")  # API password      
+) {
+
+    # form the base URL
+    base_url <- paste0(server, "/api/v1/questionnaires/statuses")
+
+    # post request
+    response <- httr::GET(
+        url = base_url,
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
+    )    
+
+    status <- httr::status_code(response)
+
+    # success
+    if (status == 200) {
+
+        df <- jsonlite::fromJSON(content(response, as = "text"))
+        return(df)
+
+    # unknown error
+    } else if (status != 200) {
+
+        message(paste0(
+            "Unable to get interview statuses statuses.\n",
+            "Reason: unknown error. HTTP code: ", status, "."
+        ))
+
+    }
+
+}
+
 #' Enable audio recording for questionnaire
 #'
 #' Sets audio recording enabled setting for provided questionnaire. Wrapper of \code{POST /api/v1/questionnaires/{id}/{version}/recordAudio} endpoint

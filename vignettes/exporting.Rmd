@@ -89,4 +89,4 @@ get_export_file(
 )
 ```
 
-Alternatively, see `susoflows` for functions that automate this and similar export worflows.
+Alternatively, see [`susoflows`](https://github.com/arthur-shaw/susoflows) for functions that automate this and similar export worflows.

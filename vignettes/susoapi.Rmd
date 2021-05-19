@@ -156,4 +156,4 @@ tablet_activity <- get_user_action_log(
 
 ## Other tools
 
-Alternatively, for certain tasks, users can rely on `susoflows`, a package that aims to wrap common workflows in single functions (e.g., download data).
+Alternatively, for certain tasks, users can rely on [`susoflows`](https://github.com/arthur-shaw/susoflows), a package that aims to wrap common workflows in single functions (e.g., download data).

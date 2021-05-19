@@ -7,7 +7,7 @@
 comment_question(
   interview_id,
   variable_name,
-  row_number = "",
+  roster_vector = "",
   comment,
   verbose = FALSE,
   server = Sys.getenv("SUSO_SERVER"),
@@ -20,7 +20,7 @@ comment_question(
 
 \item{variable_name}{Variable name. User name from Designer.}
 
-\item{row_number}{Row number. Use roster-specific row code.}
+\item{roster_vector}{Character. Row code(s) of variable. If a single row code, a single character value (e.g., "102"). If multiple row codes, a character containing a comma-separated list (e.g, "1, 2").}
 
 \item{comment}{Comment to post.}
 

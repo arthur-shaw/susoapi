@@ -783,7 +783,7 @@ reject_interview_as_sup <- function(
 #'
 #' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
 #' @param variable_name Variable name. User name from Designer.
-#' @param row_number Row number. Use roster-specific row code.
+#' @param roster_vector Character. Row code(s) of variable. If a single row code, a single character value (e.g., "102"). If multiple row codes, a character containing a comma-separated list (e.g, "1, 2").
 #' @param comment Comment to post.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
@@ -798,7 +798,7 @@ reject_interview_as_sup <- function(
 comment_question <- function(
     interview_id,
     variable_name,
-    row_number = "",
+    roster_vector = "",
     comment,
     verbose = FALSE,
     server = Sys.getenv("SUSO_SERVER"),     # full server address
@@ -812,6 +812,17 @@ comment_question <- function(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
 
+    # row_vector is either empty, a singleton, or a comma-separted list
+    assertthat::assert_that(
+        suppressWarnings((roster_vector == "" | is.count(as.numeric(roster_vector)) | grepl(x = roster_vector, pattern = "[0-9]+,[ ]*"))),
+        msg = paste0(
+            "Row vector(s) in `row_vector` must be a character that contains either:\n",
+            "- empty (i.e., '')\n",
+            "- singleton value (e.g., '3') or\n",
+            "- comma-separated list (e.g., '1, 2, 3)'"
+        )
+    )
+
     # formulate API call
     base_url <- paste0(server,
         "/api/v1/interviews/", interview_id, 			# interview
@@ -819,10 +830,17 @@ comment_question <- function(
     )
 
     # form query portion of request
-    query = list(
-        rosterVector = row_number,
-        comment = comment
+    # first, convert character of comma-separated values to list
+    rows <- as.list(strsplit(x = roster_vector, split = ", ")[[1]])
+    # then, name each elementof the list rosterVector
+    rows <- purrr::lmap(
+        .x = rows,
+        .f = ~ setNames(object = .x, nm = "rosterVector")
     )
+    # compose the query object as the combination of row vectors and the comment
+    # to do so: start with the rows object and add comments as a named element
+    query <- rows
+    query[["comment"]] <- comment
 
     # compose the full URL: base + query parameters
     url <- httr::modify_url(url = base_url, query = query)

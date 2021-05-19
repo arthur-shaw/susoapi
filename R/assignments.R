@@ -457,7 +457,79 @@ get_assignment_quantity_setting <- function(
 
 # GET ​/api​/v1​/assignments​/{id}​/history
 # Gets history of the assignment
-# TODO: Consider creating a function
+
+#' Get assignment history
+#' 
+#' Get the history of actions taken on the target assignment.
+#' 
+#' Wrapper for the `GET ​/api​/v1​/assignments​/{id}​/history` endpoint
+#' 
+#' @param id Assignment ID number
+#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user API user name
+#' @param password API password
+#' 
+#' @import httr
+#' @importFrom jsonlite fromJSON
+get_assignment_history <- function(
+    id,
+    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")  # API password    
+) {
+
+    # check inputs
+    # id
+    assertthat::assert_that(
+        assertthat::is.count(id), 
+        msg = "Assignment ID must be a non-negative integer")
+
+    # form base URL
+    base_url <- paste0(server, "/api/v1/assignments/", id, "/history")
+
+    # make request
+    response <- httr::GET(
+        url = base_url,
+        httr::authenticate(user = user, password = password),
+        httr::accept_json(),
+        httr::content_type_json()
+    )    
+
+    status <- httr::status_code(response)
+
+    # success
+    if (status == 200) {
+
+        df <- jsonlite::fromJSON(content(response, as = "text"))
+        return(df)
+
+    # Assignment cannot accessed by logged in user
+    } else if (status == 403) {
+
+        message(paste0(
+            "Unable to get assignment history.\n",
+            "Reason: User unable to access this assignment. HTTP code: 403."
+        ))
+
+    # Assignment cannot be found
+    } else if (status == 404) {
+
+        message(paste0(
+            "Unable to get assignment history.\n",
+            "Reason: Unable to find this assignment. HTTP code: 404."
+        ))
+
+    # unknown error
+    } else if (!status %in% c(200, 403, 404)) {
+
+        message(paste0(
+            "Unable to get assignment history.\n",
+            "Reason: Unknown error. HTTP code: ", status, "."
+        ))
+
+    }
+
+}
 
 # GET ​/api​/v1​/assignments​/{id}​/recordAudio
 # Gets status of audio recording for provided assignment
@@ -687,9 +759,169 @@ archive_assignment <- function(
 # Assign new responsible person for assignment
 # TODO: Consider making function
 
+#' Reassign assignment to another user
+#' 
+#' Wrapper for `PATCH ​/api​/v1​/assignments​/{id}​/assign`
+#' 
+#' @param id Assignment ID number
+#' @param responsible Character. Either user name or GUID.
+#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user API user name
+#' @param password API password
+#' 
+#' @return Server-side side-effect of reassigning an assignment to another user
+#' 
+#' @importFrom assertthat assert_that is.count is.string
+#' @import httr
+#' @importFrom jsonlite toJSON
+reassign_assignment <- function(
+    id,
+    responsible,
+    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")   # API password         
+) {
+
+    # check inputs
+    # id is a count
+    assertthat::assert_that(
+        assertthat::is.count(id), 
+        msg = "Assignment ID must be a non-negative integer")
+
+    # target_user is a GUID or a user name
+    assertthat::assert_that(
+        is_guid(responsible) | assertthat::is.string(responsible), 
+        msg = "Responsible ID in `responsible` is not a valid GUID.")
+
+    # form base URL
+    base_url <- paste0(server, "/api/v1/assignments/", id, "/assign")
+
+    # compose body of request
+    body <- list(Responsible = responsible)
+
+    # get assignments from the server
+    response <- httr::PATCH(
+        url = base_url,
+        body = jsonlite::toJSON(body, auto_unbox = TRUE),
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
+    )
+
+    status <- httr::status_code(response)
+
+    # success
+    if (status == 200) {
+
+        message("Assignee for assignment successfully updated")
+
+    # assignment or assignee not found
+    } else if (status == 404) {
+
+        message(paste0(
+            "Unable to update assignee for assignment.\n",
+            "Reason: Assignment or assignee not found. HTTP code: 404"
+        ))
+
+    # assignee cannot be assigned an assignment
+    } else if (status == 406) {
+
+        message(paste0(
+            "Unable to update assignee for assignment.\n",
+            "Reason: Assignee cannot be assigned an assignment. HTTP code: 406"
+        ))
+
+    # unknown error
+    } else if (!status %in% c(200, 404, 406)) {
+
+        message(paste0(
+            "Unable to update assignee for assignment.\n",
+            "Reason: Unkown error. HTTP code: ", status, "."
+        ))
+
+    }
+
+}
+
 # PATCH ​/api​/v1​/assignments​/{id}​/changeQuantity
 # Change assignments limit on created interviews
-# TODO: Consider making function
+
+#' Change assignment quantity
+#' 
+#' Change the quantity for the target assignment.
+#' 
+#' Wrapper for `PATCH ​/api​/v1​/assignments​/{id}​/changeQuantity`
+#' 
+#' @param id Assignment ID number
+#' @param quantity Numeric. 
+#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user API user name
+#' @param password API password
+#' 
+#' @return Server-side side-effect of changing assignment quantity.
+#' 
+#' @import httr
+#' @importFrom assertthat assert_that is.count
+#' 
+#' @export 
+change_assignment_quantity <- function(
+    id,
+    quantity,
+    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")   # API password         
+) {
+
+    # check inputs
+    # id
+    assertthat::assert_that(
+        assertthat::is.count(id), 
+        msg = "Assignment ID must be a non-negative integer"
+    )
+
+    # quantity
+    assertthat::assert_that(
+        assertthat::is.count(quantity) | quantity == -1, 
+        msg = "Quantity must be either a non-negative integer or -1."
+    )
+
+    # form base URL
+    base_url <- paste0(server, "/api/v1/assignments/", id, "/changeQuantity")
+
+    # get assignments from the server
+    response <- httr::PATCH(
+        url = base_url,
+        body = as.character(quantity),
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
+    )
+
+    status <- httr::status_code(response)
+
+    # success
+    if (status == 200) {
+        message("Assignment quantity successfully updated")
+    # assignment not found
+    } else if (status == 404) {
+        message(paste0(
+            "Unable to change assignment quantity.\n",
+            "Reason: Assignment not found. HTTP code: 404"
+        ))
+    # size cannot be changed
+    } else if (status == 406) {
+        message(paste0(
+            "Unable to change assignment quantity.\n",
+            "Reason: Size cannot be changed. HTTP code: 406"
+        ))
+    } else if (!status %in% c(200, 404, 406)) {
+        message(paste0(
+            "Unable to change assignment quantity.\n",
+            "Reason: Unknown error. HTTP code: ", status, "."
+        ))
+    }
+
+}
 
 #' Unarchive an assignment
 #'

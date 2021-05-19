@@ -61,10 +61,15 @@ set_credentials <- function(
         SUSO_PASSWORD = password
     )
 
-    # check that credentials work
-
-
-    message("SuSo server access credentials have been saved \nFor immediate use, they are available as environment variables. \nFor future use, they are stored in .Renviron. \nFrom there, they will be loaded into environment variables upon startup.")
+    # inform the user that credentials have been set and what other actions, optionally, to take
+    message(paste0(
+        "Credentials successfully set.\n",
+        "They are available for immediate use by `susoapi` functions, or other packages that use `susoapi`.\n",
+        "They are also available for future use, upon startup in any new R session.\n",
+        "Use `show_credentials` to see them.\n",
+        "Use `check_credentials` to check them for the server.\n",
+        "Use `set_credentials` to change them."
+    ))
 
 }
 

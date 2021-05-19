@@ -1,15 +1,20 @@
-# message displayed
-# test_that("Message issued after function executed", {
+message displayed
+test_that("Message issued after function executed", {
 
-#     expect_message(
-#         set_credentials(
-#             server = "", 
-#             user = "", 
-#             password = ""
-#         )        
-#     )
+    withr::local_envvar(.new = list(
+        "SUSO_SERVER" = "https://demo.mysurvey.solutions", 
+        "SUSO_USER" = "FakeX1", 
+        "SUSO_PASSWORD" = "Fake123456"))
 
-# })
+    expect_message(
+        set_credentials(
+            server = "https://demo.mysurvey.solutions", 
+            user = "FakeX1", 
+            password = "Fake123456"
+        )        
+    )
+
+})
 
 # credentials set to environment variables
 # test_that("Credentials set to environment variables", {

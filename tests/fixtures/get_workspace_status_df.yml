@@ -1,0 +1,32 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>api/v1/workspaces/status/primary
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Tue, 18 May 2021 20:10:40 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"CanBeDeleted":false,"WorkspaceName":"primary","WorkspaceDisplayName":"Default
+        Workspace","ExistingQuestionnairesCount":7,"InterviewersCount":2,"SupervisorsCount":1,"MapsCount":0}'
+  recorded_at: 2021-05-18 20:10:40 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

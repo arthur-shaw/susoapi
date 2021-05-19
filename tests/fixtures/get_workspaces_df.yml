@@ -1,0 +1,62 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>api/v1/workspaces?Start=0&Length=1&IncludeDisabled=false
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Tue, 18 May 2021 19:29:34 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Workspaces":[{"Name":"another","DisplayName":"Another workspace","DisabledAtUtc":null}],"Order":null,"Limit":1,"TotalCount":2,"Offset":0}'
+  recorded_at: 2021-05-18 19:29:34 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0
+- request:
+    method: get
+    uri: <<<fake_server>>>api/v1/workspaces?Start=0&Length=20&IncludeDisabled=false
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Tue, 18 May 2021 19:29:34 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Workspaces":[{"Name":"another","DisplayName":"Another workspace","DisabledAtUtc":null},{"Name":"primary","DisplayName":"Default
+        Workspace","DisabledAtUtc":null}],"Order":null,"Limit":20,"TotalCount":2,"Offset":0}'
+  recorded_at: 2021-05-18 19:29:34 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

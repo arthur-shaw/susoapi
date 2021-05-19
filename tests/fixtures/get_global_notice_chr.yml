@@ -1,0 +1,31 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>api/v1/settings/globalnotice
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Tue, 18 May 2021 20:51:45 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Message":null}'
+  recorded_at: 2021-05-18 20:51:46 GMT
+  recorded_with: vcr/0.6.0, webmockr/0.8.0

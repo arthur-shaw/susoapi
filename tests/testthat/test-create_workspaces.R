@@ -1,7 +1,28 @@
 # INPUTS
 
-# TODO: name
-# TODO: display_name
+# name
+test_that("name is valid", {
+
+    expect_error(
+        create_workspace(
+            name = "___",
+            display_name = "This is a test"
+        )
+    )
+
+})
+
+# display_name
+test_that("name is valid", {
+
+    expect_error(
+        create_workspace(
+            name = "testname1",
+            display_name = ""
+        )
+    )
+
+})
 
 # `verbose` is Boolean
 test_that("`verbose` is Boolean", {
@@ -23,7 +44,7 @@ test_that("issue message on success/failure of operation", {
 
     expect_message(
         create_workspace(
-            name = "unit_tests",
+            name = "unittests",
             display_name = "Unit tests"
         )       
     )
@@ -35,7 +56,7 @@ test_that("issue message on success/failure of operation", {
 
     x <- suppressMessages(
         create_workspace(
-            name = "unit_tests",
+            name = "unittests",
             display_name = "Unit tests",
             verbose = TRUE
         )       

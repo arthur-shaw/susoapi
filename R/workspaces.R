@@ -186,7 +186,25 @@ create_workspace <- function(
     # check inputs
     # TODO: check inputs
     # TODO: devise a way to check that credentials are admin credentials
-    # TODO: see if there are any restriction on workspace Name or DisplayName
+
+    # name
+    assertthat::assert_that(
+        is_workspace_name(name),
+        msg = paste0(
+            "Workspace name is not valid. Names must be:\n",
+            "- No more than 12 character.\n",
+            "- Composed of lower-case letters and numbers."
+        )
+    )
+
+    # display_name
+    assertthat::assert_that(
+        is_workspace_display_name(display_name),
+        msg = paste0(
+            "Workspace display name is not valid.\n",
+            "Must be 300 characters or less."
+        )
+    )
 
     # `verbose` is Boolean
     assert_that(
@@ -270,8 +288,17 @@ get_workspace_details <- function(
 ) {
 
     # check inputs
-    # TODO: check that name is valid
     # TODO: check that user is admin
+
+    # name
+    assertthat::assert_that(
+        is_workspace_name(name),
+        msg = paste0(
+            "Workspace name is not valid. Names must be:\n",
+            "- No more than 12 character.\n",
+            "- Composed of lower-case letters and numbers."
+        )
+    )
 
     # form the URL
     url <- paste0(server, "/api/v1/workspaces/", name)
@@ -336,6 +363,26 @@ update_workspace <- function(
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password      
 ) {
+
+    # check inputs
+    # name
+    assertthat::assert_that(
+        is_workspace_name(name),
+        msg = paste0(
+            "Workspace name is not valid. Names must be:\n",
+            "- No more than 12 character.\n",
+            "- Composed of lower-case letters and numbers."
+        )
+    )
+
+    # display_name
+    assertthat::assert_that(
+        is_workspace_display_name(display_name),
+        msg = paste0(
+            "Workspace display name is not valid.\n",
+            "Must be 300 characters or less."
+        )
+    )
 
     # form the base URL
     base_url <- paste0(server, "/api/v1/workspaces/", name)
@@ -424,6 +471,17 @@ delete_workspace <- function(
     password = Sys.getenv("SUSO_PASSWORD")  # API password       
 ) {
 
+    # check inputs
+    # name
+    assertthat::assert_that(
+        is_workspace_name(name),
+        msg = paste0(
+            "Workspace name is not valid. Names must be:\n",
+            "- No more than 12 character.\n",
+            "- Composed of lower-case letters and numbers."
+        )
+    )
+
     # form the base URL
     base_url <- paste0(server, "/api/v1/workspaces/", name)
 
@@ -481,6 +539,17 @@ get_workspace_status <- function(
     password = Sys.getenv("SUSO_PASSWORD")  # API password   
 ) {
 
+    # check inputs
+    # name
+    assertthat::assert_that(
+        is_workspace_name(name),
+        msg = paste0(
+            "Workspace name is not valid. Names must be:\n",
+            "- No more than 12 character.\n",
+            "- Composed of lower-case letters and numbers."
+        )
+    )
+
     # form the base URL
     base_url <- paste0(server, "/api/v1/workspaces/status/", name)
 
@@ -537,6 +606,17 @@ disable_workspace <- function(
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
+
+    # check inputs
+    # name
+    assertthat::assert_that(
+        is_workspace_name(name),
+        msg = paste0(
+            "Workspace name is not valid. Names must be:\n",
+            "- No more than 12 character.\n",
+            "- Composed of lower-case letters and numbers."
+        )
+    )  
 
     # form the base URL
     base_url <- paste0(server, "/api/v1/workspaces/", name, "/disable")
@@ -600,6 +680,17 @@ enable_workspace <- function(
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password      
 ) {
+
+    # check inputs
+    # name
+    assertthat::assert_that(
+        is_workspace_name(name),
+        msg = paste0(
+            "Workspace name is not valid. Names must be:\n",
+            "- No more than 12 character.\n",
+            "- Composed of lower-case letters and numbers."
+        )
+    )   
 
     # form the base URL
     base_url <- paste0(server, "/api/v1/workspaces/", name, "/enable")
@@ -685,6 +776,16 @@ assign_users_to_workspaces <- function(
     assertthat::assert_that(
         (typeof(workspaces) == "character" & is.vector(workspaces)),
         msg = "`workspaces` should be a character vector"
+    )
+
+    # workpaces names are valid names
+    assertthat::assert_that(
+        all(is_workspace_name(workspaces)),
+        msg = paste0(
+            "At least one workspace name is not valid. Names must be:\n",
+            "- No more than 12 character.\n",
+            "- Composed of lower-case letters and numbers."
+        )
     )
 
     # action in c("Assign", "Add", "Remove")

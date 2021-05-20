@@ -102,3 +102,32 @@ logical_to_string <- function(
 
 }
 
+#' Checks validity of workspace name
+#' 
+#' @param Character Name of the workspace
+#' 
+#' @return Logical. `TRUE` if a valid name; `FALSE` otherwise
+#' 
+#' @noRd
+is_workspace_name <- function(x) {
+
+    # compute number of characters total and number matched
+    n_char <- nchar(x)
+    n_matches <- stringr::str_count(string = x, pattern = "[[:lower:][:digit:]]")
+
+    # number of characters == number of matched characters
+    (n_char %in% c(1:12)) & (n_matches == n_char)
+
+}
+
+#' Checks validity of workspace display name
+#' 
+#' @param Character Display name of the workspace
+#' 
+#' @return Logical. `TRUE` if a valid name; `FALSE` otherwise
+#' 
+#' @noRd
+is_workspace_display_name <- function(x) {
+    n_char <- nchar(x) 
+    n_char > 0 & n_char <= 300
+}

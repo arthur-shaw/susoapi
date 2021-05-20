@@ -1,5 +1,14 @@
 # INPUTS
 
+# name
+test_that("name is valid", {
+
+    expect_error(
+        get_workspace_status(name = "___")
+    )
+
+})
+
 # OUTPUTS
 
 # if workspace exists, returns df with expected columns
@@ -29,7 +38,7 @@ test_that("if workspace exists, returns df with expected columns", {
 # vcr::use_cassette("get_workspace_status_msg", {
 
     test_that("if workspace does not exist, issues message", {
-        expect_message(get_workspace_status(name = "i_do_not_exist"))
+        expect_message(get_workspace_status(name = "idonotexist"))
     })
 
 # })

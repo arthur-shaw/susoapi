@@ -36,6 +36,18 @@ test_that("workspaces is a character vector", {
 
 })
 
+# workspaces is composed of all valid names
+test_that("workspaces is a character vector", {
+
+    expect_error(
+        assign_users_to_workspaces(
+            users = "7bdf95abab1b4d46b818cdf7546e049f",
+            workspaces = "this is wrong"
+        )
+    )
+
+})
+
 # action %in% c("Assign", "Add", "Remove")
 test_that('action %in% c("Assign", "Add", "Remove")', {
 

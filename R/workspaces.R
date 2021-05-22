@@ -13,7 +13,7 @@ get_workspaces_count <- function(
 ) {
 
 # form the base URL
-base_url <- paste0(server, "api/v1/workspaces")
+base_url <- paste0(server, "/api/v1/workspaces")
 
 # compose query
 # match function params to expected query params
@@ -59,7 +59,7 @@ get_workspaces_batch <- function(
 ) {
 
     # form the base URL
-    base_url <- paste0(server, "api/v1/workspaces")
+    base_url <- paste0(server, "/api/v1/workspaces")
 
     # compose query
     # match function params to expected query params
@@ -213,7 +213,7 @@ create_workspace <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server, "api/v1/workspaces")
+    base_url <- paste0(server, "/api/v1/workspaces")
 
     # compose body of post
     # match function params to expected keys in body

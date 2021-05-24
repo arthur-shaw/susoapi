@@ -992,7 +992,7 @@ unarchive_assignment <- function(
 
 #' Close assignment
 #'
-#' Closes assignment by setting Size to the amount of collected interviews. Wrapper for \code{POST /api/v1/assignments/{id}/close} endpoint
+#' Closes assignment by setting Size to the amount of collected interviews. Wrapper for \code{PATCH /api/v1/assignments/{id}/close} endpoint
 #'
 #' @param id Assignment ID number
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
@@ -1025,7 +1025,7 @@ close_assignment <- function(
     base_url <- paste0(server, "/api/v1/assignments/", id, "/close")
 
     # get assignments from the server
-    response <- httr::POST(
+    response <- httr::PATCH(
         url = base_url,
         authenticate(user = user, password = password),
 		accept_json(),

@@ -14,6 +14,8 @@ get_interviews_for_questionnaire(
 )
 }
 \arguments{
+\item{workspace}{Character. Name of the workspace whose questionnaires and associated interviews to get.}
+
 \item{qnr_id}{Questionnaire ID. GUID from server.}
 
 \item{qnr_version}{Questionnaire version number.}

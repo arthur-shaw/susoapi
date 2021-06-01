@@ -197,6 +197,7 @@ get_questionnaire_document <- function(
 #'
 #' GraphQL implmentation for deprecated REST \code{GET /api/v1/questionnaires/{id}/{version}/interviews} endpoint
 #'
+#' @param workspace Character. Name of the workspace whose questionnaires and associated interviews to get.
 #' @param qnr_id Questionnaire ID. GUID from server.
 #' @param qnr_version Questionnaire version number.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})

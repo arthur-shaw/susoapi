@@ -80,6 +80,167 @@ delete_interview <- function(
 # GET ​/api​/v1​/interviews​/{id}​/history
 # Get interivew history for interview (?)
 
+#' Get interviews
+#' 
+#' Get list of interviews and their attributes
+#' 
+#' GraphQL implementation of deprecated REST `GET ​/api​/v1​/interviews​/{id}` endpoint.
+#' 
+#' @param workspace Character. Name of the workspace whose interviews to get.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Charater. API or admin user name for user that access to the workspace.
+#' @param password API or admin password
+#' 
+#' @importFrom assertthat assert_that
+#' @import ghql
+#' @importFrom jsonlite base64_enc fromJSON
+#' @importFrom glue glue double_quote
+#' @importFrom purrr map_if discard
+#' @importFrom rlang is_empty .data
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr `%>%` select rename_with left_join
+#' @importFrom tidyr unnest pivot_wider
+#' 
+#' @export
+get_interviews <- function(
+    workspace = "primary",
+    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")  # API password
+) {
+
+    # check inputs
+    assertthat::assert_that(
+        is_workspace_name(workspace),
+        msg = "Invalid workspace name. Please check the input for the `workspace` parameter."
+    )
+    # TODO: confirm that it is a valid workspace
+
+    # compose the GraphQL request client
+    interviews_request <- ghql::GraphqlClient$new(
+        url = paste0(server, "/graphql"), 
+        headers = list(authorization = paste0(
+            "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password)))
+        )
+    )
+
+    # compose the query for all interviews
+    # use string interpolation to pipe double-quoted workspace name into query
+    qry <- ghql::Query$new()
+    qry$query("interviews", 
+        glue::glue("{
+            interviews (workspace: <glue::double_quote(workspace)>) {
+                nodes {
+                    id
+                    key
+                    assignmentId
+                    identifyingData {
+                        answerValue
+                        value
+                        valueBool
+                        valueDate
+                        valueLong
+                        valueDouble
+                        isEnabled
+                        entity {
+                            identifying
+                            label
+                            options {
+                                parentValue
+                                title
+                                value
+                            }
+                            questionText
+                            scope
+                            type
+                            variable
+                        }
+                    }
+                    questionnaireId
+                    questionnaireVersion
+                    questionnaireVariable
+                    responsibleName
+                    responsibleId
+                    responsibleRole
+                    supervisorName
+                    status
+                    actionFlags
+                    wasCompleted
+                    notAnsweredCount
+                    errorsCount
+                    createdDate
+                    updateDateUtc
+                    receivedByInterviewerAtUtc
+                    interviewMode        
+                }
+                filteredCount
+            }
+        }", .open = "<", .close = ">")
+    )
+
+    # send request
+    interviews_result <- interviews_request$exec(qry$queries$interviews)
+
+    # convert JSON payload to data frame
+    interviews <- jsonlite::fromJSON(interviews_result, flatten = TRUE)
+    interviews_count <- interviews$data$interviews$filteredCount
+
+    if ("errors" %in% names(interviews)) {
+
+        # extract and display error(s)
+        errors <- dplyr::pull(interviews$errors) %>% paste0(collapse = "\n")
+        stop(errors)
+
+    } else if (interviews_count == 0) {
+
+        message(glue::glue(
+            "No interviews found in workspace {glue::backtick(workspace)}.",
+            "If this result is surprising, check the input in the `workspace` parameter.",
+            .sep = "\n"
+        ))
+
+    } else if (interviews_count > 0) {
+
+        # extract interview data payload
+        interviews_df <- interviews$data$interviews$nodes %>% 
+            purrr::map_if(is.data.frame, list) %>% 
+            tibble::as_tibble()
+
+        # extract interview attributes from the payload
+        interview_attribs_df <- dplyr::select(interviews_df, -.data$identifyingData)
+
+        # extract (nested) identifying data
+        identifying_df <- interviews_df %>% 
+            dplyr::select(id, .data$identifyingData) %>%
+            purrr::discard(rlang::is_empty) %>%
+            purrr::map_if(is.data.frame, list) %>% 
+            tibble::as_tibble() %>%
+            tidyr::unnest(.data$identifyingData) %>%
+            dplyr::rename_with(
+                .cols = starts_with("entity."),
+                .fn = ~ gsub(
+                    pattern = "entity.",
+                    replacement = "",
+                    x = .x
+                )
+            ) %>%
+            dplyr::select(id, .data$value, .data$variable) %>%
+            tidyr::pivot_wider(
+                id_cols = id,
+                names_from = .data$variable,
+                values_from = .data$value
+            )
+
+        # combine interview attributes and identifying data
+        interview_list_df <- interview_attribs_df %>%
+            dplyr::left_join(identifying_df, by = "id")
+
+        return(interview_list_df)
+
+    }
+
+}
+
 #' Get statistics by interview
 #'
 #' Fetch statistics for a single interview. 

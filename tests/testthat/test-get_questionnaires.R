@@ -1,28 +1,44 @@
 # inputs
 
-# N/A
+test_that("issues error if invalid workspace name", {
+
+    expect_error(
+        get_questionnaires(workspace = "I_am_invalid")
+    )
+
+})
 
 # outputs
 
 # returns df with expected columns
 test_that("Returns df with expected columns", {
 
-    vcr::use_cassette("get_questionnaires_return", {
-        x <- get_questionnaires()
+    vcr::use_cassette("get_questionnaires_df", {
+        x <- get_questionnaires(workspace = "primary")
     })
 
+    # is a data frame
     expect_s3_class(x, c("tbl_df","tbl","data.frame"))
-    expect_named(x, c(
-        "QuestionnaireIdentity", "QuestionnaireId", "Version",
-        "Title", "Variable", "LastEntryDate",
-        "WebModeEnabled", "IsAudioRecordingEnabled"
-    ), ignore.order = TRUE)
-    expect_type(x$QuestionnaireIdentity, "character")
-    expect_type(x$QuestionnaireId, "character")
-    expect_type(x$Version, "integer")
-    expect_type(x$Title, "character")
-    expect_type(x$Variable, "character")
-    expect_type(x$LastEntryDate, "character")
+
+    # has expected columns
+    expect_named(
+        object = x,
+        expected = c(
+            "questionnaireId", "id", "version", 
+            "variable", "title", 
+            "defaultLanguageName", "translations"
+        ),
+        ignore.order = TRUE
+    )
+
+    # columns are of expected type
+    expect_type(x$id, "character")
+    expect_type(x$questionnaireId, "character")
+    expect_type(x$version, "integer")
+    expect_type(x$variable, "character")
+    expect_type(x$title, "character")
+    expect_type(x$defaultLanguageName, "character")
+    expect_type(x$translations, "list")
 
 })
 

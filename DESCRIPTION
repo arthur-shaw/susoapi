@@ -23,7 +23,11 @@ Imports:
     stringr,
     assertthat,
     curl,
-    fs
+    fs,
+    ghql,
+    glue,
+    rlang,
+    tibble
 Suggests: 
     rmarkdown,
     knitr,

@@ -1,158 +1,123 @@
 
-#' Count imported questionnaires
-#'
-#' See how many questionnaires on the server that meet search criteria. Wrapper for \code{GET /api/v1/questionnaires} endpoint
-#'
-#' @param limit
-#' @param offset
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
-#'
-#' @return
-#'
-#' @import httr
-#' @importFrom jsonlite fromJSON
-#'
-#' @noRd 
-qnr_get_count <- function(
-    limit = 40,
-    offset = "",
-    server = Sys.getenv("SUSO_SERVER"),     # full server address
-    user = Sys.getenv("SUSO_USER"),         # API user name
-    password = Sys.getenv("SUSO_PASSWORD")  # API password  
-) {
-
-    # form the base URL
-    base_url <- paste0(server, "/api/v1/questionnaires")
-
-    # form the query parameters of the request
-    query <- list(
-        offset = offset,
-        limit = limit
-    )
-
-    # compose the full URL: base + query parameters
-    url <- httr::modify_url(
-        url = base_url,
-        query = query)
-
-    # get assignments from the server
-    response <- httr::GET(
-        url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
-    )
-
-    # if non-200 code returned, fail loudly
-    if (status_code(response) != 200) {
-        error_code <- status_code(response)
-        stop(
-            paste0(
-                "Server returned status code ",  error_code,
-                ". Check the parameters provided.")
-        )
-    }
-
-    # otherwise, return the total assignment count
-    total_count <- jsonlite::fromJSON(
-        content(response, as = "text"),
-        flatten = TRUE)$TotalCount
-    return(total_count)
-
-}
-
-#' Get batch of questionnaires
-#'
-#' @param limit
-#' @param offset
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
-#'
-#' @return
-#'
-#' @import httr
-#' @importFrom jsonlite fromJSON
-#'
-#' @noRd
-qnr_get_batch <- function(
-    limit = 40,
-    offset = "",
-    server = Sys.getenv("SUSO_SERVER"),     # full server address
-    user = Sys.getenv("SUSO_USER"),         # API user name
-    password = Sys.getenv("SUSO_PASSWORD")  # API password  
-) {
-
-    # form the base URL
-    base_url <- paste0(server, "/api/v1/questionnaires")
-
-   # form the query parameters of the request
-    query <- list(
-        offset = offset,
-        limit = limit
-    )
-
-    # compose the full URL: base + query parameters
-    url <- httr::modify_url(
-        url = base_url,
-        query = query)
-
-    # get questionnaires from the server
-    response <- httr::GET(
-        url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
-    )
-
-    # return questionnaires
-    df <- jsonlite::fromJSON(content(response, as = "text"), flatten = TRUE)$Questionnaires
-    return(df)
-
-}
-
 #' Get all questionnaires
 #'
 #' Get list of all questionnaires and their attributes
+#' 
+#' GraphQL implementation of the deprecated REST `GET​/api​/v1​/questionnaires` endpoint.
 #'
+#' @param workspace Character. Name of the workspace whose questionnaires to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
 #'
 #' @return Data frame of questionnaires.
 #' 
-#' @importFrom purrr map_dfr
+#' @importFrom assertthat assertthat
+#' @import ghql
+#' @importFrom jsonlite base64_enc fromJSON
+#' @importFrom glue glue double_quote
+#' @importFrom dplyr pull
 #'
 #' @export
 get_questionnaires <- function(
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
 
-    # get total count of assignments
-    total_count <- qnr_get_count(
-        offset = 1,
-        limit = 1,
-        server = server,
-        user = user,
-        password = password)
+    # check inputs
+    assertthat::assert_that(
+        is_workspace_name(workspace),
+        msg = "Invalid workspace name. Please check the input for the `workspace` parameter."
+    )
+    # TODO: confirm that it is a valid workspace
 
-    # return all assignments as a dataframe
-    df <- purrr::map_dfr(
-        .x = seq(
-            from = 1,
-            to = ceiling(total_count/40),
-            by = 1),
-        .f = qnr_get_batch,
-        limit = 40,
-        server = server,
-        user = user,
-        password = password)
+    # compose the GraphQL request client
+    questionnaires_request <- ghql::GraphqlClient$new(
+        url = paste0(server, "/graphql"), 
+        headers = list(authorization = paste0(
+            "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password)))
+        )
+    )
 
-    return(df)
+    # compose the query for all interviews
+    # use string interpolation to pipe double-quoted workspace name into query
+    qry <- ghql::Query$new()
+    qry$query("questionnaires", 
+        glue::glue("{
+            questionnaires (workspace: <glue::double_quote(workspace)>) {
+                nodes {
+                    id
+                    questionnaireId
+                    version
+                    variable
+                    title
+                    defaultLanguageName
+                    translations {
+                        id
+                        name
+                    }
+                }
+                filteredCount   
+            }
+        }", .open = "<", .close = ">")
+    )
+
+    # send request
+    questionnaires_result <- questionnaires_request$exec(qry$queries$questionnaires)
+
+    # convert JSON payload into an R object
+    qnrs <- jsonlite::fromJSON(questionnaires_result, flatten = TRUE)
+    qnr_count <- qnrs$data$questionnaires$filteredCount
+
+    if ("errors" %in% names(qnrs)) {
+
+        # extract and display error(s)
+        errors <- dplyr::pull(qnrs$errors) %>% paste0(collapse = "\n")
+        stop(errors)
+
+    } else if (qnr_count == 0) {
+
+        message(glue::glue(
+            "No questionnaires found in workspace {glue::backtick(workspace)}.",
+            "If this result is surprising, check the input in the `workspace` parameter.",
+            .sep = "\n"
+        ))
+
+    } else if (qnr_count > 0) {
+
+        # extract data frame from nested containers
+        qnrs_df <- qnrs$data$questionnaires$nodes
+
+        # correct class of defaultLanguageName, which may often be empty
+        qnrs_df$defaultLanguageName <- as.character(qnrs_df$defaultLanguageName)
+
+        # rename variables to names from REST ?
+
+            # What REST CURRENTLY RETURNS:
+            # "QuestionnaireIdentity": "string",
+            # "QuestionnaireId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            # "Version": 0,
+            # "Title": "string",
+            # "Variable": "string",
+            # "LastEntryDate": "2021-06-01T13:41:59.328Z",
+            # "IsAudioRecordingEnabled": true,
+            # "WebModeEnabled": true
+
+            # How to rename:
+            # qnrs_df <- qnrs_df %>%
+            #     rename(
+            #         QuestionnaireIdentity = questionnaireId,
+            #         QuestionnaireId = id,
+            #         Version = version,
+            #         Variable = variable,
+            #         Title = title
+            #     )
+
+        return(qnrs_df)
+
+    }
 
 }
 
@@ -228,173 +193,9 @@ get_questionnaire_document <- function(
 
 }
 
-#' Get count of interviews for questionnaire-version
-#'
-#' Provides count of interviews returned from \code{GET /api/v1/questionnaires/{id}/{version}/interviews} endpoint
-#'
-#' @param qnr_id Questionnaire ID. GUID from server
-#' @param qnr_version Version number of questionnaire
-#' @param limit
-#' @param offset
-#' @param server
-#' @param user API user name
-#' @param password API password
-#' 
-#' @import httr
-#' @importFrom jsonlite fromJSON
-#' 
-#' @noRd
-qnr_get_interview_count <- function(
-    qnr_id,
-    qnr_version,
-    limit = 1,
-    offset = 1,
-    server = Sys.getenv("SUSO_SERVER"),     # full server address
-    user = Sys.getenv("SUSO_USER"),         # API user name
-    password = Sys.getenv("SUSO_PASSWORD")  # API password      
-) {
-
-    # check inputs:
-    # qnr_id
-    check_guid(
-        guid = qnr_id, 
-        fail_msg = "Questionnaire ID in `qnr_id` is not a valid GUID.")
-
-    # qnr_version
-    assertthat::assert_that(
-        assertthat::is.count(qnr_version),
-        msg = "Questionnaire version number must be a non-negative integer.")
-
-    # form the base URL
-    base_url <- paste0(server,
-        "/api/v1/questionnaires/", qnr_id, "/", qnr_version, "/interviews")
-
-    # form the body for the request
-    query <- list(
-        limit = limit,
-        offset = offset
-    )
-
-    # compose the full URL: base + query parameters
-    url <- httr::modify_url(
-        url = base_url,
-        query = query)
-
-    # post request
-    response <- httr::GET(
-        url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
-    )
-
-    # return count of interviews
-    total_count <- jsonlite::fromJSON(content(response, as = "text"), flatten = TRUE)$TotalCount
-    return(total_count)    
-
-}
-
 #' Get list of interviews for questionnaire-version
 #'
-#' Returns one batch of interviews for a given questionnaire as a df. Wrapper for \code{GET /api/v1/questionnaires/{id}/{version}/interviews} endpoint.
-#'
-#' @param qnr_id Questionnaire ID. GUID from server
-#' @param qnr_version Version number of questionnaire
-#' @param limit
-#' @param offset
-#' @param server
-#' @param user API user name
-#' @param password API password
-#'
-#' @return Data frame of interviews
-#'
-#' @importFrom assertthat assert_that is.count
-#' @import httr
-#' @importFrom jsonlite fromJSON
-#' @import dplyr
-#' @importFrom tidyr unnest pivot_wider
-#' 
-#' @noRd
-qnr_get_interviews_batch <- function(
-    qnr_id,
-    qnr_version,
-    limit = 40,
-    offset = 1,
-    server = Sys.getenv("SUSO_SERVER"),     # full server address
-    user = Sys.getenv("SUSO_USER"),         # API user name
-    password = Sys.getenv("SUSO_PASSWORD")  # API password  
-) {
-
-    # check inputs:
-    # qnr_id
-    check_guid(
-        guid = qnr_id, 
-        fail_msg = "Questionnaire ID in `qnr_id` is not a valid GUID.")
-
-    # qnr_version
-    assertthat::assert_that(
-        assertthat::is.count(qnr_version),
-        msg = "Questionnaire version number must be a non-negative integer.")
-
-    # form the base URL
-    base_url <- paste0(server,
-        "/api/v1/questionnaires/", qnr_id, "/", qnr_version, "/interviews")
-
-    # form the body for the request
-    query <- list(
-        limit = limit,
-        offset = offset
-    )
-
-    # compose the full URL: base + query parameters
-    url <- httr::modify_url(
-        url = base_url,
-        query = query)
-
-    # post request
-    response <- httr::GET(
-        url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
-    )
-
-    # return interviews
-    df <- jsonlite::fromJSON(content(response, as = "text"), flatten = TRUE)$Interviews
-
-    # if any interviews returned, transform nested df into tidy df, making FeaturedQuestions into columns
-    if (length(df) > 0 & length(df$FeaturedQuestions[[1]]) > 0) {
-        df_identifying <- df %>%
-            tidyr::unnest(cols = .data$FeaturedQuestions) %>%
-            tidyr::pivot_wider(
-                id_cols = !matches("^Id$|^Question$|^Answer$"), # all columns except those in nested FeaturesQuestions df
-                names_from = .data$Question,
-                values_from = .data$Answer
-                )
-    # else if there is an interview with no identifying questions
-    } else if (length(df > 0) & length(df$FeaturedQuestions[[1]]) == 0) {
-        df_identifying <- df %>%
-            select(-.data$FeaturedQuestions)
-    # else, if no interviews returned, create an empty df
-    } else {
-        df_identifying <- data.frame(
-            InterviewId = NA_character_,
-            QuestionnaireId = NA_character_,
-            QuestionnaireVersion = NA_real_,
-            AssignmentId = NA_real_,
-            ResponsibleId = NA_character_,
-            ResponsibleName = NA_character_, 
-            stringsAsFactors = FALSE
-        )
-    }
-
-    return(df_identifying)
-
-}
-
-#' Get list of interviews for questionnaire-version
-#'
-#' Wrapper for \code{GET /api/v1/questionnaires/{id}/{version}/interviews} endpoint
+#' GraphQL implmentation for deprecated REST \code{GET /api/v1/questionnaires/{id}/{version}/interviews} endpoint
 #'
 #' @param qnr_id Questionnaire ID. GUID from server.
 #' @param qnr_version Questionnaire version number.
@@ -405,12 +206,18 @@ qnr_get_interviews_batch <- function(
 #' @return Data frame of interviews.
 #' 
 #' @importFrom assertthat assert_that is.count
-#' @importFrom purrr map_dfr
+#' @import ghql
+#' @importFrom jsonlite base64_enc fromJSON
+#' @importFrom glue glue double_quote
+#' @importFrom purrr map_if discard
+#' @importFrom rlang is_empty .data
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr `%>%` select rename_with left_join pull
+#' @importFrom tidyr unnest pivot_wider
 #'
 #' @export
-#' 
-#' @examples
 get_interviews_for_questionnaire <- function(
+    workspace = "primary",
     qnr_id,
     qnr_version,
     server = Sys.getenv("SUSO_SERVER"),     # full server address
@@ -429,51 +236,137 @@ get_interviews_for_questionnaire <- function(
         assertthat::is.count(qnr_version),
         msg = "Questionnaire version number must be a non-negative integer.")
 
-    # form the base URL
-    base_url <- paste0(server,
-        "/api/v1/questionnaires/", qnr_id, "/", qnr_version, "/interviews")
-
-    # get count of interviews for questionnaire-version
-    total_count <- qnr_get_interview_count(
-        qnr_id = qnr_id,
-        qnr_version = qnr_version,
-        server = server,
-        user = user,
-        password = password)
-
-    # return all interviews as df
-    # if no interviews, return an empty df
-    if (total_count == 0) {
-
-        message("No interviews available for this questionnaire-version")
-        df <- data.frame(
-            InterviewId = NA_character_,
-            QuestionnaireId = NA_character_,
-            QuestionnaireVersion = NA_integer_,
-            AssignmentId = NA_integer_,
-            ResponsibleId = NA_character_,
-            ResponsibleName = NA_character_, 
-            stringsAsFactors = FALSE
+    # compose the GraphQL request client
+    interviews_request <- ghql::GraphqlClient$new(
+        url = paste0(server, "/graphql"), 
+        headers = list(authorization = paste0(
+            "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password)))
         )
+    )
 
-    # otherwise, return a df with the accumulatio of all server replies
-    } else {
+    # compose the query for all interviews
+    # use string interpolation to pipe double-quoted workspace name into query
+    qry <- ghql::Query$new()
+    qry$query("interviews", 
+        glue::glue("{
+            interviews (
+                workspace: <glue::double_quote(workspace)>,
+                where: {
+                    questionnaireId: {eq: <glue::double_quote(qnr_id)>}
+                    questionnaireVersion: {eq: <qnr_version>}
+                }
+            ) {
+                nodes {
+                    id
+                    key
+                    assignmentId
+                    identifyingData {
+                        answerValue
+                        value
+                        valueBool
+                        valueDate
+                        valueLong
+                        valueDouble
+                        isEnabled
+                        entity {
+                            identifying
+                            label
+                            options {
+                                parentValue
+                                title
+                                value
+                            }
+                            questionText
+                            scope
+                            type
+                            variable
+                        }
+                    }
+                    questionnaireId
+                    questionnaireVersion
+                    questionnaireVariable
+                    responsibleName
+                    responsibleId
+                    responsibleRole
+                    supervisorName
+                    status
+                    actionFlags
+                    wasCompleted
+                    notAnsweredCount
+                    errorsCount
+                    createdDate
+                    updateDateUtc
+                    receivedByInterviewerAtUtc
+                    interviewMode        
+                }
+                filteredCount
+            }
+        }", .open = "<", .close = ">")
+    )
 
-        df <- purrr::map_dfr(
-            .x = seq(
-                from = 1,
-                to = ceiling(total_count/40),
-                by = 1),
-            .f = qnr_get_interviews_batch,
-            limit = 40,
-            qnr_id = qnr_id,
-            qnr_version = qnr_version,
-            server = server,
-            user = user,
-            password = password)
+    # send request
+    interviews_result <- interviews_request$exec(qry$queries$interviews)
+
+    # convert JSON payload to data frame
+    interviews <- jsonlite::fromJSON(interviews_result, flatten = TRUE)
+    interviews_count <- interviews$data$interviews$filteredCount    
+
+    if ("errors" %in% names(interviews)) {
+
+        # extract and display error(s)
+        errors <- dplyr::pull(interviews$errors) %>% paste0(collapse = "\n")
+        stop(errors)
+
+    } else if (interviews_count == 0) {
+
+        message(glue::glue(
+            "No interviews found for these search parameters:",
+            "- `workspace`: {workspace}",
+            "- `qnr_id`: {qnr_id}",
+            "- `qnr_version`: {qnr_version}",
+            "If this result is surprising, check the search parameter.",
+            .sep = "\n"
+        ))
+
+    } else if (interviews_count > 0) {
+
+        # extract interview data payload
+        interviews_df <- interviews$data$interviews$nodes %>% 
+            purrr::map_if(is.data.frame, list) %>% 
+            tibble::as_tibble()
+
+        # extract interview attributes from the payload
+        interview_attribs_df <- dplyr::select(interviews_df, -.data$identifyingData)
+
+        # extract (nested) identifying data
+        identifying_df <- interviews_df %>% 
+            dplyr::select(id, .data$identifyingData) %>%
+            purrr::discard(rlang::is_empty) %>%
+            purrr::map_if(is.data.frame, list) %>% 
+            tibble::as_tibble() %>%
+            tidyr::unnest(.data$identifyingData) %>%
+            dplyr::rename_with(
+                .cols = starts_with("entity."),
+                .fn = ~ gsub(
+                    pattern = "entity.",
+                    replacement = "",
+                    x = .x
+                )
+            ) %>%
+            dplyr::select(id, .data$value, .data$variable) %>%
+            tidyr::pivot_wider(
+                id_cols = id,
+                names_from = .data$variable,
+                values_from = .data$value
+            )
+
+        # combine interview attributes and identifying data
+        interview_list_df <- interview_attribs_df %>%
+            dplyr::left_join(identifying_df, by = "id")
+
+        return(interview_list_df)
+
     }
-
-    return(df)
 
 }
 

@@ -5,12 +5,15 @@
 \title{Get all questionnaires}
 \usage{
 get_questionnaires(
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
 }
 \arguments{
+\item{workspace}{Character. Name of the workspace whose questionnaires to get.}
+
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
 \item{user}{API user name}
@@ -22,4 +25,7 @@ Data frame of questionnaires.
 }
 \description{
 Get list of all questionnaires and their attributes
+}
+\details{
+GraphQL implementation of the deprecated REST \verb{GET​/api​/v1​/questionnaires} endpoint.
 }

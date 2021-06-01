@@ -31,20 +31,28 @@ test_that("If invalid `qnr_version`, issues error", {
 # if interviews returned
 test_that("If interviews found, return df with expected columns", {
 
-    vcr::use_cassette("get_interviews_for_questionnaire_w_interviews", {
+    vcr::use_cassette("get_interviews_for_questionnaire_df", {
         x <- get_interviews_for_questionnaire(
                 qnr_id = "5495bfd5-f232-4b3a-8a75-c80056f1898e",
                 qnr_version = 1
             )
     })
 
+    # is data frame
     expect_s3_class(x, c("tbl_df","tbl","data.frame"))
-    expect_type(x$InterviewId, "character")
-    expect_type(x$QuestionnaireId, "character")
-    expect_type(x$QuestionnaireVersion, "integer")
-    expect_type(x$AssignmentId, "integer")
-    expect_type(x$ResponsibleId, "character")
-    expect_type(x$ResponsibleName, "character")
+
+    # has expected columns
+    # names found in data frame, which include interview-specific identifying variables
+    col_names <- names(x)
+    # expected core values, drawn from GraphQL query
+    expected_names <- c(
+        "id", "key", "assignmentId", 
+        "questionnaireId", "questionnaireVersion", "questionnaireVariable",
+        "responsibleName", "responsibleId", "responsibleRole", "supervisorName",
+        "status", "actionFlags", "wasCompleted", "notAnsweredCount", "errorsCount",
+        "createdDate", "updateDateUtc", "receivedByInterviewerAtUtc", "interviewMode"
+    )
+    expect_true(all(expected_names %in% col_names))
 
 })
 
@@ -52,35 +60,11 @@ test_that("If interviews found, return df with expected columns", {
 # issues a message
 test_that("If no interviews found, emit a message", {
 
-    vcr::use_cassette("get_interviews_for_questionnaire_no_interviews_message", {
+    vcr::use_cassette("get_interviews_for_questionnaire_msg", {
         expect_message(get_interviews_for_questionnaire(
                 qnr_id = "b4382cca-8231-4e8a-87b0-b1acf8e1ac6c",
                 qnr_version = 1
         ))
     })
-
-})
-
-# returns an empty data frame with expected column names and types
-test_that("If no interviews found, return empty df with expected columns", {
-
-    vcr::use_cassette("get_interviews_for_questionnaire_no_interviews_message_df", {
-        x <- suppressMessages(get_interviews_for_questionnaire(
-                qnr_id = "b4382cca-8231-4e8a-87b0-b1acf8e1ac6c",
-                qnr_version = 1
-            ))
-    })
-
-    expect_s3_class(x, c("tbl_df","tbl","data.frame"))
-    expect_named(x, c(
-        "InterviewId", "QuestionnaireId", "QuestionnaireVersion",
-        "AssignmentId", "ResponsibleId", "ResponsibleName"
-    ), ignore.order = TRUE)
-    expect_type(x$InterviewId, "character")
-    expect_type(x$QuestionnaireId, "character")
-    expect_type(x$QuestionnaireVersion, "integer")
-    expect_type(x$AssignmentId, "integer")
-    expect_type(x$ResponsibleId, "character")
-    expect_type(x$ResponsibleName, "character")
 
 })

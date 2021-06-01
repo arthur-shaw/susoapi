@@ -12,7 +12,7 @@
 #'
 #' @return Data frame of questionnaires.
 #' 
-#' @importFrom assertthat assertthat
+#' @importFrom assertthat assert_that
 #' @import ghql
 #' @importFrom jsonlite base64_enc fromJSON
 #' @importFrom glue glue double_quote

@@ -5,6 +5,7 @@
 \title{Get list of interviews for questionnaire-version}
 \usage{
 get_interviews_for_questionnaire(
+  workspace = "primary",
   qnr_id,
   qnr_version,
   server = Sys.getenv("SUSO_SERVER"),
@@ -27,5 +28,5 @@ get_interviews_for_questionnaire(
 Data frame of interviews.
 }
 \description{
-Wrapper for \code{GET /api/v1/questionnaires/{id}/{version}/interviews} endpoint
+GraphQL implmentation for deprecated REST \code{GET /api/v1/questionnaires/{id}/{version}/interviews} endpoint
 }

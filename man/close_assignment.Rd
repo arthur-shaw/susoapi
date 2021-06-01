@@ -27,5 +27,5 @@ close_assignment(
 If \code{verbose = FALSE}, no return value. If \code{verbose = TRUE}, return logical outcome: \code{TRUE} if succeeded; \code{FALSE} otherwise
 }
 \description{
-Closes assignment by setting Size to the amount of collected interviews. Wrapper for \code{POST /api/v1/assignments/{id}/close} endpoint
+Closes assignment by setting Size to the amount of collected interviews. Wrapper for \code{PATCH /api/v1/assignments/{id}/close} endpoint
 }

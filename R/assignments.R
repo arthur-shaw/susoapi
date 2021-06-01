@@ -1002,12 +1002,10 @@ unarchive_assignment <- function(
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome: `TRUE` if succeeded; `FALSE` otherwise
 #'
-#' @export
-#'
 #' @importFrom assertthat assert_that is.count
 #' @import httr
 #'
-#' @examples
+#' @export
 close_assignment <- function(
     id,
     verbose = FALSE,

@@ -339,31 +339,47 @@ get_interviews_for_questionnaire <- function(
         # extract interview attributes from the payload
         interview_attribs_df <- dplyr::select(interviews_df, -.data$identifyingData)
 
-        # extract (nested) identifying data
-        identifying_df <- interviews_df %>% 
+        # determine whether contains any identifying data
+        # compute the length of identifying data df for each record
+        has_identifying <- interviews_df %>%
             dplyr::select(id, .data$identifyingData) %>%
-            purrr::discard(rlang::is_empty) %>%
-            purrr::map_if(is.data.frame, list) %>% 
-            tibble::as_tibble() %>%
-            tidyr::unnest(.data$identifyingData) %>%
-            dplyr::rename_with(
-                .cols = starts_with("entity."),
-                .fn = ~ gsub(
-                    pattern = "entity.",
-                    replacement = "",
-                    x = .x
-                )
-            ) %>%
-            dplyr::select(id, .data$value, .data$variable) %>%
-            tidyr::pivot_wider(
-                id_cols = id,
-                names_from = .data$variable,
-                values_from = .data$value
-            )
+            dplyr::mutate(has_identifying = length(interviews_df$identifyingData[[dplyr::row_number()]]))
+        # create summary measure whether any obs has identifying
+        has_any_identifying <- any(has_identifying$has_identifying > 0)
 
-        # combine interview attributes and identifying data
-        interview_list_df <- interview_attribs_df %>%
-            dplyr::left_join(identifying_df, by = "id")
+        if (has_any_identifying == TRUE) {
+
+            # extract (nested) identifying data
+            identifying_df <- interviews_df %>% 
+                dplyr::select(id, .data$identifyingData) %>%
+                purrr::discard(rlang::is_empty) %>%
+                purrr::map_if(is.data.frame, list) %>% 
+                tibble::as_tibble() %>%
+                tidyr::unnest(.data$identifyingData) %>%
+                dplyr::rename_with(
+                    .cols = starts_with("entity."),
+                    .fn = ~ gsub(
+                        pattern = "entity.",
+                        replacement = "",
+                        x = .x
+                    )
+                ) %>%
+                dplyr::select(id, .data$value, .data$variable) %>%
+                tidyr::pivot_wider(
+                    id_cols = id,
+                    names_from = .data$variable,
+                    values_from = .data$value
+                )
+
+            # combine interview attributes and identifying data
+            interview_list_df <- interview_attribs_df %>%
+                dplyr::left_join(identifying_df, by = "id")
+
+        } else if (has_any_identifying == FALSE) {
+
+            interview_list_df <- interview_attribs_df
+
+        }
 
         return(interview_list_df)
 

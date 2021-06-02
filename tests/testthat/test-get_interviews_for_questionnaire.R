@@ -1,5 +1,3 @@
-get_interviews_for_questionnaire
-
 # inputs
 
 # qnr_id

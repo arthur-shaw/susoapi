@@ -193,49 +193,30 @@ get_questionnaire_document <- function(
 
 }
 
-#' Get list of interviews for questionnaire-version
-#'
-#' GraphQL implmentation for deprecated REST \code{GET /api/v1/questionnaires/{id}/{version}/interviews} endpoint
-#'
-#' @param workspace Character. Name of the workspace whose questionnaires and associated interviews to get.
+#' Get count of interviews for questionnaire-version
+#' 
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param qnr_id Questionnaire ID. GUID from server.
 #' @param qnr_version Questionnaire version number.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
-#'
-#' @return Data frame of interviews.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Charater. API or admin user name for user that access to the workspace.
+#' @param password API or admin password
 #' 
-#' @importFrom assertthat assert_that is.count
+#' @return List consisting of two element: interviews information and interview count
+#' 
 #' @import ghql
 #' @importFrom jsonlite base64_enc fromJSON
 #' @importFrom glue glue double_quote
-#' @importFrom purrr map_if discard
-#' @importFrom rlang is_empty .data
-#' @importFrom tibble as_tibble
-#' @importFrom dplyr `%>%` select rename_with left_join pull
-#' @importFrom tidyr unnest pivot_wider
-#'
-#' @export
-get_interviews_for_questionnaire <- function(
+#' 
+#' @noRd 
+get_interviews_for_questionnaire_count <- function(
     workspace = "primary",
     qnr_id,
-    qnr_version,
+    qnr_version,    
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
-    password = Sys.getenv("SUSO_PASSWORD")  # API password  
+    password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
-
-    # check inputs:
-    # qnr_id
-    check_guid(
-        guid = qnr_id, 
-        fail_msg = "Questionnaire ID in `qnr_id` is not a valid GUID.")
-
-    # qnr_version
-    assertthat::assert_that(
-        assertthat::is.count(qnr_version),
-        msg = "Questionnaire version number must be a non-negative integer.")
 
     # compose the GraphQL request client
     interviews_request <- ghql::GraphqlClient$new(
@@ -256,6 +237,84 @@ get_interviews_for_questionnaire <- function(
                     questionnaireId: {eq: <glue::double_quote(qnr_id)>}
                     questionnaireVersion: {eq: <qnr_version>}
                 }
+                take: 1
+                skip: 0
+            ) {
+                filteredCount
+            }
+        }", .open = "<", .close = ">")
+    )
+
+    # send request
+    interviews_result <- interviews_request$exec(qry$queries$interviews)
+
+    # convert JSON payload to data frame
+    interviews <- jsonlite::fromJSON(interviews_result, flatten = TRUE)
+
+    # extract total number of interviews
+    interviews_count <- interviews$data$interviews$filteredCount
+
+    interview_info <- list(interviews = interviews, interviews_count = interviews_count)
+
+    return(interview_info)
+
+}
+
+#' Get chuck of interviews returned from the server for the questionnaire-version
+#' 
+#' @param workspace Character. Name of the workspace whose interviews to get.
+#' @param take_n Numeric. Number of interviews to take in one request.
+#' @param skip_n Numeric. Number of interviews to skip when paging through results.
+#' @param qnr_id Questionnaire ID. GUID from server.
+#' @param qnr_version Questionnaire version number.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Charater. API or admin user name for user that access to the workspace.
+#' @param password API or admin password
+#' 
+#' @return Data frame. Interviews.
+#' 
+#' @import ghql
+#' @importFrom jsonlite base64_enc fromJSON
+#' @importFrom glue glue double_quote backtick
+#' @importFrom dplyr `%>%` pull select rename_with starts_with left_join
+#' @importFrom purrr map_if discard
+#' @importFrom rlang .data is_empty
+#' @importFrom tibble as_tibble
+#' @importFrom tidyr unnest pivot_wider
+#' 
+#' @noRd 
+get_interviews_for_questionnaire_by_chunk <- function(
+    workspace = "primary",
+    take_n = 100,
+    skip_n = 0,
+    qnr_id,
+    qnr_version,    
+    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")  # API password    
+) {
+
+    # compose the GraphQL request client
+    interviews_request <- ghql::GraphqlClient$new(
+        url = paste0(server, "/graphql"), 
+        headers = list(authorization = paste0(
+            "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password)))
+        )
+    )
+
+    # compose the query for all interviews
+    # use string interpolation to pipe double-quoted workspace name into query
+    qry <- ghql::Query$new()
+    qry$query("interviews", 
+        glue::glue("{
+            interviews (
+                workspace: <glue::double_quote(workspace)>,
+                where: {
+                    questionnaireId: {eq: <glue::double_quote(qnr_id)>}
+                    questionnaireVersion: {eq: <qnr_version>}
+                }
+                take: <take_n>
+                skip: <skip_n>
             ) {
                 nodes {
                     id
@@ -310,6 +369,7 @@ get_interviews_for_questionnaire <- function(
 
     # convert JSON payload to data frame
     interviews <- jsonlite::fromJSON(interviews_result, flatten = TRUE)
+    
     interviews_count <- interviews$data$interviews$filteredCount    
 
     if ("errors" %in% names(interviews)) {
@@ -382,6 +442,99 @@ get_interviews_for_questionnaire <- function(
         }
 
         return(interview_list_df)
+
+    }
+
+}
+
+#' Get list of interviews for questionnaire-version
+#'
+#' GraphQL implmentation for deprecated REST \code{GET /api/v1/questionnaires/{id}/{version}/interviews} endpoint
+#'
+#' @param workspace Character. Name of the workspace whose questionnaires and associated interviews to get.
+#' @param chunk_size Numeric. Number of records to take in one request.
+#' @param qnr_id Questionnaire ID. GUID from server.
+#' @param qnr_version Questionnaire version number.
+#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user API user name
+#' @param password API password
+#'
+#' @return Data frame of interviews.
+#' 
+#' @importFrom assertthat assert_that is.count
+#' @importFrom purrr map_dfr
+#'
+#' @export
+get_interviews_for_questionnaire <- function(
+    workspace = "primary",
+    chunk_size = 100,
+    qnr_id,
+    qnr_version,
+    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")  # API password  
+) {
+
+    # check inputs:
+    # qnr_id
+    check_guid(
+        guid = qnr_id, 
+        fail_msg = "Questionnaire ID in `qnr_id` is not a valid GUID.")
+
+    # qnr_version
+    assertthat::assert_that(
+        assertthat::is.count(qnr_version),
+        msg = "Questionnaire version number must be a non-negative integer.")
+
+    # get total count of interviews
+    interviews_info <- get_interviews_for_questionnaire_count(
+        workspace = workspace, 
+        qnr_id = qnr_id,
+        qnr_version = qnr_version,  
+        server = server, 
+        user = user, 
+        password = password
+    )
+
+    # case 1: handle "errors"
+    # if request returns errors
+    if ("errors" %in% names(interviews_info$interviews)) {
+
+        # extract and display error(s)
+        errors <- dplyr::pull(interviews_info$interviews$errors) %>% paste0(collapse = "\n")
+        stop(errors)
+
+    # if no interviews found
+    } else if (interviews_info$interviews_count == 0) {
+
+        message(glue::glue(
+            "No interviews found for these search parameters:",
+            "- `workspace`: {workspace}",
+            "- `qnr_id`: {qnr_id}",
+            "- `qnr_version`: {qnr_version}",
+            "If this result is surprising, check the search parameter.",
+            .sep = "\n"
+        ))
+
+    # case 2: handle interviews
+    } else if (interviews_info$interviews_count > 0) {
+
+        # page through interviews
+        interviews <- purrr::map_dfr(
+            .x = seq(from = 0, to = interviews_info$interviews_count, by = chunk_size),
+            .f = ~ get_interviews_for_questionnaire_by_chunk(
+                workspace = workspace,
+                take_n = chunk_size,
+                skip_n = .x,
+                qnr_id = qnr_id,
+                qnr_version = qnr_version,                 
+                server = server, 
+                user = user, 
+                password = password            
+            )
+        )
+
+        return(interviews)
 
     }
 

@@ -80,41 +80,26 @@ delete_interview <- function(
 # GET ​/api​/v1​/interviews​/{id}​/history
 # Get interivew history for interview (?)
 
-#' Get interviews
-#' 
-#' Get list of interviews and their attributes
-#' 
-#' GraphQL implementation of deprecated REST `GET ​/api​/v1​/interviews​/{id}` endpoint.
+#' Get count of interviews
 #' 
 #' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user Charater. API or admin user name for user that access to the workspace.
 #' @param password API or admin password
 #' 
-#' @importFrom assertthat assert_that
+#' @return List consisting of two element: interviews information and interview count
+#' 
 #' @import ghql
 #' @importFrom jsonlite base64_enc fromJSON
 #' @importFrom glue glue double_quote
-#' @importFrom purrr map_if discard
-#' @importFrom rlang is_empty .data
-#' @importFrom tibble as_tibble
-#' @importFrom dplyr `%>%` select rename_with left_join
-#' @importFrom tidyr unnest pivot_wider
 #' 
-#' @export
-get_interviews <- function(
+#' @noRd 
+get_interviews_count <- function(
     workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
-    password = Sys.getenv("SUSO_PASSWORD")  # API password
+    password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
-
-    # check inputs
-    assertthat::assert_that(
-        is_workspace_name(workspace),
-        msg = "Invalid workspace name. Please check the input for the `workspace` parameter."
-    )
-    # TODO: confirm that it is a valid workspace
 
     # compose the GraphQL request client
     interviews_request <- ghql::GraphqlClient$new(
@@ -129,7 +114,79 @@ get_interviews <- function(
     qry <- ghql::Query$new()
     qry$query("interviews", 
         glue::glue("{
-            interviews (workspace: <glue::double_quote(workspace)>) {
+            interviews (
+                workspace: <glue::double_quote(workspace)>
+                take: 1
+                skip: 0
+            ) {
+                filteredCount
+            }
+        }", .open = "<", .close = ">")
+    )
+
+    # send request
+    interviews_result <- interviews_request$exec(qry$queries$interviews)
+
+    # convert JSON payload to data frame
+    interviews <- jsonlite::fromJSON(interviews_result, flatten = TRUE)
+
+    # extract total number of interviews
+    interviews_count <- interviews$data$interviews$filteredCount
+
+    interview_info <- list(interviews = interviews, interviews_count = interviews_count)
+
+    return(interview_info)
+
+}
+
+#' Get chuck of interviews returned from the server
+#' 
+#' @param workspace Character. Name of the workspace whose interviews to get.
+#' @param take_n Numeric. Number of interviews to take in one request.
+#' @param skip_n Numeric. Number of interviews to skip when paging through results.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Charater. API or admin user name for user that access to the workspace.
+#' @param password API or admin password
+#' 
+#' @return Data frame. Interviews.
+#' 
+#' @import ghql
+#' @importFrom jsonlite base64_enc fromJSON
+#' @importFrom glue glue double_quote backtick
+#' @importFrom dplyr `%>%` pull select rename_with starts_with left_join
+#' @importFrom purrr map_if discard
+#' @importFrom rlang .data is_empty
+#' @importFrom tibble as_tibble
+#' @importFrom tidyr unnest pivot_wider
+#' 
+#' @noRd 
+get_interviews_by_chunk <- function(
+    workspace = "primary",
+    take_n = 100,
+    skip_n = 0,
+    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")  # API password    
+) {
+
+    # compose the GraphQL request client
+    interviews_request <- ghql::GraphqlClient$new(
+        url = paste0(server, "/graphql"), 
+        headers = list(authorization = paste0(
+            "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password)))
+        )
+    )
+
+    # compose the query for all interviews
+    # use string interpolation to pipe double-quoted workspace name into query
+    qry <- ghql::Query$new()
+    qry$query("interviews", 
+        glue::glue("{
+            interviews (
+                workspace: <glue::double_quote(workspace)>
+                take: <take_n>
+                skip: <skip_n>
+            ) {
                 nodes {
                     id
                     key
@@ -183,9 +240,10 @@ get_interviews <- function(
 
     # convert JSON payload to data frame
     interviews <- jsonlite::fromJSON(interviews_result, flatten = TRUE)
+    
     interviews_count <- interviews$data$interviews$filteredCount
 
-    if ("errors" %in% names(interviews)) {
+     if ("errors" %in% names(interviews)) {
 
         # extract and display error(s)
         errors <- dplyr::pull(interviews$errors) %>% paste0(collapse = "\n")
@@ -217,7 +275,7 @@ get_interviews <- function(
             tibble::as_tibble() %>%
             tidyr::unnest(.data$identifyingData) %>%
             dplyr::rename_with(
-                .cols = starts_with("entity."),
+                .cols = dplyr::starts_with("entity."),
                 .fn = ~ gsub(
                     pattern = "entity.",
                     replacement = "",
@@ -236,6 +294,84 @@ get_interviews <- function(
             dplyr::left_join(identifying_df, by = "id")
 
         return(interview_list_df)
+
+    }
+
+}
+
+#' Get interviews
+#' 
+#' Get list of interviews and their attributes
+#' 
+#' GraphQL implementation of deprecated REST `GET ​/api​/v1​/interviews​/{id}` endpoint.
+#' 
+#' @param workspace Character. Name of the workspace whose interviews to get.
+#' @param chunk_size Numeric. Number of records to take in one request.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Charater. API or admin user name for user that access to the workspace.
+#' @param password API or admin password
+#' 
+#' @importFrom assertthat assert_that
+#' @importFrom purrr map_dfr
+#' 
+#' @export
+get_interviews <- function(
+    workspace = "primary",
+    chunk_size = 100,
+    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")  # API password
+) {
+
+    # check inputs
+    assertthat::assert_that(
+        is_workspace_name(workspace),
+        msg = "Invalid workspace name. Please check the input for the `workspace` parameter."
+    )
+    # TODO: confirm that it is a valid workspace
+
+    # get total count of interviews
+    interviews_info <- get_interviews_count(
+        workspace = workspace, 
+        server = server, 
+        user = user, 
+        password = password
+    )
+
+    # case 1: handle "errors"
+    # if request returns errors
+    if ("errors" %in% names(interviews_info$interviews)) {
+
+        # extract and display error(s)
+        errors <- dplyr::pull(interviews_info$interviews$errors) %>% paste0(collapse = "\n")
+        stop(errors)
+
+    # if no interviews found
+    } else if (interviews_info$interviews_count == 0) {
+
+        message(glue::glue(
+            "No interviews found in workspace {glue::backtick(workspace)}.",
+            "If this result is surprising, check the input in the `workspace` parameter.",
+            .sep = "\n"
+        ))
+
+    # case 2: handle interviews
+    } else if (interviews_info$interviews_count > 0) {
+
+        # page through interiews; compile data
+        interviews <- purrr::map_dfr(
+            .x = seq(from = 0, to = interviews_info$interviews_count, by = chunk_size),
+            .f = ~ get_interviews_by_chunk(
+                workspace = workspace,
+                take_n = chunk_size,
+                skip_n = .x,
+                server = server, 
+                user = user, 
+                password = password            
+            )
+        )
+
+        return(interviews)
 
     }
 

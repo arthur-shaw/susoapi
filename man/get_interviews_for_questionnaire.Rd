@@ -6,6 +6,7 @@
 \usage{
 get_interviews_for_questionnaire(
   workspace = "primary",
+  chunk_size = 100,
   qnr_id,
   qnr_version,
   server = Sys.getenv("SUSO_SERVER"),
@@ -15,6 +16,8 @@ get_interviews_for_questionnaire(
 }
 \arguments{
 \item{workspace}{Character. Name of the workspace whose questionnaires and associated interviews to get.}
+
+\item{chunk_size}{Numeric. Number of records to take in one request.}
 
 \item{qnr_id}{Questionnaire ID. GUID from server.}
 

@@ -4,7 +4,42 @@ http_interactions:
     uri: <<<fake_server>>>/graphql
     body:
       encoding: ''
-      string: '{"query":"{    interviews (workspace: \"primary\") {        nodes {            id            key            assignmentId            identifyingData
+      string: '{"query":"{    interviews (        workspace: \"primary\"        take:
+        1        skip: 0    ) {        filteredCount    }}"}'
+    headers:
+      User-Agent: libcurl/7.64.1 r-curl/4.3.1 crul/1.1.0
+      Content-Type: application/json
+      Accept-Encoding: gzip, deflate
+      Accept: application/json, text/xml, application/xml, */*
+      authorization: Basic YWRtaW46TXlMZXlsYUxvdmVzTWUyRGF5
+  response:
+    status:
+      status_code: '200'
+      message: OK
+      explanation: Request fulfilled, document follows
+    headers:
+      status: HTTP/1.1 200 OK
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Wed, 02 Jun 2021 02:49:17 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"data":{"interviews":{"filteredCount":9}}}'
+  recorded_at: 2021-06-02 02:49:18 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0
+- request:
+    method: post
+    uri: <<<fake_server>>>/graphql
+    body:
+      encoding: ''
+      string: '{"query":"{    interviews (        workspace: \"primary\"        take:
+        100        skip: 0    ) {        nodes {            id            key            assignmentId            identifyingData
         {                answerValue                value                valueBool                valueDate                valueLong                valueDouble                isEnabled                entity
         {                    identifying                    label                    options
         {                        parentValue                        title                        value                    }                    questionText                    scope                    type                    variable                }            }            questionnaireId            questionnaireVersion            questionnaireVariable            responsibleName            responsibleId            responsibleRole            supervisorName            status            actionFlags            wasCompleted            notAnsweredCount            errorsCount            createdDate            updateDateUtc            receivedByInterviewerAtUtc            interviewMode                }        filteredCount    }}"}'
@@ -28,7 +63,7 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Tue, 01 Jun 2021 17:20:22 GMT
+      date: Wed, 02 Jun 2021 02:49:17 GMT
     body:
       encoding: UTF-8
       file: no
@@ -149,5 +184,5 @@ http_interactions:
         ID","options":[],"questionText":"Household ID (hhid)","scope":"INTERVIEWER","type":"NUMERIC","variable":"hhid"}},{"answerValue":3,"value":"WOLLOF","valueBool":null,"valueDate":null,"valueLong":null,"valueDouble":null,"isEnabled":true,"entity":{"identifying":true,"label":"","options":[{"parentValue":null,"title":"ENGLISH","value":1},{"parentValue":null,"title":"MANDINKA","value":2},{"parentValue":null,"title":"WOLLOF","value":3},{"parentValue":null,"title":"FULA","value":4},{"parentValue":null,"title":"JOLA","value":5},{"parentValue":null,"title":"SARAHULE","value":6},{"parentValue":null,"title":"SERERE","value":7},{"parentValue":null,"title":"MANJAGO","value":8},{"parentValue":null,"title":"CREOLE/
         AKU MARABOUT","value":9},{"parentValue":null,"title":"BAMBARA","value":10}],"questionText":"Respondent\u0027s
         language","scope":"INTERVIEWER","type":"SINGLEOPTION","variable":"language"}}],"questionnaireId":"e71bcb42a2aa420fa7e95f0ddc791b91","questionnaireVersion":1,"questionnaireVariable":"GAMBIA_COVID_19Wave5","responsibleName":"ArthurInt123","responsibleId":"cc78158de9874d7e9cfbfb4546d2c895","responsibleRole":"INTERVIEWER","supervisorName":"ArthurSup123","status":"INTERVIEWERASSIGNED","actionFlags":["CANCHANGETOCAWI","CANCHANGETOCAPI","CANBEREASSIGNED"],"wasCompleted":false,"notAnsweredCount":114,"errorsCount":0,"createdDate":"2021-03-22T23:00:15.374Z","updateDateUtc":"2021-05-21T01:54:20.636Z","receivedByInterviewerAtUtc":"2021-05-21T01:54:20.603Z","interviewMode":"UNKNOWN"}],"filteredCount":9}}}'
-  recorded_at: 2021-06-01 17:20:22 GMT
+  recorded_at: 2021-06-02 02:49:18 GMT
   recorded_with: vcr/1.0.2, webmockr/0.8.0

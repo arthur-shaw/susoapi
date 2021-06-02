@@ -6,6 +6,7 @@
 \usage{
 get_interviews(
   workspace = "primary",
+  chunk_size = 100,
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -13,6 +14,8 @@ get_interviews(
 }
 \arguments{
 \item{workspace}{Character. Name of the workspace whose interviews to get.}
+
+\item{chunk_size}{Numeric. Number of records to take in one request.}
 
 \item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

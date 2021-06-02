@@ -277,7 +277,7 @@ get_interviews_for_questionnaire_count <- function(
 #' @importFrom jsonlite base64_enc fromJSON
 #' @importFrom glue glue double_quote backtick
 #' @importFrom dplyr `%>%` pull select rename_with starts_with left_join
-#' @importFrom purrr map_if discard
+#' @importFrom purrr map_if discard map_int
 #' @importFrom rlang .data is_empty
 #' @importFrom tibble as_tibble
 #' @importFrom tidyr unnest pivot_wider
@@ -403,7 +403,7 @@ get_interviews_for_questionnaire_by_chunk <- function(
         # compute the length of identifying data df for each record
         has_identifying <- interviews_df %>%
             dplyr::select(id, .data$identifyingData) %>%
-            dplyr::mutate(has_identifying = length(interviews_df$identifyingData[[dplyr::row_number()]]))
+            dplyr::mutate(has_identifying = purrr::map_int(.data$identifyingData, length))
         # create summary measure whether any obs has identifying
         has_any_identifying <- any(has_identifying$has_identifying > 0)
 

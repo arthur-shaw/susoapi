@@ -66,3 +66,31 @@ test_that("If no interviews found, emit a message", {
     })
 
 })
+
+# if interview has no identifying info, still returns df
+test_that("if interview has no identifying info, still returns df with expected columns", {
+
+    vcr::use_cassette("get_interviews_for_questionnaire_noid_df", {
+        x <- get_interviews_for_questionnaire(
+                qnr_id = "5ab793ffc84a4211858df168bbd90cf9",
+                qnr_version = 1
+            )
+    })
+
+    # is data frame
+    expect_s3_class(x, c("tbl_df","tbl","data.frame"))
+
+    # has expected columns
+    # names found in data frame, which include interview-specific identifying variables
+    col_names <- names(x)
+    # expected core values, drawn from GraphQL query
+    expected_names <- c(
+        "id", "key", "assignmentId", 
+        "questionnaireId", "questionnaireVersion", "questionnaireVariable",
+        "responsibleName", "responsibleId", "responsibleRole", "supervisorName",
+        "status", "actionFlags", "wasCompleted", "notAnsweredCount", "errorsCount",
+        "createdDate", "updateDateUtc", "receivedByInterviewerAtUtc", "interviewMode"
+    )
+    expect_true(all(expected_names %in% col_names))
+
+})

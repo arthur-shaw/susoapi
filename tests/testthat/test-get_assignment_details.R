@@ -1,7 +1,32 @@
 # invalid inputs
 
+# assignment ID
 test_that("If invalid id parameter, then issues error", {
     expect_error(get_assignment_details(id = "boo"))
+})
+
+# workspace
+# invalid workspace name
+test_that("Error if invalid workspace name", {
+
+    expect_error(
+        get_assignment_details(
+            id = 1,
+            workspace = "I am an invalid workspace name"
+        )
+    )
+
+})
+# unauthorized or non-existent workspace
+test_that("Error if invalid workspace name", {
+
+    expect_error(
+        get_assignment_details(
+            id = 1,
+            workspace = "fake"
+        )
+    )
+
 })
 
 # outputs

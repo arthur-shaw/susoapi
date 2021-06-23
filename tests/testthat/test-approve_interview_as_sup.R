@@ -1,9 +1,32 @@
 # invalid inputs
 
+# interview ID
 test_that("Issues error if `interview_id` is invalid form", {
 
     expect_error(approve_interview_as_sup(interview_id = "123"))
 
+})
+
+# workspace
+# invalid workspace name
+test_that("Error if invalid workspace name", {
+    expect_error(
+        approve_interview_as_sup(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            comment = "Comment",
+            workspace = "I am an invalid workspace name"
+        )
+    )
+})
+# unauthorized or non-existant workspace
+test_that("Error if unauthorized or non-existant workspace", {
+    expect_error(
+        approve_interview_as_sup(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            comment = "Comment",
+            workspace = "fake"
+        )
+    )
 })
 
 # expected outputs

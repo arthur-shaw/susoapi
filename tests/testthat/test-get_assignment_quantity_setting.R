@@ -1,7 +1,28 @@
 # invalid inputs
 
+# assignment ID
 test_that("If invalid `id` parameter, then issues error", {
     expect_error(get_assignment_quantity_setting(id = "boo"))
+})
+
+# workspace
+# invalid workspace name
+test_that("Error if invalid workspace name", {
+    expect_error(
+        get_assignment_quantity_setting(
+            id = 1,
+            workspace = "I am an invalid workspace name"
+        )
+    )
+})
+# unauthorized or non-existant workspace
+test_that("Error if unauthorized or non-existant workspace", {
+    expect_error(
+        get_assignment_quantity_setting(
+            id = 1,
+            workspace = "fake"
+        )
+    )
 })
 
 # valid outputs

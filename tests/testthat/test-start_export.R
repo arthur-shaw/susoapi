@@ -46,6 +46,32 @@ test_that("Error issued if `include_meta` not logical", {
         include_meta = "I object!"))
 })
 
+# workspace
+# invalid form
+test_that("Error if workspace invalid", {
+
+    expect_error(
+        start_export(
+            workspace = "I am an invalid workspace name",
+            qnr_id = "5495bfd5f2324b3a8a75c80056f1898e$1", 
+            export_type = "STATA"            
+        )
+    )
+
+})
+# unauthorized or non-existent
+test_that("Error if workspace unauthorized or non-existent", {
+
+    expect_error(
+        start_export(
+            workspace = "fake",
+            qnr_id = "5495bfd5f2324b3a8a75c80056f1898e$1", 
+            export_type = "STATA"           
+        )
+    )
+
+})
+
 # outputs
 
 # message

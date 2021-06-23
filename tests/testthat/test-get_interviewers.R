@@ -2,7 +2,24 @@
 unarchive_user(user_id = "cc78158d-e987-4d7e-9cfb-fb4546d2c895")
 
 # inputs
-# N/A
+
+# workspace
+# invalid workspace name
+test_that("Error if invalid workspace name", {
+    expect_error(
+        get_interviewers(
+            workspace = "I am an invalid workspace name"
+        )
+    )
+})
+# unauthorized or non-existant workspace
+test_that("Error if unauthorized or non-existant workspace", {
+    expect_error(
+        get_interviewers(
+            workspace = "fake"
+        )
+    )
+})
 
 # outputs
 

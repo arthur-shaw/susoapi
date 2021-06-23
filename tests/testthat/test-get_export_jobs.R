@@ -25,6 +25,17 @@ test_that("Error issued if `has_file` not logical", {
     expect_error(get_export_jobs(has_file = "Something completely different"))
 })
 
+# workspace
+# invalid form
+test_that("Error issued if workspace invalid form", {
+    expect_error(get_export_jobs(workspace = "I am an invalid workspace"))
+})
+# unauthorized or non-existent
+test_that("Error issued if workspace invalid form", {
+    expect_error(get_export_jobs(workspace = "fake"))
+})
+# unau
+
 # outputs
 
 # df with expected columns

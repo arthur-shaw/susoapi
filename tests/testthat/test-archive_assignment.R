@@ -1,7 +1,32 @@
 # invalid inputs
 
+# assignment ID
 test_that("If invalid `id` parameter, then issues error", {
     expect_error(archive_assignment(id = "boo"))
+})
+
+# workspace
+# invalid workspace name
+test_that("Error if invalid workspace name", {
+
+    expect_error(
+        archive_assignment(
+            id = 1,
+            workspace = "invalid workspace name"
+        )
+    )
+
+})
+# unauthorized or non-existant workspace
+test_that("Error if unauthorized or non-existant workspace", {
+
+    expect_error(
+        archive_assignment(
+            id = 1,
+            workspace = "fake"
+        )
+    )
+
 })
 
 # valid outputs

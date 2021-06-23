@@ -7,6 +7,28 @@ test_that("Issues error if `interview_id` is invalid form", {
 
 })
 
+# workspace
+# invalid workspace name
+test_that("Error if invalid workspace name", {
+    expect_error(
+        approve_interview_as_hq(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            verbose = TRUE,
+            workspace = "I am an invalid workspace name"
+        )
+    )
+})
+# unauthorized or non-existant workspace
+test_that("Error if unauthorized or non-existant workspace", {
+    expect_error(
+        approve_interview_as_hq(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            verbose = TRUE,
+            workspace = "fake"
+        )
+    )
+})
+
 # expected outputs
 
 # message
@@ -26,9 +48,10 @@ test_that("Returns logical if `verbose = TRUE`", {
     vcr::use_cassette("approve_interview_as_hq_lgl", {
         x <- suppressMessages(
                 approve_interview_as_hq(
-                interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
-                verbose = TRUE
-            ))
+                    interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+                    verbose = TRUE
+                )
+            )
     })
 
     expect_type(x, "logical")

@@ -1,7 +1,36 @@
 # invalid inputs
 
+# assignment ID
 test_that("If invalid `id` parameter, then issues error", {
     expect_error(set_assignment_audio(id = "boo", enable = TRUE))
+})
+
+# workspace
+# invalid workspace name
+test_that("Error if invalid workspace name", {
+
+    expect_error(
+        set_assignment_audio(
+            id = 1, 
+            enable = TRUE, 
+            verbose = TRUE,
+            workspace = "invalid workspace name"
+        )
+    )
+
+})
+# unauthorized or non-existant workspace
+test_that("Error if unauthorized or non-existant workspacee", {
+
+    expect_error(
+        set_assignment_audio(
+            id = 1, 
+            enable = TRUE, 
+            verbose = TRUE,
+            workspace = "fake"
+        )
+    )
+
 })
 
 # valid outputs

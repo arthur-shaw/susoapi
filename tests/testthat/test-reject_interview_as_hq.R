@@ -7,6 +7,28 @@ test_that("Issues error if `interview_id` is invalid form", {
 
 })
 
+# workspace
+# invalid workspace name
+test_that("Error if invalid workspace name", {
+    expect_error(
+        reject_interview_as_hq(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            verbose = TRUE,
+            workspace = "I am an invalid workspace name"
+        )
+    )
+})
+# unauthorized or non-existant workspace
+test_that("Error if unauthorized or non-existant workspace", {
+    expect_error(
+        reject_interview_as_hq(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            verbose = TRUE,
+            workspace = "true"
+        )
+    )
+})
+
 # responsible_id, if provided
 test_that("Issues error if `responsible_id` is provided and is of invalid form", {
 

@@ -9,6 +9,26 @@ test_that("interview_id is a GUID", {
 
 })
 
+# workspace
+# invalid workspace name
+test_that("Error if invalid workspace name", {
+    expect_error(
+        get_interview_history(
+            interview_id = "19cb7577-0b1c-48de-b244-31ad29e9d6e4",
+            workspace = "I am an invalid workspace name"
+        )
+    )
+})
+# unauthorized or non-existant workspace
+test_that("Error if unauthorized or non-existant workspace", {
+    expect_error(
+        get_interview_history(
+            interview_id = "19cb7577-0b1c-48de-b244-31ad29e9d6e4",
+            workspace = "fake"
+        )
+    )
+})
+
 # OUTPUTS
 
 # if interview exists, returns list (FOR NOW)

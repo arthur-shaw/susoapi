@@ -1,9 +1,30 @@
 # invalid inputs
 
+# interview ID
 test_that("Issues error if `interview_id` is invalid form", {
 
     expect_error(get_interview_stats(interview_id = "123"))
 
+})
+
+# workspace
+# invalid workspace name
+test_that("Error if invalid workspace name", {
+    expect_error(
+        get_interview_stats(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            workspace = "I am an invalid workspace name"
+        )
+    )
+})
+# unauthorized or non-existant workspace
+test_that("Error if unauthorized or non-existant workspace", {
+    expect_error(
+        get_interview_stats(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            workspace = "fake"
+        )
+    )
 })
 
 # expected outputs
@@ -26,7 +47,8 @@ test_that("Returns data frame with expected columns", {
         "Invalid", "WithComments", "ForInterviewer", "ForSupervisor",
         "InterviewId", "InterviewKey", "Status", "ResponsibleId",
         "ResponsibleName", "NumberOfInterviewers", "NumberRejectionsBySupervisor",
-        "NumberRejectionsByHq", "InterviewDuration", "AssignmentId", "UpdatedAtUtc"
+        "NumberRejectionsByHq", "InterviewDuration", "AssignmentId", "UpdatedAtUtc",
+        "WebInterviewUrl"
     ))
 
 })

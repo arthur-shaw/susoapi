@@ -1,5 +1,18 @@
 # inputs
-# N/A
+
+# workspace
+# invalid workspace name
+test_that("Error if invalid workspace name", {
+    expect_error(
+        get_supervisors(workspace = "I am an invalid workspace name")
+    )
+})
+# unauthorized or non-existant workspace
+test_that("Error if unauthorized or non-existant workspace", {
+    expect_error(
+        get_supervisors(workspace = "fake")
+    )
+})
 
 # outputs
 

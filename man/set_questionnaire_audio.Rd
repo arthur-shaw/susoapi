@@ -8,6 +8,7 @@ set_questionnaire_audio(
   qnr_id,
   qnr_version,
   enable,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -19,6 +20,8 @@ set_questionnaire_audio(
 \item{qnr_version}{Questionnaire version number.}
 
 \item{enable}{Whether to enable. Values: c(TRUE, FALSE)}
+
+\item{workspace}{Character. Name of the workspace whose questionnaire audio settings to change.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

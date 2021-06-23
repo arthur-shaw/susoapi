@@ -8,6 +8,7 @@ set_assignment_audio(
   id,
   enable,
   verbose,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -19,6 +20,8 @@ set_assignment_audio(
 \item{enable}{Whether to enable or disable audio--\code{TRUE} or \code{FALSE}, respectively}
 
 \item{verbose}{Returns information about success of operation: message and \code{TRUE}/\code{FALSE} return value.}
+
+\item{workspace}{Character. Name of the workspace whose assignments to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

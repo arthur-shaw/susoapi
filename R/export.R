@@ -12,6 +12,7 @@
 #' @param has_file Export file generated. Values: \code{c(true, false)}.
 #' @param limit Number of results to return. Values: \code{c(1:40)}
 #' @param offset Offset in list of processes.
+#' @param workspace Character. Name of the workspace whose export jobs to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -31,6 +32,7 @@ get_export_jobs <- function(
     has_file = "", # values: c(true, false)
     limit = 40, # limit %in% c(1, 40)
     offset = 0, #
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
@@ -87,7 +89,7 @@ get_export_jobs <- function(
     }
 
     # form base URL
-    base_url <- paste0(server, "/api/v2/export")
+    base_url <- paste0(server, "/", workspace, "/api/v2/export")
 
     # form the query parameters of the request
     query <- list(
@@ -160,6 +162,7 @@ get_export_jobs <- function(
 #' @param storage_type External storage type, if relevant. Values: \code{c("Dropbox", "OneDrive", "GoogleDrive")}
 #' @param translation_id Translation ID for variable and value labels to include in export files.
 #' @param include_meta Logical. If `TRUE`, include questionnaire metadata in export file.
+#' @param workspace Character. Name of the workspace whose export jobs to start.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -181,6 +184,7 @@ start_export <- function(
     storage_type = "",
     translation_id = "",
     include_meta = TRUE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
@@ -239,7 +243,7 @@ start_export <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server, "/api/v2/export")
+    base_url <- paste0(server, "/", workspace, "/api/v2/export")
 
     # form the body for the export request, excluding empty elements of list
     body <- list(
@@ -307,6 +311,7 @@ start_export <- function(
 #' Wrapper for \code{GET /api/v2/export/{id}} endpoint
 #'
 #' @param job_id Export job ID
+#' @param workspace Character. Name of the workspace whose export job details to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -323,6 +328,7 @@ start_export <- function(
 #' @examples
 get_export_job_details <- function(
     job_id,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
@@ -335,8 +341,11 @@ get_export_job_details <- function(
         msg = "Invalid `job_id` value provided."
     )
 
+    # workspace
+    check_workspace_param(workspace = workspace)
+
     # form the base URL
-    base_url <- paste0(server, "/api/v2/export/", job_id)
+    base_url <- paste0(server, "/", workspace, "/api/v2/export/", job_id)
 
     # send and get response
     response <- httr::GET(
@@ -393,6 +402,7 @@ get_export_job_details <- function(
 #'
 #' @param job_id Export job ID
 #' @param verbose Logical. If `verbose = TRUE`, return `TRUE` if cancellation successful, `FALSE` otherwise
+#' @param workspace Character. Name of the workspace whose export jobs to cancel.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -406,12 +416,14 @@ get_export_job_details <- function(
 cancel_export <- function(
     job_id,
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
 ) {
 
     # check inputs
+
     # job_id
     assertthat::assert_that(
         assertthat::is.number(job_id),
@@ -419,7 +431,7 @@ cancel_export <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server, "/api/v2/export/", job_id)
+    base_url <- paste0(server, "/", workspace, "/api/v2/export/", job_id)
 
     # send request
     response <- httr::DELETE(
@@ -469,6 +481,7 @@ cancel_export <- function(
 #' @param job_id Export job ID
 #' @param path File path where export file should be downloaded
 #' @param verbose Logical. If `verbose = TRUE`, return a logical value about the outcome. If `verbose = FALSE`, the default, simply return a message describing the outcome.
+#' @param workspace Character. Name of the workspace whose export files to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -487,6 +500,7 @@ get_export_file <- function(
     job_id,
     path,
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
@@ -506,7 +520,7 @@ get_export_file <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server, "/api/v2/export/", job_id, "/file")
+    base_url <- paste0(server, "/", workspace, "/api/v2/export/", job_id, "/file")
 
     # request redirect link
     response_redir <- httr::GET(

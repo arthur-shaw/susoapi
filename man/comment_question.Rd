@@ -10,6 +10,7 @@ comment_question(
   roster_vector = "",
   comment,
   verbose = FALSE,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -25,6 +26,8 @@ comment_question(
 \item{comment}{Comment to post.}
 
 \item{verbose}{Logical. If \code{verbose == TRUE}, return logical outcome and print message. Otherwise, be silent.}
+
+\item{workspace}{Character. Name of the workspace whose interviews to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

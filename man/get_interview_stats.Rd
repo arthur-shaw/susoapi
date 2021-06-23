@@ -6,6 +6,7 @@
 \usage{
 get_interview_stats(
   interview_id,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -13,6 +14,8 @@ get_interview_stats(
 }
 \arguments{
 \item{interview_id}{Interview ID. GUID from server or \code{interview__id} from exported data}
+
+\item{workspace}{Character. Name of the workspace whose interviews to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

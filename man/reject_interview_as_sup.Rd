@@ -9,6 +9,7 @@ reject_interview_as_sup(
   comment = "",
   responsible_id = "",
   verbose = FALSE,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -22,6 +23,8 @@ reject_interview_as_sup(
 \item{responsible_id}{User to receive rejected interview. User ID. GUID from server.}
 
 \item{verbose}{Logical. If \code{verbose == TRUE}, return logical outcome and print message. Otherwise, be silent.}
+
+\item{workspace}{Character. Name of the workspace whose interviews to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

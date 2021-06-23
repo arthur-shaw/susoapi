@@ -7,6 +7,7 @@
 #' 
 #' Wrapper for the `GET ​/api​/v1​/settings​/globalnotice` endpoint.
 #' 
+#' @param workspace Character. Name of the workspace whose global notice to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user User name
 #' @param password Password
@@ -18,13 +19,17 @@
 #' 
 #' @export 
 get_global_notice <- function(
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password        
 ) {
 
     # form the base URL
-    base_url <- paste0(server, "api/v1/settings/globalnotice")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/settings/globalnotice"
+    )
 
     # get global notice
     response <- httr::GET(
@@ -61,6 +66,7 @@ get_global_notice <- function(
 #' Wrapper for the `PUT /api​/v1​/settings​/globalnotice` endpoint.
 #' 
 #' @param text Character. Text of the global notice to display.
+#' @param workspace Character. Name of the workspace whose global notice to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user User name
 #' @param password Password
@@ -72,12 +78,14 @@ get_global_notice <- function(
 #' @export 
 set_global_notice <- function(
     text,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password        
 ) {
 
     # check inputs
+
     # text
     assertthat::assert_that(
         typeof(text) == "character",
@@ -85,7 +93,10 @@ set_global_notice <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server, "api/v1/settings/globalnotice")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/settings/globalnotice"
+    )
 
     # construct body
     body <- list(
@@ -131,6 +142,7 @@ set_global_notice <- function(
 #' 
 #' Wrapper for the `DELETE ​/api​/v1​/settings​/globalnotice` endpoint
 #' 
+#' @param workspace Character. Name of the workspace whose global notice to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user User name
 #' @param password Password
@@ -141,13 +153,17 @@ set_global_notice <- function(
 #' 
 #' @export 
 delete_global_notice <- function(
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password   
 ) {
 
     # form the base URL
-    base_url <- paste0(server, "api/v1/settings/globalnotice")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/settings/globalnotice"
+    )
 
     # get global notice
     response <- httr::DELETE(

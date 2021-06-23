@@ -13,6 +13,7 @@ create_user(
   phone_number = "",
   email = "",
   verbose = FALSE,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -34,6 +35,8 @@ create_user(
 \item{email}{Character. Email address for user. (Optional)}
 
 \item{verbose}{Logical. If \code{verbose == TRUE}, return logical outcome and print message. Otherwise, be silent.}
+
+\item{workspace}{Character. Name of the workspace whose users to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

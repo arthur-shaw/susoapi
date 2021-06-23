@@ -11,6 +11,7 @@
 #' Wrapper for the `DELETE ​/api​/v1​/interviews​/{id}` endpoint.
 #' 
 #' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -20,19 +21,29 @@
 #' @export 
 delete_interview <- function(
     interview_id,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password       
 ) {
 
     # check inputs:
+
     # interview_id
     check_guid(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form the base URL
-    base_url <- paste0(server, "/api/v1/interviews/", interview_id)
+    base_url <- paste0(
+        server, "/", workspace, 
+        "/api/v1/interviews/", interview_id
+    )
 
     # get stats from the server
     response <- httr::DELETE(
@@ -340,11 +351,11 @@ get_interviews <- function(
 ) {
 
     # check inputs
-    assertthat::assert_that(
-        is_workspace_name(workspace),
-        msg = "Invalid workspace name. Please check the input for the `workspace` parameter."
-    )
-    # TODO: confirm that it is a valid workspace
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # get total count of interviews
     interviews_info <- get_interviews_count(
@@ -402,6 +413,7 @@ get_interviews <- function(
 #' Wrapper for \code{GET /api/v1/interviews/{id}/stats} endpoint
 #'
 #' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -414,6 +426,7 @@ get_interviews <- function(
 #' @export
 get_interview_stats <- function(
     interview_id,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
@@ -425,8 +438,17 @@ get_interview_stats <- function(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
+
     # form the base URL
-    base_url <- paste0(server, "/api/v1/interviews/", interview_id, "/stats")
+    base_url <- paste0(
+        server, "/", workspace, 
+        "/api/v1/interviews/", interview_id, "/stats"
+    )
 
     # get stats from the server
     response <- httr::GET(
@@ -489,6 +511,7 @@ get_interview_stats <- function(
 #' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
 #' @param comment Character. Comment to post upon approval.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome.
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -502,19 +525,29 @@ approve_interview_as_sup <- function(
     interview_id,
     comment = "",
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
 
     # check inputs:
+
     # interview_id
     check_guid(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form the base URL
-    base_url <- paste0(server, "/api/v1/interviews/", interview_id, "/approve")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/interviews/", interview_id, "/approve"
+    )
 
     # form query portion of request
     query <- list(
@@ -572,6 +605,7 @@ approve_interview_as_sup <- function(
 #' @param user_id User ID. GUID from server.
 #' @param user_name User name of target interviewer.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -589,6 +623,7 @@ assign_interview_to_int <- function(
     user_id = "",
     user_name = "",
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
@@ -612,8 +647,16 @@ assign_interview_to_int <- function(
             fail_msg = "User ID in `user_id` is not a valid GUID.")
     }
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form the base URL
-    base_url <- paste0(server, "/api/v1/interviews/", interview_id, "/assign")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/interviews/", interview_id, "/assign"
+    )
 
     # form the body for the assignment request
     # ... if only `user_id` provided
@@ -690,6 +733,7 @@ assign_interview_to_int <- function(
 #' @param user_id ID of target user. GUID from server.
 #' @param user_name User name of target user.
 #' @param verbose Logical. If `verbose = TRUE`, return logical outcome and print message. Otherwise, be silent.
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -705,12 +749,14 @@ assign_interview_to_sup <- function(
     user_id = "",
     user_name = "",
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
 
     # check inputs:
+
     # interview_id
     check_guid(
         guid = interview_id, 
@@ -730,7 +776,10 @@ assign_interview_to_sup <- function(
     }
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/interviews/", interview_id, "/assignsupervisor")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/interviews/", interview_id, "/assignsupervisor"
+    )
 
     # form the body for the assignment request
     # ... if only `user_id` provided
@@ -807,6 +856,7 @@ assign_interview_to_sup <- function(
 #' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
 #' @param comment Comment to post upon approval.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -820,19 +870,24 @@ approve_interview_as_hq <- function(
     interview_id,
     comment = "",
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
 
     # check inputs:
+
     # interview_id
     check_guid(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/interviews/", interview_id, "/hqapprove")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/interviews/", interview_id, "/hqapprove"
+    )
 
     # form query portion of request
     query <- list(
@@ -892,6 +947,7 @@ approve_interview_as_hq <- function(
 #' @param comment Comment to post upon rejection.
 #' @param responsible_id User ID. GUID from server or \code{interview__id} from exported data. User ID of the interviewer/supervisor to which the interview should be rejected.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -906,12 +962,14 @@ reject_interview_as_hq <- function(
     comment = "",
     responsible_id = "",
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
 
     # check inputs:
+
     # interview_id
     check_guid(
         guid = interview_id, 
@@ -925,7 +983,10 @@ reject_interview_as_hq <- function(
     }
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/interviews/", interview_id, "/hqreject")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/interviews/", interview_id, "/hqreject"
+    )
 
     # form query portion of request
     query <- list(
@@ -986,6 +1047,7 @@ reject_interview_as_hq <- function(
 #' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
 #' @param comment Comment to post upon unapproval
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -999,19 +1061,24 @@ unapprove_interview <- function(
     interview_id,
     comment = "",
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
 
     # check inputs:
+
     # qnr_id
     check_guid(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/interviews/", interview_id, "/hqunapprove")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/interviews/", interview_id, "/hqunapprove"
+    )
 
     # form query portion of request
     query <- list(
@@ -1071,6 +1138,7 @@ unapprove_interview <- function(
 #' @param comment Comment to post upon rejection
 #' @param responsible_id User to receive rejected interview. User ID. GUID from server.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -1085,12 +1153,14 @@ reject_interview_as_sup <- function(
     comment = "",
     responsible_id = "",
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
 
     # check inputs:
+
     # interview_id
     check_guid(
         guid = interview_id, 
@@ -1104,7 +1174,10 @@ reject_interview_as_sup <- function(
     }
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/interviews/", interview_id, "/reject")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/interviews/", interview_id, "/reject"
+    )
 
     # form query portion of request
     query <- list(
@@ -1171,6 +1244,7 @@ reject_interview_as_sup <- function(
 #' @param roster_vector Character. Row code(s) of variable. If a single row code, a single character value (e.g., "102"). If multiple row codes, a character containing a comma-separated list (e.g, "1, 2").
 #' @param comment Comment to post.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -1186,12 +1260,14 @@ comment_question <- function(
     roster_vector = "",
     comment,
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
 
     # check inputs:
+
     # interview_id
     check_guid(
         guid = interview_id, 
@@ -1209,7 +1285,8 @@ comment_question <- function(
     )
 
     # formulate API call
-    base_url <- paste0(server,
+    base_url <- paste0(
+        server, "/", workspace,
         "/api/v1/interviews/", interview_id, 			# interview
         "/comment-by-variable/", variable_name 		# variable
     )
@@ -1271,6 +1348,7 @@ comment_question <- function(
 #' 
 #' @param interview_id Character. GUID for interview.
 #' @param path Character. Path to folder where transcript should be downloaded.
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -1285,19 +1363,24 @@ comment_question <- function(
 get_interview_transcript <- function(
     interview_id,
     path,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password      
 ) {
 
     # check inputs:
+
     # interview_id
     check_guid(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/interviews/", interview_id, "/pdf")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/interviews/", interview_id, "/pdf"
+    )
 
     # make request
     response <- httr::GET(
@@ -1368,6 +1451,7 @@ get_interview_transcript <- function(
 #' Wrapper for the `GET ​/api​/v1​/interviews​/{id}​/history` endpoint.
 #' 
 #' @param interview_id Character. GUID for interview.
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -1380,19 +1464,24 @@ get_interview_transcript <- function(
 #' @export 
 get_interview_history <- function(
     interview_id,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
 
     # check inputs:
+
     # interview_id
     check_guid(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/interviews/", interview_id, "/history")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/interviews/", interview_id, "/history"
+    )
 
     # make request
     response <- httr::GET(

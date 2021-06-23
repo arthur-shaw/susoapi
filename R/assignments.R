@@ -3,7 +3,6 @@
 #'
 #' Wrapper for \code{GET /api/v1/assignments} endpoint
 #'
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param search_by
 #' @param qnr_id Questionnaire ID. GUID provided by the server.
 #' @param qnr_version Questionnaire version. Version number provided by the server.
@@ -13,6 +12,8 @@
 #' @param order
 #' @param offset
 #' @param limit
+#' @param workspace Character. Name of the workspace whose assignments to get.
+#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
 #'
@@ -23,7 +24,6 @@
 #'
 #' @noRd
 get_assignment_count <- function(
-    server = Sys.getenv("SUSO_SERVER"),
     search_by = "",
     qnr_id = "",        # questionnaire ID
     qnr_version = "",   # questionnaire version
@@ -33,12 +33,14 @@ get_assignment_count <- function(
     order = "",         # Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"
     offset = "",        # integer
     limit = 40,         # integer
+    workspace = "primary",
+    server = Sys.getenv("SUSO_SERVER"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
 ) {
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/assignments")
+    base_url <- paste0(server, "/", workspace, "/api/v1/assignments")
 
     # form the questionnaire ID as QuestionnaireID$Version
     qnr_id_full <- ifelse(
@@ -100,6 +102,7 @@ get_assignment_count <- function(
 #' @param order
 #' @param offset
 #' @param limit
+#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -120,6 +123,7 @@ get_assignment_batch <- function(
     order = "",         # Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"
     offset = "",        # integer
     limit = 40,         # integer
+    workspace = "primary",    
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
@@ -131,7 +135,7 @@ get_assignment_batch <- function(
     # check_guid(supervisor_id)
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/assignments")
+    base_url <- paste0(server, "/", workspace, "/api/v1/assignments")
 
     # form the questionnaire ID as QuestionnaireID$Version
     qnr_id_full <- ifelse(
@@ -183,6 +187,7 @@ get_assignment_batch <- function(
 #' @param supervisor_id Character. User ID (GUID) of supervisor.
 #' @param show_archive Include archived assignments. Values: c("true", "false")
 #' @param order Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"
+#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user User name
 #' @param password Password
@@ -201,6 +206,7 @@ get_assignments <- function(
     supervisor_id = "",
     show_archive = "",  # values: c("true", "false")
     order = "",         # Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
@@ -254,7 +260,6 @@ get_assignments <- function(
 
     # get total count of assignments
     total_count <- get_assignment_count(
-        server = server,
         search_by = search_by,
         qnr_id = qnr_id,
         qnr_version = qnr_version,
@@ -262,8 +267,11 @@ get_assignments <- function(
         supervisor_id = supervisor_id,
         show_archive = show_archive,
         order = order,
+        workspace = workspace,
+        server = server,
         user = user,
-        password = password)
+        password = password
+    )
 
     # get all assignments
     df <- purrr::map_dfr(
@@ -272,7 +280,6 @@ get_assignments <- function(
             to = total_count,
             by = 40),
         .f = get_assignment_batch,
-        server = server,
         search_by = search_by,
         qnr_id = qnr_id,
         qnr_version = qnr_version,
@@ -280,6 +287,9 @@ get_assignments <- function(
         supervisor_id = supervisor_id,
         show_archive = show_archive,
         order = order,
+        workspace = workspace,
+        server = server,
+        user = user,
         password = password)
 
     # if no assignments, construct an empty df
@@ -316,6 +326,7 @@ get_assignments <- function(
 #' Wrapper for \code{GET /api/v1/assignments/{id}} endpoint
 #'
 #' @param id Integer. Assignment ID
+#' @param workspace Character. Name of the workspace whose assginment details to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})server
 #' @param user API user name
 #' @param password API password
@@ -332,18 +343,21 @@ get_assignments <- function(
 #' @export
 get_assignment_details <- function(
     id,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
 
     # check inputs
+
+    # assignment ID
     assertthat::assert_that(
         assertthat::is.count(id), 
         msg = "Assignment ID, `id`, must be a non-negative integer")
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/assignments/", id)
+    base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id)
 
     # get assignments from the server
     response <- httr::GET(
@@ -394,6 +408,7 @@ get_assignment_details <- function(
 #' Wrapper for \code{GET ​/api​/v1​/assignments​/{id}​/assignmentQuantitySettings} endpoint
 #'
 #' @param id Assignment ID
+#' @param workspace Character. Name of the workspace whose assginment quantity to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})server
 #' @param user API user name
 #' @param password API password
@@ -407,6 +422,7 @@ get_assignment_details <- function(
 #' @export
 get_assignment_quantity_setting <- function(
     id,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password       
@@ -419,7 +435,10 @@ get_assignment_quantity_setting <- function(
         msg = "Assignment ID must be a non-negative integer")
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/assignments/", id, "/assignmentQuantitySettings")
+    base_url <- paste0(
+        server, "/", workspace, 
+        "/api/v1/assignments/", id, "/assignmentQuantitySettings"
+    )
 
     # get assignments from the server
     response <- httr::GET(
@@ -465,6 +484,7 @@ get_assignment_quantity_setting <- function(
 #' Wrapper for the `GET ​/api​/v1​/assignments​/{id}​/history` endpoint
 #' 
 #' @param id Assignment ID number
+#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -475,6 +495,7 @@ get_assignment_quantity_setting <- function(
 #' @export 
 get_assignment_history <- function(
     id,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
@@ -487,7 +508,7 @@ get_assignment_history <- function(
         msg = "Assignment ID must be a non-negative integer")
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/assignments/", id, "/history")
+    base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id, "/history")
 
     # make request
     response <- httr::GET(
@@ -542,6 +563,7 @@ get_assignment_history <- function(
 #' Informs whether audio audit is enabled for the target assignment. Wrapper for \code{GET ​/api​/v1​/assignments​/{id}​/recordAudio} endpoint
 #'
 #' @param id Assignment ID number
+#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -555,6 +577,7 @@ get_assignment_history <- function(
 #' @export
 check_assignment_audio <- function(
     id,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password     
@@ -567,7 +590,7 @@ check_assignment_audio <- function(
         msg = "Assignment ID must be a non-negative integer")
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/assignments/", id, "/recordAudio")
+    base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id, "/recordAudio")
 
     # get audio from the server
     response <- httr::GET(
@@ -632,6 +655,7 @@ check_assignment_audio <- function(
 #' @param id Assignment ID number
 #' @param enable Whether to enable or disable audio--`TRUE` or `FALSE`, respectively
 #' @param verbose Returns information about success of operation: message and `TRUE`/`FALSE` return value.
+#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -647,6 +671,7 @@ set_assignment_audio <- function(
     id,
     enable,                                 # TRUE or FALSE
     verbose,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password 
@@ -659,7 +684,10 @@ set_assignment_audio <- function(
         msg = "Assignment ID must be a non-negative integer")
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/assignments/", id, "/recordAudio")
+    base_url <- paste0(
+        server, "/", workspace, 
+        "/api/v1/assignments/", id, "/recordAudio"
+    )
 
     # form the body for the request
     audio_val <- ifelse(enable == TRUE, "true", "false")
@@ -700,6 +728,7 @@ set_assignment_audio <- function(
 #' Wrapper for \code{PATCH /api/v1/assignments/{id}/archive} endpoint
 #'
 #' @param id Assignment ID number
+#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param verbose Returns information about success of operation: message and `TRUE`/`FALSE` return value.
 #' @param user API user name
@@ -716,18 +745,21 @@ set_assignment_audio <- function(
 archive_assignment <- function(
     id,
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
 
     # check inputs
+    
+    # assignment ID
     assertthat::assert_that(
         assertthat::is.count(id), 
         msg = "Assignment ID must be a non-negative integer")
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/assignments/", id, "/archive")
+    base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id, "/archive")
 
     # get assignments from the server
     response <- httr::PATCH(
@@ -767,6 +799,7 @@ archive_assignment <- function(
 #' 
 #' @param id Assignment ID number
 #' @param responsible Character. Either user name or GUID.
+#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -781,12 +814,14 @@ archive_assignment <- function(
 reassign_assignment <- function(
     id,
     responsible,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")   # API password         
 ) {
 
     # check inputs
+
     # id is a count
     assertthat::assert_that(
         assertthat::is.count(id), 
@@ -798,7 +833,7 @@ reassign_assignment <- function(
         msg = "Responsible ID in `responsible` is not a valid GUID.")
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/assignments/", id, "/assign")
+    base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id, "/assign")
 
     # compose body of request
     body <- list(Responsible = responsible)
@@ -858,6 +893,7 @@ reassign_assignment <- function(
 #' 
 #' @param id Assignment ID number
 #' @param quantity Numeric. 
+#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -871,6 +907,7 @@ reassign_assignment <- function(
 change_assignment_quantity <- function(
     id,
     quantity,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")   # API password         
@@ -890,7 +927,10 @@ change_assignment_quantity <- function(
     )
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/assignments/", id, "/changeQuantity")
+    base_url <- paste0(
+        server, "/", workspace, 
+        "/api/v1/assignments/", id, "/changeQuantity"
+    )
 
     # get assignments from the server
     response <- httr::PATCH(
@@ -933,6 +973,7 @@ change_assignment_quantity <- function(
 #'
 #' @param id Assignment ID number
 #' @param verbose Print whether operation was successful or not
+#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -948,18 +989,24 @@ change_assignment_quantity <- function(
 unarchive_assignment <- function(
     id,
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")   # API password    
 ) {
 
     # check inputs
+
+    # assignment ID
     assertthat::assert_that(
         assertthat::is.count(id), 
         msg = "Assignment ID must be a non-negative integer")
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/assignments/", id, "/unarchive")
+    base_url <- paste0(
+        server, "/", workspace, 
+        "/api/v1/assignments/", id, "/unarchive"
+    )
 
     # get assignments from the server
     response <- httr::PATCH(
@@ -995,6 +1042,7 @@ unarchive_assignment <- function(
 #' Closes assignment by setting Size to the amount of collected interviews. Wrapper for \code{PATCH /api/v1/assignments/{id}/close} endpoint
 #'
 #' @param id Assignment ID number
+#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -1009,18 +1057,24 @@ unarchive_assignment <- function(
 close_assignment <- function(
     id,
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
 
     # check inputs
+
+    # assignment ID
     assertthat::assert_that(
         assertthat::is.count(id), 
         msg = "Assignment ID must be a non-negative integer")
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/assignments/", id, "/close")
+    base_url <- paste0(
+        server, "/", workspace, 
+        "/api/v1/assignments/", id, "/close"
+    )
 
     # get assignments from the server
     response <- httr::PATCH(

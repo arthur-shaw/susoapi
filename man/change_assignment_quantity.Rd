@@ -7,6 +7,7 @@
 change_assignment_quantity(
   id,
   quantity,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -16,6 +17,8 @@ change_assignment_quantity(
 \item{id}{Assignment ID number}
 
 \item{quantity}{Numeric.}
+
+\item{workspace}{Character. Name of the workspace whose assignments to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

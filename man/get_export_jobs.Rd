@@ -12,6 +12,7 @@ get_export_jobs(
   has_file = "",
   limit = 40,
   offset = 0,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -31,6 +32,8 @@ get_export_jobs(
 \item{limit}{Number of results to return. Values: \code{c(1:40)}}
 
 \item{offset}{Offset in list of processes.}
+
+\item{workspace}{Character. Name of the workspace whose export jobs to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

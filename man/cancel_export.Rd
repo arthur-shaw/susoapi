@@ -7,6 +7,7 @@
 cancel_export(
   job_id,
   verbose = FALSE,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -16,6 +17,8 @@ cancel_export(
 \item{job_id}{Export job ID}
 
 \item{verbose}{Logical. If \code{verbose = TRUE}, return \code{TRUE} if cancellation successful, \code{FALSE} otherwise}
+
+\item{workspace}{Character. Name of the workspace whose export jobs to cancel.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

@@ -8,6 +8,7 @@ get_questionnaire_document(
   qnr_id,
   qnr_version,
   path,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -19,6 +20,8 @@ get_questionnaire_document(
 \item{qnr_version}{Version number of questionnaire}
 
 \item{path}{Directory where export JSON representation of the questionnaire should be downloaded}
+
+\item{workspace}{Character. Name of the workspace whose questionnaire document to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

@@ -8,6 +8,7 @@ approve_interview_as_sup(
   interview_id,
   comment = "",
   verbose = FALSE,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -19,6 +20,8 @@ approve_interview_as_sup(
 \item{comment}{Character. Comment to post upon approval.}
 
 \item{verbose}{Logical. If \code{verbose == TRUE}, return logical outcome.}
+
+\item{workspace}{Character. Name of the workspace whose interviews to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

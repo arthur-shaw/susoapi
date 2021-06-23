@@ -15,6 +15,7 @@ start_export(
   storage_type = "",
   translation_id = "",
   include_meta = TRUE,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -40,6 +41,8 @@ start_export(
 \item{translation_id}{Translation ID for variable and value labels to include in export files.}
 
 \item{include_meta}{Logical. If \code{TRUE}, include questionnaire metadata in export file.}
+
+\item{workspace}{Character. Name of the workspace whose export jobs to start.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

@@ -6,6 +6,7 @@
 \usage{
 get_user_details(
   user_id,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -13,6 +14,8 @@ get_user_details(
 }
 \arguments{
 \item{user_id}{User ID, user name, or email.}
+
+\item{workspace}{Character. Name of the workspace whose users to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

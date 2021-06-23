@@ -5,12 +5,15 @@
 \title{Get the global notice}
 \usage{
 get_global_notice(
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
 }
 \arguments{
+\item{workspace}{Character. Name of the workspace whose global notice to get.}
+
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
 \item{user}{User name}

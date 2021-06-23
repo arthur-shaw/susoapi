@@ -9,6 +9,7 @@ reject_interview_as_hq(
   comment = "",
   responsible_id = "",
   verbose = FALSE,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -22,6 +23,8 @@ reject_interview_as_hq(
 \item{responsible_id}{User ID. GUID from server or \code{interview__id} from exported data. User ID of the interviewer/supervisor to which the interview should be rejected.}
 
 \item{verbose}{Logical. If \code{verbose == TRUE}, return logical outcome and print message. Otherwise, be silent.}
+
+\item{workspace}{Character. Name of the workspace whose interviews to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

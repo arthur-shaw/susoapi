@@ -15,6 +15,7 @@
 #' @param user_id User ID. GUID from server.
 #' @param start Character. Date in "YYYY-MM-DD" format
 #' @param end Character. Date in "YYYY-MM-DD" format
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -29,6 +30,7 @@ get_user_action_log <- function(
     user_id, 
     start = "",
     end = "",
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password        
@@ -50,7 +52,10 @@ get_user_action_log <- function(
     # TODO: add check on input format
 
     # form base URL
-    base_url <- paste0(server, "/api/v1/interviewers/", user_id, "/actions-log")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/interviewers/", user_id, "/actions-log"
+    )
 
     # form the query terms
     query <- list(
@@ -117,6 +122,7 @@ get_user_action_log <- function(
 #'
 #' Provides count for iterative request for supervisors. Wrapper for \code{GET /api/v1/supervisors} endpoint
 #'
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -128,13 +134,17 @@ get_user_action_log <- function(
 #'
 #' @noRd
 user_get_sups_count <- function(
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/supervisors/")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/supervisors/"
+    )
 
     # form the body for the request
     query <- list(
@@ -167,6 +177,7 @@ user_get_sups_count <- function(
 #'
 #' @param limit
 #' @param offset
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -180,13 +191,17 @@ user_get_sups_count <- function(
 user_get_list_sups <- function(
     limit = 40,
     offset = 1,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/supervisors/")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/supervisors/"
+    )
 
     # form the body for the request
     query <- list(
@@ -217,6 +232,7 @@ user_get_list_sups <- function(
 #'
 #' Get all supervisors and their attributes. Wrapper for \code{GET /api/v1/supervisors} endpoint
 #'
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -227,6 +243,7 @@ user_get_list_sups <- function(
 #'
 #' @noRd 
 user_get_list_sups_all <- function(
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
@@ -234,6 +251,7 @@ user_get_list_sups_all <- function(
 
     # get total count of assignments
     total_count <- user_get_sups_count(
+        workspace = workspace,
         server = server,
         user = user,
         password = password)
@@ -245,8 +263,9 @@ user_get_list_sups_all <- function(
             to = ceiling(total_count/40),
             by = 1),
         .f = user_get_list_sups,
-        server = server,
         limit = 40,
+        workspace = workspace,
+        server = server,
         user = user,
         password = password)
 
@@ -265,6 +284,7 @@ user_get_list_sups_all <- function(
 #' Wrapper for \code{GET /api/v1/supervisors/{supervisorId}/interviewers} endpoint
 #'
 #' @param sup_id Supervisor's user ID. GUID from server.
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -277,6 +297,7 @@ user_get_list_sups_all <- function(
 #' @noRd
 user_get_ints_count <-  function(
     sup_id,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
@@ -289,7 +310,10 @@ user_get_ints_count <-  function(
         fail_msg = "Supervisor ID in `sup_id` is not a valid GUID.")
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/supervisors/", sup_id, "/interviewers")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/supervisors/", sup_id, "/interviewers"
+    )
 
     # form the body for the request
     query <- list(
@@ -323,6 +347,7 @@ user_get_ints_count <-  function(
 #' @param sup_id Supervisor's user ID. GUID from server.
 #' @param limit
 #' @param offset
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -337,6 +362,7 @@ user_get_list_ints <- function(
     sup_id,
     limit = 40,
     offset = 1,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
@@ -349,7 +375,10 @@ user_get_list_ints <- function(
         fail_msg = "Supervisor ID in `sup_id` is not a valid GUID.")
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/supervisors/", sup_id, "/interviewers")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/supervisors/", sup_id, "/interviewers"
+    )
 
     # form the body for the request
     query <- list(
@@ -396,6 +425,7 @@ user_get_list_ints <- function(
 #' Wrapper for \code{GET /api/v1/supervisors/{supervisorId}/interviewers} endpoint
 #'
 #' @param sup_id Supervisor user ID. GUID from server.
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -407,6 +437,7 @@ user_get_list_ints <- function(
 #' @noRd 
 user_get_list_ints_all <- function(
     sup_id,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
@@ -421,6 +452,7 @@ user_get_list_ints_all <- function(
     # get total count of interviewers for supervisor
     total_count <- user_get_ints_count(
         sup_id = sup_id,
+        workspace = workspace,
         server = server,
         user = user,
         password = password)
@@ -434,8 +466,9 @@ user_get_list_ints_all <- function(
                 by = 1),
             .f = user_get_list_ints,
             sup_id = sup_id,
-            server = server,
             limit = 40,
+            workspace = workspace,
+            server = server,
             user = user,
             password = password)
     } else {
@@ -459,6 +492,7 @@ user_get_list_ints_all <- function(
 #' Wrapper for \code{GET /api/v1/users/{id}} endpoint
 #'
 #' @param user_id User ID, user name, or email.
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -471,13 +505,17 @@ user_get_list_ints_all <- function(
 #' @export
 get_user_details <- function(
     user_id,   # accepts: UserId, UserName, or Email
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/users/", user_id)
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/users/", user_id
+    )
 
     # post request
     response <- httr::GET(
@@ -520,6 +558,7 @@ get_user_details <- function(
 #'
 #' Fetch list of all supervisors and their attributes
 #'
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -531,6 +570,7 @@ get_user_details <- function(
 #'
 #' @export
 get_supervisors <- function(
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
@@ -538,12 +578,14 @@ get_supervisors <- function(
 
     # get count of supervisors
     total_count <- user_get_sups_count(
+        workspace = workspace,
         server = server,
         user = user,
         password = password)
 
     # get list all supervisors
     supervisor_list <- user_get_list_sups_all(
+        workspace = workspace,
         server = server,
         user = user,
         password = password)
@@ -559,6 +601,7 @@ get_supervisors <- function(
     supervisor_details <- purrr::map_dfr(
         .x = supervisor_list$UserId,
         .f = get_user_details,
+        workspace = workspace,
         server = server,
         user = user,
         password = password
@@ -583,6 +626,7 @@ get_supervisors <- function(
 #'
 #' Fetch list of all interviewers and their attributes, including their supervisor
 #'
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -594,6 +638,7 @@ get_supervisors <- function(
 #'
 #' @export
 get_interviewers <- function(
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
@@ -607,7 +652,11 @@ get_interviewers <- function(
     ints_list <- purrr::map_dfr(
         .x = sups_list$UserId,
         .f = user_get_list_ints_all,
-        server = server, user = user, password = password) %>%
+            workspace = workspace,
+            server = server, 
+            user = user, 
+            password = password
+        ) %>%
         filter(!is.na(.data$UserId))
 
     # add column missing user never connected
@@ -619,6 +668,7 @@ get_interviewers <- function(
     ints_detail <- purrr::map_dfr(
         .x = ints_list$UserId,
         .f = get_user_details,
+        workspace = workspace,
         server = server,
         user = user,
         password = password
@@ -654,6 +704,7 @@ get_interviewers <- function(
 #'
 #' @param user_id User ID. GUID from server.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -668,19 +719,24 @@ get_interviewers <- function(
 archive_user <- function(
     user_id,
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password       
 ) {
 
     # check inputs
+
     # user_id
     check_guid(
         guid = user_id, 
         fail_msg = "User ID in `user_id` is not a valid GUID.")
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/users/", user_id, "/archive")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/users/", user_id, "/archive"
+    )
 
     # oatch archive status on server
     response <- httr::PATCH(
@@ -734,6 +790,7 @@ archive_user <- function(
 #'
 #' @param user_id User ID. GUID from server.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -748,19 +805,24 @@ archive_user <- function(
 unarchive_user <- function(
     user_id,
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password       
 ) {
 
     # check inputs
+
     # user_id
     check_guid(
         guid = user_id, 
         fail_msg = "User ID in `user_id` is not a valid GUID.")
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/users/", user_id, "/unarchive")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/users/", user_id, "/unarchive"
+    )
 
     # patch archive status on server
     response <- httr::PATCH(
@@ -821,6 +883,7 @@ unarchive_user <- function(
 #' @param phone_number Character. Phone number for user. (Optional)
 #' @param email Character. Email address for user. (Optional)
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
+#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -843,12 +906,14 @@ create_user <- function(
     phone_number = "",
     email = "",
     verbose = FALSE,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
 
-    # check inputs
+    # check inputs:
+
     # role
     assertthat::assert_that(
         role %in% c("Supervisor", "Interviewer"),
@@ -864,7 +929,10 @@ create_user <- function(
     }
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/users/")
+    base_url <- paste0(
+        server, "/", workspace,
+        "/api/v1/users/"
+    )
 
     # compose body of post
     # match function params to expected keys in body

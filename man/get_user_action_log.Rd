@@ -8,6 +8,7 @@ get_user_action_log(
   user_id,
   start = "",
   end = "",
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -19,6 +20,8 @@ get_user_action_log(
 \item{start}{Character. Date in "YYYY-MM-DD" format}
 
 \item{end}{Character. Date in "YYYY-MM-DD" format}
+
+\item{workspace}{Character. Name of the workspace whose users to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

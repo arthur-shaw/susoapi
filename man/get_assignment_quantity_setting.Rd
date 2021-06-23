@@ -6,6 +6,7 @@
 \usage{
 get_assignment_quantity_setting(
   id,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -13,6 +14,8 @@ get_assignment_quantity_setting(
 }
 \arguments{
 \item{id}{Assignment ID}
+
+\item{workspace}{Character. Name of the workspace whose assginment quantity to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})server}
 

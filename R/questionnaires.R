@@ -27,11 +27,9 @@ get_questionnaires <- function(
 ) {
 
     # check inputs
-    assertthat::assert_that(
-        is_workspace_name(workspace),
-        msg = "Invalid workspace name. Please check the input for the `workspace` parameter."
-    )
-    # TODO: confirm that it is a valid workspace
+    # invalid name
+    # workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # compose the GraphQL request client
     questionnaires_request <- ghql::GraphqlClient$new(
@@ -136,6 +134,7 @@ get_questionnaires <- function(
 #' @param qnr_id Questionnaire ID. GUID from server
 #' @param qnr_version Version number of questionnaire
 #' @param path Directory where export JSON representation of the questionnaire should be downloaded
+#' @param workspace Character. Name of the workspace whose questionnaire document to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -149,12 +148,17 @@ get_questionnaire_document <- function(
     qnr_id,
     qnr_version,
     path,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password        
 ) {
 
     # check inputs:
+
+    # workspace
+    check_workspace_param(workspace = workspace)
+    
     # qnr_id
     check_guid(
         guid = qnr_id, 
@@ -172,8 +176,11 @@ get_questionnaire_document <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server,
-        "/api/v1/questionnaires/", qnr_id, "/", qnr_version, "/document")
+    base_url <- paste0(
+        server,
+        "/", workspace,
+        "/api/v1/questionnaires/", qnr_id, "/", qnr_version, "/document"
+    )
 
     # post request and download file
     response <- httr::GET(
@@ -198,6 +205,7 @@ get_questionnaire_document <- function(
 #' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param qnr_id Questionnaire ID. GUID from server.
 #' @param qnr_version Questionnaire version number.
+#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user Charater. API or admin user name for user that access to the workspace.
 #' @param password API or admin password
@@ -210,9 +218,9 @@ get_questionnaire_document <- function(
 #' 
 #' @noRd 
 get_interviews_for_questionnaire_count <- function(
-    workspace = "primary",
     qnr_id,
     qnr_version,    
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
@@ -599,6 +607,7 @@ get_possible_interview_statuses <- function(
 #' @param qnr_id Questionnaire ID. GUID from server.
 #' @param qnr_version Questionnaire version number.
 #' @param enable Whether to enable. Values: c(TRUE, FALSE)
+#' @param workspace Character. Name of the workspace whose questionnaire audio settings to change.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
@@ -615,6 +624,7 @@ set_questionnaire_audio <- function(
     qnr_id,
     qnr_version,
     enable,
+    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
@@ -638,6 +648,7 @@ set_questionnaire_audio <- function(
 
     # form the base URL
     base_url <- paste0(server,
+            "/", workspace,
             "/api/v1/questionnaires/", qnr_id, "/", qnr_version, "/recordAudio")
 
     # form the body for the request

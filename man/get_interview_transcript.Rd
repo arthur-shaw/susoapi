@@ -7,6 +7,7 @@
 get_interview_transcript(
   interview_id,
   path,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -16,6 +17,8 @@ get_interview_transcript(
 \item{interview_id}{Character. GUID for interview.}
 
 \item{path}{Character. Path to folder where transcript should be downloaded.}
+
+\item{workspace}{Character. Name of the workspace whose interviews to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

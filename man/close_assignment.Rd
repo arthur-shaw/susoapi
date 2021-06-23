@@ -7,6 +7,7 @@
 close_assignment(
   id,
   verbose = FALSE,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -16,6 +17,8 @@ close_assignment(
 \item{id}{Assignment ID number}
 
 \item{verbose}{Print whether operation was successful or not}
+
+\item{workspace}{Character. Name of the workspace whose assignments to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

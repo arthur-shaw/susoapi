@@ -8,6 +8,7 @@ get_export_file(
   job_id,
   path,
   verbose = FALSE,
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -19,6 +20,8 @@ get_export_file(
 \item{path}{File path where export file should be downloaded}
 
 \item{verbose}{Logical. If \code{verbose = TRUE}, return a logical value about the outcome. If \code{verbose = FALSE}, the default, simply return a message describing the outcome.}
+
+\item{workspace}{Character. Name of the workspace whose export files to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

@@ -12,6 +12,7 @@ get_assignments(
   supervisor_id = "",
   show_archive = "",
   order = "",
+  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
@@ -31,6 +32,8 @@ get_assignments(
 \item{show_archive}{Include archived assignments. Values: c("true", "false")}
 
 \item{order}{Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"}
+
+\item{workspace}{Character. Name of the workspace whose assignments to get.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 

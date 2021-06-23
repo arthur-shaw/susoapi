@@ -1410,6 +1410,13 @@ get_interview_transcript <- function(
     # - invalid name
     # - workspace does not exist
     check_workspace_param(workspace = workspace)
+
+    # path
+    assertthat::assert_that(
+        dir.exists(path), # assertthat::is.dir does not seem to work; using base r replacement
+        msg = "Download path specified in `path` is not a valid directory."
+    )
+
     # form base URL
     base_url <- paste0(
         server, "/", workspace,

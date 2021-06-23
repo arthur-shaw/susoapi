@@ -95,15 +95,17 @@ show_credentials <- function() {
 #' Check that server credentials are valid
 #'
 #' Shows server credentials saved in environment variables and .Renviron.
-#'
+#' @param workspace Character. Name of the workspace for which credentials will be checked.
 #' @param verbose Logical. If `TRUE`, function returns logical regarding validity of credentials. If `FALSE`, function simply prints information about validity to the console.
 #' 
 #' @return If `verbose = FALSE` (default), side-effect of message printed to the console. If `verbose = TRUE`, logical: `TRUE` if credentials valid; `FALSE` otherwise.
 #' 
 #' @import httr
+#' @importFrom glue glue_collapse backtick glue
 #' 
 #' @export
 check_credentials <- function(
+    workspace = "primary",
     verbose = FALSE
 ) {
 
@@ -122,40 +124,32 @@ check_credentials <- function(
         credentials_valid <- FALSE
 
     # check whether credentials are valid
-    # by making the smallest possible query: returning 1 questionnaire from the server
+    # by making getting the workspaces for which the user is authorized
     } else {
 
-        # questionnaire list API path
-        path <- "/api/v1/questionnaires"
-
-        # query for 1 questionnaire with no offset
-        query <- list(
-            limit = 1, 
-            offset = 1
+        workspaces_df <- tryCatch(
+            error = function(cnd) {
+                data.frame(Name = NA_character_)
+            },
+            susoapi::get_workspaces(server = server, user = user, password = password)
         )
 
-        # construct url
-        url <- httr::modify_url(
-                url = server, 
-                path = path, 
-                query = query)
+        workspaces_names <- workspaces_df$Name
 
-        test_credentials <- httr::GET(
-            url = url,
-            authenticate(user = user, password = password),
-            accept_json(),
-            content_type_json()        
-        )
-
-        credentials_valid <- httr::status_code(test_credentials) == 200
+        credentials_valid <- (workspace %in% workspaces_names)
 
         if (credentials_valid == TRUE) {
-            message("Credentials valid.")
+            workspaces_list <- glue::glue_collapse(glue::backtick(workspaces_names), sep = ", ", last = "and ")
+            message(glue::glue("Credentials valid for workspace(s) {workspaces_list}."))
         } else {
-            message(paste0(
-                "Credentials invalid.", 
-                "\nFirst, `show_credentials` to see and check input credentials.", 
-                "\nThen, use `set_credentials` to provide correct credentials."
+            message(glue::glue(
+                "Credentials invalid for workspace {glue::backtick(workspace)}.",
+                "Here are some steps to troubleshoot.", 
+                "First, `show_credentials()` to view the credentials.", 
+                "If they are incorrect, use use `set_credentials()` to correct them.",
+                "Next, check which workspace(s) the user can access.",
+                "To do so, use `get_workspaces()`.",
+                .sep = "\n"
             ))
                 
         }

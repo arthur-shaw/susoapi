@@ -40,10 +40,18 @@ response <- httr::GET(
     httr::content_type_json()
 )
 
-# return count of workspaces
-workspace_count <- jsonlite::fromJSON(content(response, as = "text"), flatten = TRUE)$TotalCount
+result <- httr::status_code(response)
 
-return(workspace_count)
+if (result == 200) {
+
+    # return count of workspaces
+    workspace_count <- jsonlite::fromJSON(content(response, as = "text"), flatten = TRUE)$TotalCount
+
+    return(workspace_count)
+
+} else if (result != 200) {
+    warning("No workspaces found.")
+}
 
 }
 
@@ -107,6 +115,7 @@ get_workspaces_batch <- function(
 #' @return Data frame of workspaces. Contains columns: `Name`, the name ID; `DisplayName`, the name in the GUI; and `DisabledAtUtc`, when the workspace was disabled or NA if not disabled.
 #' 
 #' @importFrom assertthat assert_that
+#' @importFrom rlang abort
 #' @importFrom purrr map_dfr
 #' 
 #' @export 
@@ -126,12 +135,15 @@ assertthat::assert_that(
 )
 
 # get total count of workspaces
-total_count <- get_workspaces_count(
-    user_id = user_id,
-    include_disabled = include_disabled,
-    server = server,
-    user = user,
-    password = password
+tryCatch(
+    warning = function(cnd) rlang::abort(conditionMessage(cnd)),
+    total_count <- get_workspaces_count(
+        user_id = user_id,
+        include_disabled = include_disabled,
+        server = server,
+        user = user,
+        password = password
+    )
 )
 
 # return all workspaces as a data frame

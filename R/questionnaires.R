@@ -631,6 +631,9 @@ set_questionnaire_audio <- function(
 ) {
 
     # check inputs:
+    # workspace
+    check_workspace_param(workspace = workspace)
+
     # qnr_id
     check_guid(
         guid = qnr_id, 

@@ -131,3 +131,35 @@ is_workspace_display_name <- function(x) {
     n_char <- nchar(x) 
     n_char > 0 & n_char <= 300
 }
+
+#' Utility function to check workspace parameter
+#' 
+#' Checks (1) that the workspace has a valid form and (2) that is one that the user is authorized to access
+#' 
+#' @param workspace Character. Name of the workspace to check.
+#' 
+#' @importFrom assertthat assert_that
+#' @importFrom glue glue glue_collapse
+#' 
+#' @noRd 
+check_workspace_param <- function(workspace) {
+
+    # invalid name
+    assertthat::assert_that(
+        is_workspace_name(workspace),
+        msg = "Invalid workspace name. Please check the input for the `workspace` parameter."
+    )
+
+    # workspace does not exist
+    workspaces <- susoapi::get_workspaces()$Name
+    assertthat::assert_that(
+        workspace %in% workspaces,
+        msg = glue::glue(
+            "Workspace either does not exist or cannot be accessed by this user.", 
+            "Please use one of the workspaces to which the user has access: {glue::glue_collapse(workspaces, sep = ', ', last = ', ')}",
+            .sep = "\n"
+        )
+
+    )
+
+}

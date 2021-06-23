@@ -51,6 +51,11 @@ get_user_action_log <- function(
     # datetime
     # TODO: add check on input format
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form base URL
     base_url <- paste0(
         server, "/", workspace,
@@ -511,6 +516,11 @@ get_user_details <- function(
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form the base URL
     base_url <- paste0(
         server, "/", workspace,
@@ -575,6 +585,11 @@ get_supervisors <- function(
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # get count of supervisors
     total_count <- user_get_sups_count(
@@ -643,6 +658,11 @@ get_interviewers <- function(
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # get supervisors
     sups_list <- user_get_list_sups_all(server = server, user = user, password = password)
@@ -732,6 +752,11 @@ archive_user <- function(
         guid = user_id, 
         fail_msg = "User ID in `user_id` is not a valid GUID.")
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form the base URL
     base_url <- paste0(
         server, "/", workspace,
@@ -817,6 +842,11 @@ unarchive_user <- function(
     check_guid(
         guid = user_id, 
         fail_msg = "User ID in `user_id` is not a valid GUID.")
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # form the base URL
     base_url <- paste0(
@@ -927,6 +957,11 @@ create_user <- function(
             msg = "Must specify `supervisor` if `role = 'Interviewer'`"
         )
     }
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # form the base URL
     base_url <- paste0(

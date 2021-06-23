@@ -39,6 +39,13 @@ get_assignment_count <- function(
     password = Sys.getenv("SUSO_PASSWORD")  # API password
 ) {
 
+    # check inputs:
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form the base URL
     base_url <- paste0(server, "/", workspace, "/api/v1/assignments")
 
@@ -133,6 +140,11 @@ get_assignment_batch <- function(
     # check_guid(qnr_id)
     # check_guid(responsible) | name
     # check_guid(supervisor_id)
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # form the base URL
     base_url <- paste0(server, "/", workspace, "/api/v1/assignments")
@@ -258,6 +270,11 @@ get_assignments <- function(
         show_archive == "" ~ ""
     )
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # get total count of assignments
     total_count <- get_assignment_count(
         search_by = search_by,
@@ -356,6 +373,11 @@ get_assignment_details <- function(
         assertthat::is.count(id), 
         msg = "Assignment ID, `id`, must be a non-negative integer")
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form base URL
     base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id)
 
@@ -434,6 +456,11 @@ get_assignment_quantity_setting <- function(
         assertthat::is.count(id), 
         msg = "Assignment ID must be a non-negative integer")
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form base URL
     base_url <- paste0(
         server, "/", workspace, 
@@ -506,6 +533,11 @@ get_assignment_history <- function(
     assertthat::assert_that(
         assertthat::is.count(id), 
         msg = "Assignment ID must be a non-negative integer")
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # form base URL
     base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id, "/history")
@@ -588,6 +620,11 @@ check_assignment_audio <- function(
     assertthat::assert_that(
         assertthat::is.count(id), 
         msg = "Assignment ID must be a non-negative integer")
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # form base URL
     base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id, "/recordAudio")
@@ -683,6 +720,11 @@ set_assignment_audio <- function(
         assertthat::is.count(id), 
         msg = "Assignment ID must be a non-negative integer")
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form base URL
     base_url <- paste0(
         server, "/", workspace, 
@@ -758,6 +800,11 @@ archive_assignment <- function(
         assertthat::is.count(id), 
         msg = "Assignment ID must be a non-negative integer")
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form base URL
     base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id, "/archive")
 
@@ -831,6 +878,11 @@ reassign_assignment <- function(
     assertthat::assert_that(
         is_guid(responsible) | assertthat::is.string(responsible), 
         msg = "Responsible ID in `responsible` is not a valid GUID.")
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # form base URL
     base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id, "/assign")
@@ -926,6 +978,11 @@ change_assignment_quantity <- function(
         msg = "Quantity must be either a non-negative integer or -1."
     )
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form base URL
     base_url <- paste0(
         server, "/", workspace, 
@@ -1002,6 +1059,11 @@ unarchive_assignment <- function(
         assertthat::is.count(id), 
         msg = "Assignment ID must be a non-negative integer")
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form base URL
     base_url <- paste0(
         server, "/", workspace, 
@@ -1069,6 +1131,11 @@ close_assignment <- function(
     assertthat::assert_that(
         assertthat::is.count(id), 
         msg = "Assignment ID must be a non-negative integer")
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # form base URL
     base_url <- paste0(

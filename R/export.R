@@ -39,6 +39,8 @@ get_export_jobs <- function(
 ) {
 
     # check inputs
+    # workspace
+    check_workspace_param(workspace = workspace)
 
     # export_type
     if (export_type != "") {
@@ -191,6 +193,9 @@ start_export <- function(
 ) {
 
     # check inputs
+
+    # workspace
+    check_workspace_param(workspace = workspace)
 
     # export_type
     assertthat::assert_that(
@@ -430,6 +435,9 @@ cancel_export <- function(
         msg = "Invalid `job_id` value provided."
     )
 
+    # workspace
+    check_workspace_param(workspace = workspace)
+
     # form the base URL
     base_url <- paste0(server, "/", workspace, "/api/v2/export/", job_id)
 
@@ -518,6 +526,9 @@ get_export_file <- function(
         dir.exists(path), # assertthat::is.dir does not seem to work; using base r replacement
         msg = "Download path specified in `path` is not a valid directory."
     )
+
+    # workspace
+    check_workspace_param(workspace = workspace)
 
     # form the base URL
     base_url <- paste0(server, "/", workspace, "/api/v2/export/", job_id, "/file")

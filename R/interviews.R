@@ -775,6 +775,11 @@ assign_interview_to_sup <- function(
             fail_msg = "User ID in `user_id` is not a valid GUID.")
     }
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form the base URL
     base_url <- paste0(
         server, "/", workspace,
@@ -883,6 +888,11 @@ approve_interview_as_hq <- function(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form the base URL
     base_url <- paste0(
         server, "/", workspace,
@@ -982,6 +992,11 @@ reject_interview_as_hq <- function(
             fail_msg = "User ID in `responsible_id` is not a valid GUID.")
     }
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form the base URL
     base_url <- paste0(
         server, "/", workspace,
@@ -1073,6 +1088,11 @@ unapprove_interview <- function(
     check_guid(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # form the base URL
     base_url <- paste0(
@@ -1172,6 +1192,11 @@ reject_interview_as_sup <- function(
             guid = responsible_id, 
             fail_msg = "User ID in `responsible_id` is not a valid GUID.")
     }
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # form the base URL
     base_url <- paste0(
@@ -1284,6 +1309,11 @@ comment_question <- function(
         )
     )
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # formulate API call
     base_url <- paste0(
         server, "/", workspace,
@@ -1376,6 +1406,10 @@ get_interview_transcript <- function(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
     # form base URL
     base_url <- paste0(
         server, "/", workspace,
@@ -1476,6 +1510,11 @@ get_interview_history <- function(
     check_guid(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # form base URL
     base_url <- paste0(

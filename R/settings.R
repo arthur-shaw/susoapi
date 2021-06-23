@@ -25,6 +25,11 @@ get_global_notice <- function(
     password = Sys.getenv("SUSO_PASSWORD")  # API password        
 ) {
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
+
     # form the base URL
     base_url <- paste0(
         server, "/", workspace,
@@ -92,6 +97,11 @@ set_global_notice <- function(
         msg = "`text` must be a single character string."
     )
 
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)    
+
     # form the base URL
     base_url <- paste0(
         server, "/", workspace,
@@ -158,6 +168,11 @@ delete_global_notice <- function(
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password   
 ) {
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # form the base URL
     base_url <- paste0(

@@ -665,7 +665,12 @@ get_interviewers <- function(
     check_workspace_param(workspace = workspace)
 
     # get supervisors
-    sups_list <- user_get_list_sups_all(server = server, user = user, password = password)
+    sups_list <- user_get_list_sups_all(
+        workspace = workspace,
+        server = server, 
+        user = user, 
+        password = password
+    )
     
     # get interviewers
     # get list

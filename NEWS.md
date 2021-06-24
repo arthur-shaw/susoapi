@@ -1,6 +1,6 @@
 # susoapi 0.1.1
 
-- Fix `get_interviews()`. A private function was missing the workspaces argument. (h/t @ashwinikalantri)
+- Fix `get_interviewers()`. A private function was missing the workspaces argument. (h/t @ashwinikalantri)
 
 # susoapi 0.1.0
 

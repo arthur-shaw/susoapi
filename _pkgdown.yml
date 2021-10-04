@@ -57,6 +57,7 @@ reference:
   - comment_question
 - subtitle: "Review"
   contents:
+  - get_interviews
   - get_interview_stats
   - get_interview_history
   - get_interview_transcript

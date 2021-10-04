@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">susoapi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -115,6 +115,9 @@
       <a href="../articles/users.html">Managing users</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -157,6 +160,7 @@
   storage_type <span class='op'>=</span> <span class='st'>""</span>,
   translation_id <span class='op'>=</span> <span class='st'>""</span>,
   include_meta <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  workspace <span class='op'>=</span> <span class='st'>"primary"</span>,
   server <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"SUSO_SERVER"</span><span class='op'>)</span>,
   user <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"SUSO_USER"</span><span class='op'>)</span>,
   password <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"SUSO_PASSWORD"</span><span class='op'>)</span>
@@ -204,6 +208,10 @@
     <tr>
       <th>include_meta</th>
       <td><p>Logical. If <code>TRUE</code>, include questionnaire metadata in export file.</p></td>
+    </tr>
+    <tr>
+      <th>workspace</th>
+      <td><p>Character. Name of the workspace whose export jobs to start.</p></td>
     </tr>
     <tr>
       <th>server</th>

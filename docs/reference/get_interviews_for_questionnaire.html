@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Get list of interviews for questionnaire-version — get_interviews_for_questionnaire" />
-<meta property="og:description" content="Wrapper for GET /api/v1/questionnaires/{id}/{version}/interviews endpoint" />
+<meta property="og:description" content="GraphQL implmentation for deprecated REST GET /api/v1/questionnaires/{id}/{version}/interviews endpoint" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">susoapi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -116,6 +116,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -143,10 +146,12 @@
     </div>
 
     <div class="ref-description">
-    <p>Wrapper for <code>GET /api/v1/questionnaires/{id}/{version}/interviews</code> endpoint</p>
+    <p>GraphQL implmentation for deprecated REST <code>GET /api/v1/questionnaires/{id}/{version}/interviews</code> endpoint</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_interviews_for_questionnaire</span><span class='op'>(</span>
+  workspace <span class='op'>=</span> <span class='st'>"primary"</span>,
+  chunk_size <span class='op'>=</span> <span class='fl'>100</span>,
   <span class='va'>qnr_id</span>,
   <span class='va'>qnr_version</span>,
   server <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"SUSO_SERVER"</span><span class='op'>)</span>,
@@ -157,6 +162,14 @@
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>workspace</th>
+      <td><p>Character. Name of the workspace whose questionnaires and associated interviews to get.</p></td>
+    </tr>
+    <tr>
+      <th>chunk_size</th>
+      <td><p>Numeric. Number of records to take in one request.</p></td>
+    </tr>
     <tr>
       <th>qnr_id</th>
       <td><p>Questionnaire ID. GUID from server.</p></td>

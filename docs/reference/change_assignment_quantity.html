@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">susoapi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -116,6 +116,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -149,6 +152,7 @@
     <pre class="usage"><span class='fu'>change_assignment_quantity</span><span class='op'>(</span>
   <span class='va'>id</span>,
   <span class='va'>quantity</span>,
+  workspace <span class='op'>=</span> <span class='st'>"primary"</span>,
   server <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"SUSO_SERVER"</span><span class='op'>)</span>,
   user <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"SUSO_USER"</span><span class='op'>)</span>,
   password <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"SUSO_PASSWORD"</span><span class='op'>)</span>
@@ -164,6 +168,10 @@
     <tr>
       <th>quantity</th>
       <td><p>Numeric.</p></td>
+    </tr>
+    <tr>
+      <th>workspace</th>
+      <td><p>Character. Name of the workspace whose assignments to get.</p></td>
     </tr>
     <tr>
       <th>server</th>

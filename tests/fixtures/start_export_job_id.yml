@@ -1,0 +1,64 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>primary/api/v1/users/<<<fake_user>>>
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:25:16 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
+  recorded_at: 2021-10-30 16:25:21 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0
+- request:
+    method: post
+    uri: <<<fake_server>>>/primary/api/v2/export
+    body:
+      encoding: ''
+      string: '{"ExportType":"STATA","QuestionnaireId":"5495bfd5f2324b3a8a75c80056f1898e$1","InterviewStatus":"All","IncludeMeta":"true"}'
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 201
+      category: Success
+      reason: Created
+      message: 'Success: (201) Created'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      location: <<<fake_server>>>primary/api/v2/export/940
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:25:18 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"JobId":940,"ExportStatus":"Running","StartDate":"2021-10-30T16:25:16.420909","CompleteDate":null,"Progress":5,"ETA":null,"Error":"","Links":{"Cancel":"<<<fake_server>>>/primary/api/v2/export/940","Download":""},"HasExportFile":false,"ExportType":"STATA","QuestionnaireId":"5495bfd5f2324b3a8a75c80056f1898e$1","InterviewStatus":"All","From":null,"To":null,"AccessToken":null,"RefreshToken":null,"StorageType":null,"TranslationId":null,"IncludeMeta":null}'
+  recorded_at: 2021-10-30 16:25:21 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0

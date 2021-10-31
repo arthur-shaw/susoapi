@@ -1,0 +1,65 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>primary/api/v1/users/<<<fake_user>>>
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:25:46 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
+  recorded_at: 2021-10-30 16:25:46 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0
+- request:
+    method: patch
+    uri: <<<fake_server>>>/primary/api/v1/assignments/1/unarchive
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:25:46 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"IdentifyingData":[{"Identity":"167a2b44fce91e33476eb158e6616154","Variable":null,"Answer":"1"},{"Identity":"8071e455d26428b5f7f72cfa505a1a03","Variable":null,"Answer":"1"},{"Identity":"442fecea5ce1664fd340a2780b3671ba","Variable":null,"Answer":"3"},{"Identity":"48aa58a76675483f487e79ec24a404b3","Variable":null,"Answer":"Arthur
+        Shaw"},{"Identity":"03b3efa6812073c2a6060791c40865b3","Variable":null,"Answer":"123
+        Fake Street"}],"Id":1,"ResponsibleId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","ResponsibleName":"ArthurInt123","QuestionnaireId":"5495bfd5f2324b3a8a75c80056f1898e$1","InterviewsCount":1,"Quantity":1,"Archived":false,"CreatedAtUtc":"2021-03-15T17:35:54.255419Z","UpdatedAtUtc":"2021-10-30T16:25:46.365704Z","Email":null,"Password":null,"WebMode":false,"ReceivedByTabletAtUtc":null,"IsAudioRecordingEnabled":true}'
+  recorded_at: 2021-10-30 16:25:46 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0

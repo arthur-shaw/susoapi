@@ -1,0 +1,74 @@
+http_interactions:
+- request:
+    method: post
+    uri: <<<fake_server>>>/graphql
+    body:
+      encoding: ''
+      string: '{"query":"{    interviews (        workspace: \"primary\",        where:
+        {            questionnaireId: {eq: \"5ab793ffc84a4211858df168bbd90cf9\"}            questionnaireVersion:
+        {eq: 1}        }        take: 1        skip: 0    ) {        filteredCount    }}"}'
+    headers:
+      User-Agent: libcurl/7.64.1 r-curl/4.3.2 crul/1.1.0
+      Content-Type: application/json
+      Accept-Encoding: gzip, deflate
+      Accept: application/json, text/xml, application/xml, */*
+      authorization: Basic YWRtaW46TXlMZXlsYUxvdmVzTWUyRGF5
+  response:
+    status:
+      status_code: '200'
+      message: OK
+      explanation: Request fulfilled, document follows
+    headers:
+      status: HTTP/1.1 200 OK
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:21:45 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"data":{"interviews":{"filteredCount":1}}}'
+  recorded_at: 2021-10-30 16:21:53 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0
+- request:
+    method: post
+    uri: <<<fake_server>>>/graphql
+    body:
+      encoding: ''
+      string: '{"query":"{    interviews (        workspace: \"primary\",        where:
+        {            questionnaireId: {eq: \"5ab793ffc84a4211858df168bbd90cf9\"}            questionnaireVersion:
+        {eq: 1}        }        take: 100        skip: 0    ) {        nodes {            id            key            assignmentId            identifyingData
+        {                answerValue                value                valueBool                valueDate                valueLong                valueDouble                isEnabled                entity
+        {                    identifying                    label                    options
+        {                        parentValue                        title                        value                    }                    questionText                    scope                    type                    variable                }            }            questionnaireId            questionnaireVersion            questionnaireVariable            responsibleName            responsibleId            responsibleRole            supervisorName            status            actionFlags            wasCompleted            notAnsweredCount            errorsCount            createdDate            updateDateUtc            receivedByInterviewerAtUtc            interviewMode                }        filteredCount    }}"}'
+    headers:
+      User-Agent: libcurl/7.64.1 r-curl/4.3.2 crul/1.1.0
+      Content-Type: application/json
+      Accept-Encoding: gzip, deflate
+      Accept: application/json, text/xml, application/xml, */*
+      authorization: Basic YWRtaW46TXlMZXlsYUxvdmVzTWUyRGF5
+  response:
+    status:
+      status_code: '200'
+      message: OK
+      explanation: Request fulfilled, document follows
+    headers:
+      status: HTTP/1.1 200 OK
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:21:53 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"data":{"interviews":{"nodes":[{"id":"441c7836fe014a5c8face4bc873aa232","key":"56-74-48-63","assignmentId":2,"identifyingData":[],"questionnaireId":"5ab793ffc84a4211858df168bbd90cf9","questionnaireVersion":1,"questionnaireVariable":"nesting","responsibleName":"ArthurInt123","responsibleId":"cc78158de9874d7e9cfbfb4546d2c895","responsibleRole":"INTERVIEWER","supervisorName":"ArthurSup123","status":"COMPLETED","actionFlags":["CANBEAPPROVED","CANBEREJECTED","CANBEREASSIGNED"],"wasCompleted":true,"notAnsweredCount":14,"errorsCount":0,"createdDate":"2021-05-11T18:33:30.991Z","updateDateUtc":"2021-05-11T18:38:07.073Z","receivedByInterviewerAtUtc":null,"interviewMode":"UNKNOWN"}],"filteredCount":1}}}'
+  recorded_at: 2021-10-30 16:21:53 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0

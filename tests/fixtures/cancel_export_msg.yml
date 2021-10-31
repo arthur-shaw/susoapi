@@ -1,0 +1,63 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>primary/api/v1/users/<<<fake_user>>>
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:14:43 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
+  recorded_at: 2021-10-30 16:14:56 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0
+- request:
+    method: delete
+    uri: <<<fake_server>>>/primary/api/v2/export/1
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:14:56 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"JobId":1,"ExportStatus":"Canceled","StartDate":"2021-03-15T17:44:49.521615","CompleteDate":"2021-10-30T12:34:42.849479","Progress":2,"ETA":null,"Error":"","Links":{"Cancel":"","Download":"<<<fake_server>>>/primary/api/v2/export/1/file"},"HasExportFile":true,"ExportType":"STATA","QuestionnaireId":"5495bfd5f2324b3a8a75c80056f1898e$1","InterviewStatus":"All","From":null,"To":null,"AccessToken":null,"RefreshToken":null,"StorageType":null,"TranslationId":null,"IncludeMeta":null}'
+  recorded_at: 2021-10-30 16:14:56 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0

@@ -1,0 +1,81 @@
+http_interactions:
+- request:
+    method: post
+    uri: <<<fake_server>>>/graphql
+    body:
+      encoding: ''
+      string: '{"query":"{    interviews (        workspace: \"primary\",        where:
+        {            questionnaireId: {eq: \"5495bfd5-f232-4b3a-8a75-c80056f1898e\"}            questionnaireVersion:
+        {eq: 1}        }        take: 1        skip: 0    ) {        filteredCount    }}"}'
+    headers:
+      User-Agent: libcurl/7.64.1 r-curl/4.3.2 crul/1.1.0
+      Content-Type: application/json
+      Accept-Encoding: gzip, deflate
+      Accept: application/json, text/xml, application/xml, */*
+      authorization: Basic YWRtaW46TXlMZXlsYUxvdmVzTWUyRGF5
+  response:
+    status:
+      status_code: '200'
+      message: OK
+      explanation: Request fulfilled, document follows
+    headers:
+      status: HTTP/1.1 200 OK
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:21:32 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"data":{"interviews":{"filteredCount":1}}}'
+  recorded_at: 2021-10-30 16:21:36 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0
+- request:
+    method: post
+    uri: <<<fake_server>>>/graphql
+    body:
+      encoding: ''
+      string: '{"query":"{    interviews (        workspace: \"primary\",        where:
+        {            questionnaireId: {eq: \"5495bfd5-f232-4b3a-8a75-c80056f1898e\"}            questionnaireVersion:
+        {eq: 1}        }        take: 100        skip: 0    ) {        nodes {            id            key            assignmentId            identifyingData
+        {                answerValue                value                valueBool                valueDate                valueLong                valueDouble                isEnabled                entity
+        {                    identifying                    label                    options
+        {                        parentValue                        title                        value                    }                    questionText                    scope                    type                    variable                }            }            questionnaireId            questionnaireVersion            questionnaireVariable            responsibleName            responsibleId            responsibleRole            supervisorName            status            actionFlags            wasCompleted            notAnsweredCount            errorsCount            createdDate            updateDateUtc            receivedByInterviewerAtUtc            interviewMode                }        filteredCount    }}"}'
+    headers:
+      User-Agent: libcurl/7.64.1 r-curl/4.3.2 crul/1.1.0
+      Content-Type: application/json
+      Accept-Encoding: gzip, deflate
+      Accept: application/json, text/xml, application/xml, */*
+      authorization: Basic YWRtaW46TXlMZXlsYUxvdmVzTWUyRGF5
+  response:
+    status:
+      status_code: '200'
+      message: OK
+      explanation: Request fulfilled, document follows
+    headers:
+      status: HTTP/1.1 200 OK
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:21:36 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"data":{"interviews":{"nodes":[{"id":"7bdf95abab1b4d46b818cdf7546e049f","key":"15-80-14-14","assignmentId":1,"identifyingData":[{"answerValue":null,"value":"1","valueBool":null,"valueDate":null,"valueLong":1,"valueDouble":null,"isEnabled":true,"entity":{"identifying":true,"label":"grappe","options":[],"questionText":"GRAPPE","scope":"INTERVIEWER","type":"NUMERIC","variable":"grappe"}},{"answerValue":null,"value":"1","valueBool":null,"valueDate":null,"valueLong":1,"valueDouble":null,"isEnabled":true,"entity":{"identifying":true,"label":"Identifiant
+        du m\u00E9nage","options":[],"questionText":"MENAGE","scope":"INTERVIEWER","type":"NUMERIC","variable":"id_menage"}},{"answerValue":null,"value":"3","valueBool":null,"valueDate":null,"valueLong":3,"valueDouble":null,"isEnabled":true,"entity":{"identifying":true,"label":"Vague","options":[],"questionText":"VAGUE","scope":"INTERVIEWER","type":"NUMERIC","variable":"vague"}},{"answerValue":null,"value":"Arthur
+        Shaw","valueBool":null,"valueDate":null,"valueLong":null,"valueDouble":null,"isEnabled":true,"entity":{"identifying":true,"label":"Pr\u00E9nom
+        et nom du chef de m\u00E9nage","options":[],"questionText":"Pr\u00E9nom et
+        nom du chef de m\u00E9nage","scope":"INTERVIEWER","type":"TEXT","variable":"nom_prenom_cm"}},{"answerValue":null,"value":"123
+        Fake Street","valueBool":null,"valueDate":null,"valueLong":null,"valueDouble":null,"isEnabled":true,"entity":{"identifying":true,"label":"Adresse
+        (localisation) du m\u00E9nage","options":[],"questionText":"Adresse (localisation)
+        du m\u00E9nage","scope":"INTERVIEWER","type":"TEXT","variable":"localisation_menage"}}],"questionnaireId":"5495bfd5f2324b3a8a75c80056f1898e","questionnaireVersion":1,"questionnaireVariable":"menage","responsibleName":"ArthurInt123","responsibleId":"cc78158de9874d7e9cfbfb4546d2c895","responsibleRole":"INTERVIEWER","supervisorName":"ArthurSup123","status":"APPROVEDBYHEADQUARTERS","actionFlags":["CANBEUNAPPROVEDBYHQ"],"wasCompleted":true,"notAnsweredCount":84,"errorsCount":0,"createdDate":"2021-03-15T17:36:22.702Z","updateDateUtc":"2021-10-30T00:02:28.992Z","receivedByInterviewerAtUtc":null,"interviewMode":"UNKNOWN"}],"filteredCount":1}}}'
+  recorded_at: 2021-10-30 16:21:36 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0

@@ -1,0 +1,72 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>primary/api/v1/users/<<<fake_user>>>
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:22:43 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
+  recorded_at: 2021-10-30 16:22:53 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0
+- request:
+    method: get
+    uri: <<<fake_server>>>primary/api/v1/interviewers/cc78158d-e987-4d7e-9cfb-fb4546d2c895/actions-log?start=2021-01-01&end=2025-12-30
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:22:53 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '[{"Time":"2021-09-02T10:18:37.469106","Message":"User ArthurInt123
+        logged in application"},{"Time":"2021-09-02T10:18:37.469106","Message":"User
+        ArthurInt123 logged in application"},{"Time":"2021-09-02T10:14:06.383112","Message":"User
+        ArthurInt123 logged in application"},{"Time":"2021-09-02T10:14:06.383112","Message":"User
+        ArthurInt123 logged in application"},{"Time":"2021-09-02T10:14:06.282762","Message":"Installation
+        finished"},{"Time":"2021-09-02T10:14:06.282762","Message":"Installation finished"},{"Time":"2021-05-20T21:54:29.33132","Message":"Sync
+        completed: 8 new assignment(s) downloaded, 6 new interview(s) downloaded"},{"Time":"2021-05-20T21:53:34.448019","Message":"Sync
+        started (Online)"},{"Time":"2021-05-20T21:53:08.648963","Message":"User ArthurInt123
+        logged in application"},{"Time":"2021-05-20T21:53:08.574184","Message":"Installation
+        finished"}]'
+  recorded_at: 2021-10-30 16:22:53 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0

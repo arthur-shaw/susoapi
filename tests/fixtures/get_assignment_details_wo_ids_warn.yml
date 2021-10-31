@@ -1,0 +1,63 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>primary/api/v1/users/<<<fake_user>>>
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:17:52 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
+  recorded_at: 2021-10-30 16:18:10 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0
+- request:
+    method: get
+    uri: <<<fake_server>>>primary/api/v1/assignments/2
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:18:10 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Answers":[],"IdentifyingData":[],"Id":2,"ResponsibleId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","ResponsibleName":"ArthurInt123","QuestionnaireId":"5ab793ffc84a4211858df168bbd90cf9$1","InterviewsCount":1,"Quantity":2,"Archived":false,"CreatedAtUtc":"2021-03-17T16:19:23.514492Z","UpdatedAtUtc":"2021-09-02T14:14:46.292294Z","Email":null,"Password":null,"WebMode":false,"ReceivedByTabletAtUtc":"2021-09-02T14:14:46.292294Z","IsAudioRecordingEnabled":false}'
+  recorded_at: 2021-10-30 16:18:10 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0

@@ -1,0 +1,62 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>primary/api/v1/users/<<<fake_user>>>
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:16:24 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
+  recorded_at: 2021-10-30 16:16:33 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0
+- request:
+    method: post
+    uri: <<<fake_server>>>/primary/api/v1/users/
+    body:
+      encoding: ''
+      string: '{"Role":"Interviewer","UserName":"abdul134","Password":"Password12345","Supervisor":"christy094"}'
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 400
+      category: Client error
+      reason: Bad Request
+      message: 'Client error: (400) Bad Request'
+    headers:
+      cache-control: no-store, no-cache
+      content-length: '302'
+      content-type: application/problem+json; charset=utf-8
+      content-language: en-US
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:16:33 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"Errors":{"DuplicateUserName":["Please choose another username"]},"Type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","Title":"One
+        or more validation errors occurred.","Status":400,"Detail":null,"Instance":null,"Extensions":{"traceId":"00-24ca0cb215a4a147883d72566f6474db-8b387de9aa20dc42-00"}}'
+  recorded_at: 2021-10-30 16:16:33 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0

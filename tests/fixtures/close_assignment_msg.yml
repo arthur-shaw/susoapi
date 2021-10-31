@@ -1,0 +1,60 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>primary/api/v1/users/<<<fake_user>>>
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:15:24 GMT
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
+  recorded_at: 2021-10-30 16:15:32 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0
+- request:
+    method: patch
+    uri: <<<fake_server>>>/primary/api/v1/assignments/1/close
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 409
+      category: Client error
+      reason: Conflict
+      message: 'Client error: (409) Conflict'
+    headers:
+      cache-control: no-store, no-cache
+      content-language: en-US
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Sat, 30 Oct 2021 16:15:26 GMT
+      content-length: '0'
+    body:
+      encoding: UTF-8
+      file: no
+      string: ''
+  recorded_at: 2021-10-30 16:15:32 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0

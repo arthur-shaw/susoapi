@@ -15,15 +15,17 @@ test_that("Error if invalid workspace name", {
         )
     )
 })
+# TODO: re-enable once figure out an API request that can be used to check
+# whether the API user has access to a workspace or the workspace exists
 # unauthorized or non-existant workspace
-test_that("Error if unauthorized or non-existant workspace", {
-    expect_error(
-        get_user_details(
-            user_id = "cc78158d-e987-4d7e-9cfb-fb4546d2c895",
-            workspace = "fake"
-        )
-    )
-})
+# test_that("Error if unauthorized or non-existant workspace", {
+#     expect_error(
+#         get_user_details(
+#             user_id = "cc78158d-e987-4d7e-9cfb-fb4546d2c895",
+#             workspace = "fake"
+#         )
+#     )
+# })
 
 # outputs
 

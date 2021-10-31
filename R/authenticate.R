@@ -28,19 +28,22 @@ set_credentials <- function(
             renv_path
         )
 
-    }
-
     # if file does exist, remove old SuSo entries, if they exist
-    else if (file.exists(renv_path)) {
+    } else if (file.exists(renv_path)) {
 
-        old_env_vars <- readLines(con = renv_path) # ingest .Renviron file
+        # ingest .Renviron file
+        old_env_vars <- readLines(con = renv_path)
+        # identify lines that are old {susoapi} entries, if any
         suso_env_entries <- grep(pattern = "SUSO_", x = old_env_vars)
-        new_env_vars <- ifelse(
-            test = length(suso_env_entries) > 0,
-            yes = old_env_vars[-grep(pattern = "SUSO_", x = old_env_vars)],
-            no = old_env_vars
-        )
-        writeLines(text = new_env_vars, con = renv_path)
+        # return REnviron entries without old {susoapi} entries
+        # case 1: if there are entries, remove them
+        if (length(suso_env_entries) > 0) {
+            new_env_vars <-  old_env_vars[-suso_env_entries]
+        # case 2: if there are no entries, keep all entries
+        } else {
+            new_env_vars <- old_env_vars
+        }
+        writeLines(text = new_env_vars, con = renv_path, sep = "\n")
 
     }
 

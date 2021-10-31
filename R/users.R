@@ -518,8 +518,10 @@ get_user_details <- function(
 
     # workspace:
     # - invalid name
-    # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    assertthat::assert_that(
+        is_workspace_name(workspace),
+        msg = "Invalid workspace name. Please check the input for the `workspace` parameter."
+    )
 
     # form the base URL
     base_url <- paste0(

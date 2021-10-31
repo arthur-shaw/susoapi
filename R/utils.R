@@ -151,15 +151,28 @@ check_workspace_param <- function(workspace) {
     )
 
     # workspace does not exist
-    workspaces <- susoapi::get_workspaces()$Name
-    assertthat::assert_that(
-        workspace %in% workspaces,
-        msg = glue::glue(
-            "Workspace either does not exist or cannot be accessed by this user.", 
-            "Please use one of the workspaces to which the user has access: {glue::glue_collapse(workspaces, sep = ', ', last = ', ')}",
-            .sep = "\n"
+    workspace_user <- suppressMessages(
+        susoapi::get_user_details(
+            user_id = Sys.getenv("SUSO_USER"),
+            workspace = workspace,
         )
-
     )
+    assertthat::assert_that(
+        !is.null(workspace_user),
+        msg = glue::glue(
+            'User `{Sys.getenv("SUSO_USER")}` does not have access to workspace `{workspace}`.'
+        )
+    )
+
+    # workspaces <- susoapi::get_workspaces()$Name
+    # assertthat::assert_that(
+    #     workspace %in% workspaces,
+    #     msg = glue::glue(
+    #         "Workspace either does not exist or cannot be accessed by this user.", 
+    #         "Please use one of the workspaces to which the user has access: {glue::glue_collapse(workspaces, sep = ', ', last = ', ')}",
+    #         .sep = "\n"
+    #     )
+
+    # )
 
 }

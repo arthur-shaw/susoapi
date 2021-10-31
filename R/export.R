@@ -329,8 +329,6 @@ start_export <- function(
 #' @import httr
 #' @importFrom jsonlite fromJSON
 #' @importFrom purrr list_modify modify_if flatten_df
-#'
-#' @examples
 get_export_job_details <- function(
     job_id,
     workspace = "primary",

@@ -180,8 +180,8 @@ user_get_sups_count <- function(
 #'
 #' Get list of N supervisors. Wrapper for \code{GET /api/v1/supervisors} endpoint
 #'
-#' @param limit
-#' @param offset
+#' @param limit Numeric. Number of records to fetch in one request.
+#' @param offset Numeric. Offset in list of records for current request.
 #' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
@@ -350,8 +350,8 @@ user_get_ints_count <-  function(
 #' Wrapper for \code{GET /api/v1/supervisors/{supervisorId}/interviewers} endpoint
 #'
 #' @param sup_id Supervisor's user ID. GUID from server.
-#' @param limit
-#' @param offset
+#' @param limit Numeric. Number of records to fetch in one request.
+#' @param offset Numeric. Offset in list of records for current request.
 #' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
@@ -739,8 +739,6 @@ get_interviewers <- function(
 #' @export
 #'
 #' @import httr
-#'
-#' @examples
 archive_user <- function(
     user_id,
     verbose = FALSE,

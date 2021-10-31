@@ -49,11 +49,9 @@ test_that("Returns logical if `verbose = TRUE`", {
 
     vcr::use_cassette("unapprove_interview_logical", {
         x <- suppressMessages(
-            expect_message(
-                unapprove_interview(
-                    interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
-                    verbose = TRUE
-                )
+            unapprove_interview(
+                interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+                verbose = TRUE
             )
         )
     })

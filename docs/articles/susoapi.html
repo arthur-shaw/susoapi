@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">susoapi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -213,7 +213,7 @@
 
 <span class="co"># extract the user ID for the target user</span>
 <span class="co"># this will be used as a parameter for the next step</span>
-<span class="va">target_user_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">all_users</span>, <span class="va">UserName</span> <span class="op">==</span> <span class="st">"TestInt007"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">target_user_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">all_users</span>, <span class="va">UserName</span> <span class="op">==</span> <span class="st">"TestInt007"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">UserId</span><span class="op">)</span></code></pre></div>
 <p>Next, request the action log of all tablet activity for the target user.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">

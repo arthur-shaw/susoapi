@@ -23,12 +23,12 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Sat, 30 Oct 2021 16:24:14 GMT
+      date: Tue, 02 Nov 2021 12:25:31 GMT
     body:
       encoding: UTF-8
       file: no
       string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
-  recorded_at: 2021-10-30 16:24:18 GMT
+  recorded_at: 2021-11-02 12:25:32 GMT
   recorded_with: vcr/1.0.2, webmockr/0.8.0
 - request:
     method: patch
@@ -50,10 +50,10 @@ http_interactions:
       content-language: en-US
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Sat, 30 Oct 2021 16:24:18 GMT
+      date: Tue, 02 Nov 2021 12:25:31 GMT
     body:
       encoding: UTF-8
       file: no
       string: ''
-  recorded_at: 2021-10-30 16:24:18 GMT
+  recorded_at: 2021-11-02 12:25:32 GMT
   recorded_with: vcr/1.0.2, webmockr/0.8.0

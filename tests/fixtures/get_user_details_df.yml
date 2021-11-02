@@ -23,10 +23,10 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Sat, 30 Oct 2021 16:23:20 GMT
+      date: Tue, 02 Nov 2021 12:25:23 GMT
     body:
       encoding: UTF-8
       file: no
       string: '{"IsArchived":false,"UserId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","UserName":"ArthurInt123","Role":"Interviewer","IsLocked":false,"CreationDate":"2021-03-15T17:34:56.769589Z"}'
-  recorded_at: 2021-10-30 16:23:20 GMT
+  recorded_at: 2021-11-02 12:25:24 GMT
   recorded_with: vcr/1.0.2, webmockr/0.8.0

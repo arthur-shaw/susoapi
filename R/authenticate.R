@@ -130,28 +130,33 @@ check_credentials <- function(
     # by making getting the workspaces for which the user is authorized
     } else {
 
-        workspaces_df <- tryCatch(
+        credentials_valid <- tryCatch(
             error = function(cnd) {
-                data.frame(Name = NA_character_)
+                FALSE
             },
-            susoapi::get_workspaces(server = server, user = user, password = password)
+                is.data.frame(
+                    suppressMessages(
+                        susoapi::get_user_details(
+                            user_id = user,
+                            server = server,
+                            workspace = workspace,
+                            user = user,
+                            password = password
+                        )
+                    )
+                )
         )
 
-        workspaces_names <- workspaces_df$Name
-
-        credentials_valid <- (workspace %in% workspaces_names)
-
         if (credentials_valid == TRUE) {
-            workspaces_list <- glue::glue_collapse(glue::backtick(workspaces_names), sep = ", ", last = "and ")
-            message(glue::glue("Credentials valid for workspace(s) {workspaces_list}."))
+            message(glue::glue("Credentials valid for workspace `{workspace}`."))
         } else {
             message(glue::glue(
                 "Credentials invalid for workspace {glue::backtick(workspace)}.",
                 "Here are some steps to troubleshoot.", 
                 "First, `show_credentials()` to view the credentials.", 
                 "If they are incorrect, use use `set_credentials()` to correct them.",
-                "Next, check which workspace(s) the user can access.",
-                "To do so, use `get_workspaces()`.",
+                "Next, as server admin, check which workspace(s) the user can access.",
+                "If the target workspace cannot be accessed by the user, add the user.",
                 .sep = "\n"
             ))
                 

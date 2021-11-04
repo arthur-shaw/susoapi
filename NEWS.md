@@ -1,3 +1,7 @@
+# susoapi 0.1.3
+
+- Fix `check_credentials()`. Check credentials by getting API user's details rather than fetching workspaces to which the user has access. The former only requires simple API access for the workspace. The latter requires admin API access.
+
 # susoapi 0.1.2
 
 - Fix `set_credentials()`. Better managment of pre-existing `.Renviron` files. Previously, the function could delete several or all key-value pairs in `.Renviron` while adding/updating Survey Solutions entries. Now, the function preserves all prior key-value entries. Also, tests have been added to check that this function works correctly going forward. A huge thanks to @petbrueck for spotting this and suggesting a fix (#20).

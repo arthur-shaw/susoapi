@@ -1353,11 +1353,11 @@ comment_question <- function(
     # commented
     if (status == 200) {
         result <- TRUE
-        message(paste0("Question ", variable_name, " successfully commented. "))            
+        message(paste0("Question ", variable_name, " successfully commented in interview ", interview_id, "."))            
     # unknown outcome
     } else {
         result <- FALSE
-        message(paste0("Question ", interview_id, " not commented. ",
+        message(paste0("Question ", variable_name, " not commented in interview ", interview_id, ".",
             "\nReason: Unknown. HTTP code: ", status, "."))
     }
 

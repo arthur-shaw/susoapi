@@ -618,8 +618,6 @@ get_possible_interview_statuses <- function(
 #' @importFrom assertthat assert_that is.count is.flag
 #' @import httr
 #' @importFrom jsonlite toJSON
-#'
-#' @examples
 set_questionnaire_audio <- function(
     qnr_id,
     qnr_version,

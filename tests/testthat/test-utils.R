@@ -31,6 +31,19 @@ test_that("Returns TRUE if GUID valid", {
 
 })
 
+# is_user_name
+test_that("Valid user name returns TRUE", {
+
+    expect_true(is_user_name("HelloWorld123"))
+
+})
+
+test_that("Invalid user anme returns FALSE", {
+
+    expect_false(is_user_name("A1"))
+
+})
+
 # logical_to_string
 test_that("Returns correct string as a function of value", {
 

@@ -3,6 +3,7 @@ test_that("Message issued if credentials empty", {
 
     withr::local_envvar(.new = list(
         "SUSO_SERVER" = "", 
+        "SUSO_WORKSPACE" = "",
         "SUSO_USER" = "", 
         "SUSO_PASSWORD" = ""))
 
@@ -21,6 +22,7 @@ test_that("Message issued if credentials wrong", {
 
     withr::local_envvar(.new = list(
         "SUSO_SERVER" = "https://demo.mysurvey.solutions", 
+        "SUSO_WORKSPACE" = "fakespace",
         "SUSO_USER" = "FakeX1", 
         "SUSO_PASSWORD" = "Fake123456"))
 
@@ -39,6 +41,7 @@ test_that("Returns logical if verbose = TRUE", {
 
     withr::local_envvar(.new = list(
         "SUSO_SERVER" = "https://demo.mysurvey.solutions", 
+        "SUSO_WORKSPACE" = "fakespace",
         "SUSO_USER" = "FakeX1", 
         "SUSO_PASSWORD" = "Fake123456"))
 

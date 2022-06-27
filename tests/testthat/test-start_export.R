@@ -22,6 +22,30 @@ test_that("Error issued if `interview_status` not in expected set of values", {
         interview_status = "Something completely different"))
 })
 
+# from
+test_that("Error if `from` provided invalid date", {
+    expect_error(
+        start_export(
+            qnr_id = "5495bfd5f2324b3a8a75c80056f1898e$1", 
+            export_type = "STATA", 
+            from = "2020-02-30",
+            to = "2020-03-01"
+        )
+    )
+})
+
+# to
+test_that("Error if `to` provided invalid date", {
+    expect_error(
+        start_export(
+            qnr_id = "5495bfd5f2324b3a8a75c80056f1898e$1", 
+            export_type = "STATA", 
+            from = "2020-02-22",
+            to = "2020-02-30"
+        )
+    )
+})
+
 # storage_type
 test_that("Error issued if `storage_type` not in expected set of values", {
     expect_error(start_export(

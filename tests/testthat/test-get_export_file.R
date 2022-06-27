@@ -17,7 +17,13 @@ test_that("Error if `job_id` invalid format", {
 })
 
 # verbose
-# TODO: add check that
+test_that("Error if `verbose` invalid value", {
+    expect_error(get_export_file(
+        job_id = "1",
+        path = vcr::vcr_test_path("fixtures"),
+        verbose = "TRUE"
+    ))
+})
 
 # workspace
 # invalid workspace name

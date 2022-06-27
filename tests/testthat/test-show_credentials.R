@@ -3,6 +3,7 @@ test_that("Message issued on function execution", {
 
     withr::local_envvar(.new = list(
         "SUSO_SERVER" = "https://demo.mysurvey.solutions", 
+        "SUSO_WORKSPACE" = "fakespace",
         "SUSO_USER" = "FakeX1", 
         "SUSO_PASSWORD" = "Fake123456"))
 
@@ -21,6 +22,7 @@ test_that("Message contains all input credentials", {
 
     withr::local_envvar(.new = list(
         "SUSO_SERVER" = "https://demo.mysurvey.solutions", 
+        "SUSO_WORKSPACE" = "fakespace",
         "SUSO_USER" = "FakeX1", 
         "SUSO_PASSWORD" = "Fake123456"))
 
@@ -31,8 +33,9 @@ test_that("Message contains all input credentials", {
     # ))
 
 
-    expect_message(show_credentials(), "https://demo.mysurvey.solutions")
-    expect_message(show_credentials(), "FakeX1")
-    expect_message(show_credentials(), "Fake123456")
+    expect_message(show_credentials(), "- server: https://demo.mysurvey.solutions")
+    expect_message(show_credentials(), "- workspace: fakespace")
+    expect_message(show_credentials(), "- user: FakeX1")
+    expect_message(show_credentials(), "- password: Fake123456")
 
 })

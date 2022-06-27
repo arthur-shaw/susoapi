@@ -7,6 +7,18 @@ test_that("Issues error if `interview_id` is invalid form", {
 
 })
 
+# verbose
+test_that("Issues error if `verbose` is invalid type", {
+
+    expect_error(
+        reject_interview_as_hq(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            verbose = "TRUE"
+        )
+    )
+
+})
+
 # workspace
 # invalid workspace name
 test_that("Error if invalid workspace name", {

@@ -1,4 +1,4 @@
-# store .REnviron
+# store .REnviron so that can be reset after tests
 my_home_path <- Sys.getenv("HOME")
 my_renv_path <- file.path(my_home_path, ".Renviron")
 
@@ -11,6 +11,7 @@ test_that("Creates .REnviron file if none exists", {
     suppressMessages(
         set_credentials(
             server = "https://demo.mysurvey.solutions", 
+            workspace = "fakespace",
             user = "FakeX1", 
             password = "Fake123456"
         )
@@ -31,6 +32,7 @@ test_that("Updated REnviron contains SuSo API credentials and old entries", {
         'ONE="TWO"',
         'THREE="FOUR"',
         'SUSO_SERVER = "https://demo.mysurvey.solutions"', 
+        'SUSO_WORKSPACE = "fakespace"',
         'SUSO_USER = "FakeX1"', 
         'SUSO_PASSWORD = "Fake123456"'
     )
@@ -45,20 +47,22 @@ test_that("Updated REnviron contains SuSo API credentials and old entries", {
     suppressMessages(
         set_credentials(
             server = "https://example.com",
+            workspace = "wspace",
             user = "me",
             password = "you2"
         )
     )
     fake_new_r_environ <- c(
         'SUSO_SERVER = "https://example.com"',
+        'SUSO_WORKSPACE = "wspace"',
         'SUSO_USER = "me"',
         'SUSO_PASSWORD = "you2"'        
     )
     updated_r_environ <- readLines(my_renv_path)
     # all old non-SuSo entries are in new .REnviron
     testthat::expect_true(all(fake_old_r_environ[1:2] %in% updated_r_environ))
-    # all 
-    all(fake_new_r_environ %in%updated_r_environ)
+    # all new fake entries are also in the new .REnviron
+    all(fake_new_r_environ %in% updated_r_environ)
 
 })
 
@@ -68,6 +72,7 @@ test_that("Message issued after function executed", {
     expect_message(
         set_credentials(
             server = "https://demo.mysurvey.solutions", 
+            workspace = "fakespace",
             user = "FakeX1", 
             password = "Fake123456"
         )        
@@ -75,19 +80,23 @@ test_that("Message issued after function executed", {
 
 })
 
-# restore .REnvrion from before test
+# restore .REnvrion from before tests
 extract_credential <- function(r_environ, credential) {
     
     credential_line <- grep(pattern = paste0("^SUSO_", credential), x = r_environ)
     credential_entry <- r_environ[credential_line]
     credential_value <- stringr::str_extract(credential_entry, pattern = '(?<=[\"|\']).+(?=[\"|\'])')
 }
+
 suso_server <- extract_credential(r_environ = my_r_environ, credential = "SERVER")
+suso_workspace <- extract_credential(r_environ = my_r_environ, credential = "WORKSPACE")
 suso_user <- extract_credential(r_environ = my_r_environ, credential = "USER")
 suso_password <- extract_credential(r_environ = my_r_environ, credential = "PASSWORD")
 writeLines(text = my_r_environ, con = my_renv_path)
+
 set_credentials(
     server = suso_server,
+    workspace = suso_workspace,
     user = suso_user,
     password = suso_password
 )

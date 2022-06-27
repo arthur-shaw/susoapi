@@ -5,6 +5,14 @@ test_that("Error if `job_id` not numeric", {
     expect_error(cancel_export(job_id = "abc"))
 })
 
+# verbose
+test_that("Error if `verbose` invalid value", {
+    expect_error(cancel_export(
+        job_id = "1",
+        verbose = "TRUE"
+    ))
+})
+
 # workspace
 # invalid name
 test_that("Error if invalid workspace name", {

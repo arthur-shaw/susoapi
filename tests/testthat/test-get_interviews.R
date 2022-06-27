@@ -8,10 +8,29 @@ test_that("issues error if invalid workspace name", {
 
 })
 
+# nodes
+# ... invalid values
+test_that("Error if invalid name in `nodes`", {
+
+    expect_error(
+        get_interviews(nodes = c("id", "fakeNode"))
+    )
+
+})
+# ... `id` missing
+test_that("Error if invalid name in `nodes`", {
+
+    expect_error(
+        get_interviews(nodes = c("key", "assignmentId"))
+    )
+
+})
+
 # outputs
 test_that("returns data frame with expected columns", {
 
     vcr::use_cassette("get_interviews_df", {
+        # implicitly, return all nodes, since this is the default for the `nodes` param
         x <- get_interviews()
     })
 

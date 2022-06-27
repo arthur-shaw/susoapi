@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: get
-    uri: <<<fake_server>>>primary/api/v1/users/<<<fake_user>>>
+    uri: <<<fake_server>>><<fake workspace>>/api/v1/users/<<<fake_user>>>
     body:
       encoding: ''
       string: ''
@@ -23,16 +23,16 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Tue, 02 Nov 2021 12:24:32 GMT
+      date: Mon, 27 Jun 2022 13:34:55 GMT
     body:
       encoding: UTF-8
       file: no
       string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
-  recorded_at: 2021-11-02 12:24:34 GMT
+  recorded_at: 2022-06-27 13:34:56 GMT
   recorded_with: vcr/1.0.2, webmockr/0.8.0
 - request:
     method: get
-    uri: <<<fake_server>>>primary/api/v1/assignments/1
+    uri: <<<fake_server>>><<fake workspace>>/api/v1/assignments/1
     body:
       encoding: ''
       string: ''
@@ -54,7 +54,7 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Tue, 02 Nov 2021 12:24:32 GMT
+      date: Mon, 27 Jun 2022 13:34:55 GMT
     body:
       encoding: UTF-8
       file: no
@@ -62,6 +62,6 @@ http_interactions:
         Shaw"},"Variable":"nom_prenom_cm"},{"Identity":{"Id":"03b3efa6-8120-73c2-a606-0791c40865b3","RosterVector":[]},"Answer":{"Value":"123
         Fake Street"},"Variable":"localisation_menage"}],"IdentifyingData":[{"Identity":"167a2b44fce91e33476eb158e6616154","Variable":"grappe","Answer":"1"},{"Identity":"8071e455d26428b5f7f72cfa505a1a03","Variable":"id_menage","Answer":"1"},{"Identity":"442fecea5ce1664fd340a2780b3671ba","Variable":"vague","Answer":"3"},{"Identity":"48aa58a76675483f487e79ec24a404b3","Variable":"nom_prenom_cm","Answer":"Arthur
         Shaw"},{"Identity":"03b3efa6812073c2a6060791c40865b3","Variable":"localisation_menage","Answer":"123
-        Fake Street"}],"Id":1,"ResponsibleId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","ResponsibleName":"ArthurInt123","QuestionnaireId":"5495bfd5f2324b3a8a75c80056f1898e$1","InterviewsCount":1,"Quantity":1,"Archived":true,"CreatedAtUtc":"2021-03-15T17:35:54.255419Z","UpdatedAtUtc":"2021-11-02T12:24:10.059493Z","Email":null,"Password":null,"WebMode":false,"ReceivedByTabletAtUtc":null,"IsAudioRecordingEnabled":true}'
-  recorded_at: 2021-11-02 12:24:34 GMT
+        Fake Street"}],"Id":1,"ResponsibleId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","ResponsibleName":"ArthurInt123","QuestionnaireId":"5495bfd5f2324b3a8a75c80056f1898e$1","InterviewsCount":1,"Quantity":1,"Archived":true,"CreatedAtUtc":"2021-03-15T17:35:54.255419Z","UpdatedAtUtc":"2022-06-27T13:34:25.142202Z","Email":null,"Password":null,"WebMode":false,"ReceivedByTabletAtUtc":null,"IsAudioRecordingEnabled":true}'
+  recorded_at: 2022-06-27 13:34:56 GMT
   recorded_with: vcr/1.0.2, webmockr/0.8.0

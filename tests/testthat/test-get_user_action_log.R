@@ -10,10 +10,26 @@ test_that("If invalid `user_id`, issue error", {
 })
 
 # start
-# TODO: add test once check implemented in function
+test_that("Error if invalid workspace name", {
+    expect_error(
+        get_user_action_log(
+            user_id = "cc78158d-e987-4d7e-9cfb-fb4546d2c895", 
+            start = "2021-02-30",
+            end = "2025-12-30"
+        )
+    )
+})
 
 # end
-# TODO: add test once check implemented in function
+test_that("Error if invalid workspace name", {
+    expect_error(
+        get_user_action_log(
+            user_id = "cc78158d-e987-4d7e-9cfb-fb4546d2c895", 
+            start = "2021-02-22",
+            end = "2025-12-40"
+        )
+    )
+})
 
 # workspace
 # invalid workspace name
@@ -42,7 +58,7 @@ test_that("Error if unauthorized or non-existant workspace", {
 # outputs
 
 # message
-test_that("Returns log", {
+test_that("Message about logs", {
 
     vcr::use_cassette("get_user_action_log_msg", {
         expect_message(

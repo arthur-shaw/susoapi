@@ -8,7 +8,15 @@ test_that("Issues error if `user_id` is not GUID", {
 })
 
 # verbose
-# TODO: add after check added to function, and other functions like this
+test_that("Error if invalid workspace name", {
+    expect_error(
+        unarchive_user(
+            user_id = "cc78158d-e987-4d7e-9cfb-fb4546d2c895", 
+            verbose = "TRUE"
+        )
+    )
+})
+
 
 # workspace
 # invalid workspace name

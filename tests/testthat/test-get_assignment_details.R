@@ -18,7 +18,7 @@ test_that("Error if invalid workspace name", {
 
 })
 # unauthorized or non-existent workspace
-test_that("Error if invalid workspace name", {
+test_that("Error if non-existent workspace", {
 
     expect_error(
         get_assignment_details(

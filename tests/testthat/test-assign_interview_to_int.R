@@ -10,6 +10,18 @@ test_that("Issues error if `interview_id` is invalid form", {
 
 })
 
+# verbose
+test_that("Issues error if `verbose` is invalid value", {
+
+    expect_error(
+        assign_interview_to_int(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            verbose = "TRUE"
+        )
+    )
+
+})
+
 # user_id
 test_that("Issues error if `user_id` is invalid form", {
 

@@ -1,17 +1,50 @@
 
-# invalid inputs
+# INVALID INPUTS
 
 # TODO: Test these inputs
 # search_by
-# qnr_id
-# qnr_version
-# responsible
-# supervisor_id
-# show_archive
 # order
 # server
 # user
 # password
+
+# qnr_id
+test_that("Error if invalid questionnaire GUID", {
+    expect_error(
+        get_assignments(qnr_id = "123")
+    )
+})
+
+# qnr_version
+test_that("Error if invalid questionnaire version", {
+    expect_error(
+        get_assignments(
+            qnr_id = "5495bfd5-f232-4b3a-8a75-c80056f1898e",
+            qnr_version = "a"
+        )
+    )
+})
+
+# responsible
+test_that("Error if invalid responsible GUID", {
+    expect_error(
+        get_assignments(responsible = "a1")
+    )
+})
+
+# supervisor_id
+test_that("Error if invalid supervisor GUID", {
+    expect_error(
+        get_assignments(supervisor_id = "a1")
+    )
+})
+
+# show_archive
+test_that("Error if non-Boolean value for `show_archive`", {
+    expect_error(
+        get_assignments(show_archive = "false")
+    )
+})
 
 # workspace
 # invalid workspace name
@@ -27,7 +60,7 @@ test_that("Error if invalid workspace name", {
     )
 })
 
-# outputs
+# OUTPUTS
 
 # ... when there are results
 

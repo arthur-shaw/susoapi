@@ -23,12 +23,12 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Tue, 02 Nov 2021 12:25:26 GMT
+      date: Mon, 27 Jun 2022 13:35:50 GMT
     body:
       encoding: UTF-8
       file: no
-      string: '{"Workspaces":[{"Name":"another","DisplayName":"Another workspace","DisabledAtUtc":null}],"Order":null,"Limit":1,"TotalCount":4,"Offset":0}'
-  recorded_at: 2021-11-02 12:25:26 GMT
+      string: '{"Workspaces":[{"Name":"another","DisplayName":"Another workspace","DisabledAtUtc":null}],"Order":null,"Limit":1,"TotalCount":7,"Offset":0}'
+  recorded_at: 2022-06-27 13:35:50 GMT
   recorded_with: vcr/1.0.2, webmockr/0.8.0
 - request:
     method: get
@@ -54,12 +54,12 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Tue, 02 Nov 2021 12:25:26 GMT
+      date: Mon, 27 Jun 2022 13:35:50 GMT
     body:
       encoding: UTF-8
       file: no
-      string: '{"Workspaces":[{"Name":"another","DisplayName":"Another workspace","DisabledAtUtc":null},{"Name":"primary","DisplayName":"Default
-        Workspace","DisabledAtUtc":null},{"Name":"uemoa","DisplayName":"EHCVM2","DisabledAtUtc":null},{"Name":"unhis","DisplayName":"UHIS
-        testing","DisabledAtUtc":null}],"Order":null,"Limit":20,"TotalCount":4,"Offset":0}'
-  recorded_at: 2021-11-02 12:25:26 GMT
+      string: '{"Workspaces":[{"Name":"another","DisplayName":"Another workspace","DisabledAtUtc":null},{"Name":"bahamas","DisplayName":"Bahamas","DisabledAtUtc":null},{"Name":"ftf","DisplayName":"FtF","DisabledAtUtc":null},{"Name":"<<fake workspace>>","DisplayName":"Default
+        Workspace","DisabledAtUtc":null},{"Name":"test","DisplayName":"Ce est un test","DisabledAtUtc":null},{"Name":"uemoa","DisplayName":"EHCVM2","DisabledAtUtc":null},{"Name":"unhis","DisplayName":"UHIS
+        testing","DisabledAtUtc":null}],"Order":null,"Limit":20,"TotalCount":7,"Offset":0}'
+  recorded_at: 2022-06-27 13:35:50 GMT
   recorded_with: vcr/1.0.2, webmockr/0.8.0

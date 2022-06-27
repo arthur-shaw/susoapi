@@ -1,5 +1,17 @@
 # invalid inputs
 
+# verbose
+test_that("Issues error if `verbose` is invalid value", {
+
+    expect_error(
+        approve_interview_as_sup(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            verbose = "TRUE"
+        )
+    )
+
+})
+
 # interview ID
 test_that("Issues error if `interview_id` is invalid form", {
 

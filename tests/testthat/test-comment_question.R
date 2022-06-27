@@ -23,6 +23,21 @@ test_that("Issues error if `row_vector` is not right content/format", {
 
 })
 
+# verbose
+test_that("Issues error if `verbose` is invalid value", {
+
+    expect_error(
+        comment_question(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            variable_name = "NOM_PRENOMS", 
+            roster_vector = "1", 
+            comment = "Comment",
+            verbose = "TRUE"
+        )
+    )
+
+})
+
 # workspace
 # invalid workspace name
 test_that("Error if invalid workspace name", {

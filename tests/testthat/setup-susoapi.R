@@ -4,9 +4,16 @@ library("vcr") # *Required* as vcr is set up on loading
 vcr_dir <- vcr::vcr_test_path("fixtures")
 
 # if credentials are empty, replace with fake values to spoof functions for testing
-if (!nzchar(Sys.getenv("SUSO_SERVER")) & !nzchar(Sys.getenv("SUSO_USER")) & !nzchar(Sys.getenv("SUSO_PASSWORD"))) {
+if (
+  !nzchar(Sys.getenv("SUSO_SERVER")) & 
+  !nzchar(Sys.getenv("SUSO_WORKSPACE")) &  
+  !nzchar(Sys.getenv("SUSO_USER")) & 
+  !nzchar(Sys.getenv("SUSO_PASSWORD"))
+  ) 
+{
   if (dir.exists(vcr_dir)) {
     Sys.setenv("SUSO_SERVER" = "<<fake_server>>")
+    Sys.setenv("SUSO_WORKSPACE" = "<<fake workspace>>")
     Sys.setenv("SUSO_USER" = "<<fake_user>>")
     Sys.setenv("SUSO_PASSWORD" = "<<fake_password>>")
   } else {
@@ -20,6 +27,7 @@ invisible(vcr::vcr_configure(
   dir = vcr::vcr_test_path("fixtures"),
   filter_sensitive_data = list(
     "<<<fake_server>>>" = Sys.getenv('SUSO_SERVER'),
+    "<<fake workspace>>" = Sys.getenv('SUSO_WORKSPACE'),
     "<<<fake_user>>>" = Sys.getenv('SUSO_USER'),
     "<<<fake_password>>>" = Sys.getenv('SUSO_PASSWORD')
   ), 

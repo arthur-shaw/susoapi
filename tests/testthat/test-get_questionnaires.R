@@ -14,7 +14,7 @@ test_that("issues error if invalid workspace name", {
 test_that("Returns df with expected columns", {
 
     vcr::use_cassette("get_questionnaires_df", {
-        x <- get_questionnaires(workspace = "primary")
+        x <- get_questionnaires()
     })
 
     # is a data frame

@@ -29,6 +29,18 @@ test_that("Issues error if `user_id` and `user_name` empty", {
 
 })
 
+# verbose
+test_that("Issues error if `verbose` is invalid type", {
+
+    expect_error(
+        assign_interview_to_sup(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            verbose = "TRUE"
+        )
+    )
+
+})
+
 # workspace
 # invalid workspace name
 test_that("Error if invalid workspace name", {

@@ -23,6 +23,19 @@ test_that("If interviewer, supervisor must be non-empty", {
 # user password
 # TODO: Add check that confirms pattern followed
 
+# verbose
+test_that("Error if invalid workspace name", {
+    expect_error(
+        create_user(
+            role = "Interviewer", 
+            user_name = "abdul134",
+            user_password = "Password12345",
+            supervisor = "christy094",
+            verbose = "TRUE"
+        )
+    )
+})
+
 # workspace
 # invalid workspace name
 test_that("Error if invalid workspace name", {

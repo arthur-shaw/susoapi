@@ -185,10 +185,10 @@ get_questionnaire_document <- function(
     # post request and download file
     response <- httr::GET(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json(),
-        write_disk(fs::path(path, "document.json"), overwrite = TRUE)
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json(),
+        httr::write_disk(fs::path(path, "document.json"), overwrite = TRUE)
     )
 
     # display message about outcome
@@ -665,9 +665,9 @@ set_questionnaire_audio <- function(
         url = base_url,
         body = jsonlite::toJSON(body, auto_unbox = TRUE),
         encode = "raw",
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # return success (TRUE/FALSE) and, if applicable, and error message.

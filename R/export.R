@@ -111,9 +111,9 @@ get_export_jobs <- function(
     # get assignments from the server
     response <- httr::GET(
         url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # return list of jobs, converting empty list into empty df
@@ -281,9 +281,9 @@ start_export <- function(
     response <- httr::POST(
         url = base_url,
         body = jsonlite::toJSON(body, auto_unbox = TRUE),
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # return job ID of started export process
@@ -365,9 +365,9 @@ get_export_job_details <- function(
     # send and get response
     response <- httr::GET(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # return details
@@ -460,9 +460,9 @@ cancel_export <- function(
     # send request
     response <- httr::DELETE(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # return result of operation
@@ -558,10 +558,10 @@ get_export_file <- function(
     # request redirect link
     response_redir <- httr::GET(
         url = base_url,
-        authenticate(user = user, password = password),
-  		accept_json(),
-  		content_type_json(),
-        config(                     # use curl options to:
+        httr::authenticate(user = user, password = password),
+  		httr::accept_json(),
+  		httr::content_type_json(),
+        httr::config(               # use curl options to:
             followlocation = 0L     # NOT follow redirects
         )
     )
@@ -576,10 +576,10 @@ get_export_file <- function(
 
         response <- httr::GET(
             url = base_url,
-            authenticate(user = user, password = password),
-            accept_json(),
-            content_type_json(),
-            write_disk(fs::path(path, file_name), overwrite = TRUE)
+            httr::authenticate(user = user, password = password),
+            httr::accept_json(),
+            httr::content_type_json(),
+            httr::write_disk(fs::path(path, file_name), overwrite = TRUE)
         )
 
         # extract file name from response header
@@ -604,7 +604,7 @@ get_export_file <- function(
         # follow redirect url and download file
         response <- httr::GET(
             url = redirect_url,
-            write_disk(fs::path(path, "temp.zip"), overwrite = TRUE)
+            httr::write_disk(fs::path(path, "temp.zip"), overwrite = TRUE)
         )
 
         # extract file name from response header

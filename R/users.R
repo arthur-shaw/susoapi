@@ -84,9 +84,9 @@ get_user_action_log <- function(
     # send request
     response <- httr::GET(
         url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # parse response
@@ -173,9 +173,9 @@ user_get_sups_count <- function(
     # post request
     response <- httr::GET(
         url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # return total count
@@ -230,9 +230,9 @@ user_get_list_sups <- function(
     # post request
     response <- httr::GET(
         url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # return supervisor list
@@ -342,9 +342,9 @@ user_get_ints_count <-  function(
     # post request
     response <- httr::GET(
         url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # return total count
@@ -407,9 +407,9 @@ user_get_list_ints <- function(
     # post request
     response <- httr::GET(
         url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # return interviewers
@@ -540,9 +540,9 @@ get_user_details <- function(
     # post request
     response <- httr::GET(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # provide message according to outcome
@@ -788,9 +788,9 @@ archive_user <- function(
     # oatch archive status on server
     response <- httr::PATCH(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if verbose mode, return result and print message
@@ -887,9 +887,9 @@ unarchive_user <- function(
     # patch archive status on server
     response <- httr::PATCH(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if verbose mode, return result and print message
@@ -1025,9 +1025,9 @@ create_user <- function(
     response <- httr::POST(
         url = base_url,
         body = jsonlite::toJSON(body, auto_unbox = TRUE),
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if verbose mode, return result and print message

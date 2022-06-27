@@ -10,11 +10,11 @@
 #' 
 #' Wrapper for the `DELETE ​/api​/v1​/interviews​/{id}` endpoint.
 #' 
-#' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param interview_id Character. Interview ID. GUID from server or \code{interview__id} from exported data
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #' 
 #' @import httr
 #' 
@@ -32,7 +32,8 @@ delete_interview <- function(
     # interview_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
 
     # workspace:
     # - invalid name
@@ -93,10 +94,10 @@ delete_interview <- function(
 
 #' Get count of interviews
 #' 
-#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Charater. API or admin user name for user that access to the workspace.
-#' @param password API or admin password
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API or admin user name for user that access to the workspace.
+#' @param password Character. API or admin password
 #' 
 #' @return List consisting of two element: interviews information and interview count
 #' 
@@ -152,13 +153,13 @@ get_interviews_count <- function(
 
 #' Get chuck of interviews returned from the server
 #' 
-#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param take_n Numeric. Number of interviews to take in one request.
 #' @param skip_n Numeric. Number of interviews to skip when paging through results.
 #' @param nodes Character vector. Names of attributes to fetch for each interview.
 #' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Charater. API or admin user name for user that access to the workspace.
-#' @param password API or admin password
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API or admin user name for user that access to the workspace.
+#' @param password Character. API or admin password
 #' 
 #' @return Data frame. Interviews.
 #' 
@@ -339,12 +340,14 @@ get_interviews_by_chunk <- function(
 #' 
 #' GraphQL implementation of deprecated REST `GET ​/api​/v1​/interviews​/{id}` endpoint.
 #' 
-#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param nodes Character vector. Names of attributes to fetch for each interview.
 #' @param chunk_size Numeric. Number of records to take in one request.
 #' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Charater. API or admin user name for user that access to the workspace.
-#' @param password API or admin password
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API or admin user name for user that access to the workspace.
+#' @param password Character. API or admin password
+#' 
+#' @return Data frame of interviews and their (user-specified) attributes.
 #' 
 #' @importFrom assertthat assert_that
 #' @importFrom purrr map_dfr
@@ -476,11 +479,11 @@ get_interviews <- function(
 #' 
 #' Wrapper for \code{GET /api/v1/interviews/{id}/stats} endpoint
 #'
-#' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param interview_id Character. Interview ID. GUID from server or \code{interview__id} from exported data
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Data frame with all values provided by the server. 
 #' 
@@ -500,7 +503,8 @@ get_interview_stats <- function(
     # interview_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
 
     # workspace:
     # - invalid name
@@ -517,9 +521,9 @@ get_interview_stats <- function(
     # get stats from the server
     response <- httr::GET(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # return data payload
@@ -632,9 +636,9 @@ approve_interview_as_sup <- function(
     # get assignments from the server
     response <- httr::PATCH(
         url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if verbose mode, return result and print message
@@ -763,9 +767,9 @@ assign_interview_to_int <- function(
         url = base_url,
         body = jsonlite::toJSON(body, auto_unbox = TRUE),
         encode = "raw",
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if verbose, return success (TRUE/FALSE) and, if applicable and message.
@@ -900,9 +904,9 @@ assign_interview_to_sup <- function(
         url = base_url,
         body = jsonlite::toJSON(body, auto_unbox = TRUE),
         encode = "raw",
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if verbose, return success (TRUE/FALSE) and, if applicable and message.
@@ -1010,9 +1014,9 @@ approve_interview_as_hq <- function(
     # get assignments from the server
     response <- httr::PATCH(
         url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if verbose mode, return result and print message
@@ -1124,9 +1128,9 @@ reject_interview_as_hq <- function(
     # get assignments from the server
     response <- httr::PATCH(
         url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if verbose mode, return result and print message
@@ -1229,9 +1233,9 @@ unapprove_interview <- function(
     # get assignments from the server
     response <- httr::PATCH(
         url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if verbose mode, return result and print message
@@ -1474,9 +1478,9 @@ comment_question <- function(
     # make request
     response <- httr::POST(
         url = url,
-        authenticate(user = user, password = password),
-        accept_json(),
-        content_type_json()
+        httr::authenticate(user = user, password = password),
+        httr::accept_json(),
+        httr::content_type_json()
     )
 
     # return result

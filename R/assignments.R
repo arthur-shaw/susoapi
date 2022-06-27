@@ -76,9 +76,9 @@ get_assignment_count <- function(
     # get assignments from the server
     response <- httr::GET(
         url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if non-200 code returned, fail loudly
@@ -176,9 +176,9 @@ get_assignment_batch <- function(
     # get assignments from the server
     response <- httr::GET(
         url = url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # return assignments
@@ -400,9 +400,9 @@ get_assignment_details <- function(
     # get assignments from the server
     response <- httr::GET(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # transform details into rectangular data set
@@ -486,9 +486,9 @@ get_assignment_quantity_setting <- function(
     # get assignments from the server
     response <- httr::GET(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     response_code <- httr::status_code(response)
@@ -648,9 +648,9 @@ check_assignment_audio <- function(
     # get audio from the server
     response <- httr::GET(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
 
@@ -757,9 +757,9 @@ set_assignment_audio <- function(
     response <- httr::PATCH(
         url = base_url,
         body = jsonlite::toJSON(body, auto_unbox = TRUE),
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # return success (TRUE/FALSE) and, if applicable, and error message.
@@ -827,9 +827,9 @@ archive_assignment <- function(
     # get assignments from the server
     response <- httr::PATCH(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if verbose, return whether operation was successful or not        
@@ -1089,9 +1089,9 @@ unarchive_assignment <- function(
     # get assignments from the server
     response <- httr::PATCH(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if verbose, return whether operation was successful or not 
@@ -1162,9 +1162,9 @@ close_assignment <- function(
     # get assignments from the server
     response <- httr::PATCH(
         url = base_url,
-        authenticate(user = user, password = password),
-		accept_json(),
-		content_type_json()
+        httr::authenticate(user = user, password = password),
+		httr::accept_json(),
+		httr::content_type_json()
     )
 
     # if verbose, return whether operation was successful or not

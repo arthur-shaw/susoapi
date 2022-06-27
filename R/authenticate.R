@@ -2,15 +2,17 @@
 #'
 #' Stores server access credentials for later use. For the current session, credentials are accessible in environment variables. For future sessions, credentials are stored in the .Renviron and loaded upon startup. While functions in this package automatically load the credential set in this way, the credentials can also be accessed via the `Sys.getenv` function and using the credential name SUSO_SERVER (server address), SUSO_USER (API user name), SUSO_PASSWORD (API user password)
 #'
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Workspace name. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
-#' @return Environment variables `SUSO_SERVER`, `SUSO_USER`, `SUSO_PASSWORD`
+#' @return Environment variables `SUSO_SERVER`, `SUSO_WORKSPACE`, `SUSO_USER`, `SUSO_PASSWORD`
 #' 
 #' @export
 set_credentials <- function(
     server,
+    workspace,
     user,
     password
 ) {
@@ -50,10 +52,12 @@ set_credentials <- function(
     # write credentials to .Renviron
     # construct entries
     server_entry <- paste0("SUSO_SERVER = '", server, "'")
+    workspace_entry <- paste0("SUSO_WORKSPACE = '", workspace, "'")
     user_entry <- paste0("SUSO_USER = '", user, "'")
     password_entry <- paste0("SUSO_PASSWORD = '", password, "'")
     # append entries to .Renviron
     write(server_entry, file = renv_path, append = TRUE, sep = "\n")
+    write(workspace_entry, file = renv_path, append = TRUE, sep = "\n")
     write(user_entry, file = renv_path, append = TRUE, sep = "\n")
     write(password_entry, file = renv_path, append = TRUE, sep = "\n")
 
@@ -61,7 +65,8 @@ set_credentials <- function(
     Sys.setenv(
         SUSO_SERVER = server,
         SUSO_USER = user,
-        SUSO_PASSWORD = password
+        SUSO_PASSWORD = password,
+        SUSO_WORKSPACE = workspace
     )
 
     # inform the user that credentials have been set and what other actions, optionally, to take
@@ -89,6 +94,7 @@ show_credentials <- function() {
         paste(
         "Currently saved credentials are:",
         paste0("- server: ", Sys.getenv("SUSO_SERVER")),
+        paste0("- workspace: ", Sys.getenv("SUSO_WORKSPACE")),
         paste0("- user: ", Sys.getenv("SUSO_USER")),
         paste0("- password: ", Sys.getenv("SUSO_PASSWORD")),
         sep = "\n") 
@@ -98,7 +104,6 @@ show_credentials <- function() {
 #' Check that server credentials are valid
 #'
 #' Shows server credentials saved in environment variables and .Renviron.
-#' @param workspace Character. Name of the workspace for which credentials will be checked.
 #' @param verbose Logical. If `TRUE`, function returns logical regarding validity of credentials. If `FALSE`, function simply prints information about validity to the console.
 #' 
 #' @return If `verbose = FALSE` (default), side-effect of message printed to the console. If `verbose = TRUE`, logical: `TRUE` if credentials valid; `FALSE` otherwise.
@@ -108,17 +113,17 @@ show_credentials <- function() {
 #' 
 #' @export
 check_credentials <- function(
-    workspace = "primary",
     verbose = FALSE
 ) {
 
     # extract server, user, and password environment variables
     server      <- Sys.getenv("SUSO_SERVER")
+    workspace   <- Sys.getenv("SUSO_WORKSPACE")
     user        <- Sys.getenv("SUSO_USER")
     password    <- Sys.getenv("SUSO_PASSWORD")
 
     # check whether credentials are completely non-missing
-    if (server == "" | user == "" | password == "") {
+    if (server == "" | workspace == "" | user == "" | password == "") {
         
         message(paste0(
             "Credentials are missing, either entirely or partially.",

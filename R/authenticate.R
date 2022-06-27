@@ -87,8 +87,6 @@ set_credentials <- function(
 #' 
 #' @return Side-effect of message in console
 #' @export
-#'
-#' @examples
 show_credentials <- function() {
     message(
         paste(

@@ -8,26 +8,26 @@ get_questionnaire_document(
   qnr_id,
   qnr_version,
   path,
-  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
 }
 \arguments{
-\item{qnr_id}{Questionnaire ID. GUID from server}
+\item{qnr_id}{Character. Questionnaire ID. GUID from server}
 
-\item{qnr_version}{Version number of questionnaire}
+\item{qnr_version}{Numeric. Version number of questionnaire}
 
-\item{path}{Directory where export JSON representation of the questionnaire should be downloaded}
+\item{path}{Character. Directory where export JSON representation of the questionnaire should be downloaded}
 
-\item{workspace}{Character. Name of the workspace whose questionnaire document to get.}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{workspace}{Character. Name of the workspace whose questionnaire document to get. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
 
-\item{user}{API user name}
+\item{user}{Character. API user name}
 
-\item{password}{API password}
+\item{password}{Character. API password}
 }
 \description{
 Fetches JSON representation of the questionnaire. Save it to disk. Wrapper for \code{GET ​/api​/v1​/questionnaires​/{id}​/{version}​/document} endpoint

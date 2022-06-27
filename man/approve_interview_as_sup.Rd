@@ -8,26 +8,26 @@ approve_interview_as_sup(
   interview_id,
   comment = "",
   verbose = FALSE,
-  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
 }
 \arguments{
-\item{interview_id}{Interview ID. GUID from server or \code{interview__id} from exported data}
+\item{interview_id}{Character. Interview ID. GUID from server or \code{interview__id} from exported data}
 
 \item{comment}{Character. Comment to post upon approval.}
 
 \item{verbose}{Logical. If \code{verbose == TRUE}, return logical outcome.}
 
-\item{workspace}{Character. Name of the workspace whose interviews to get.}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{workspace}{Character. Name of the workspace whose interviews to get. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
 
-\item{user}{API user name}
+\item{user}{Character. API user name}
 
-\item{password}{API password}
+\item{password}{Character. API password}
 }
 \value{
 If \code{verbose = FALSE}, no return value. If \code{verbose = TRUE}, return logical outcome.

@@ -8,26 +8,26 @@ set_assignment_audio(
   id,
   enable,
   verbose,
-  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
 }
 \arguments{
-\item{id}{Assignment ID number}
+\item{id}{Number. Assignment ID number}
 
-\item{enable}{Whether to enable or disable audio--\code{TRUE} or \code{FALSE}, respectively}
+\item{enable}{Logical. Whether to enable or disable audio--\code{TRUE} or \code{FALSE}, respectively}
 
-\item{verbose}{Returns information about success of operation: message and \code{TRUE}/\code{FALSE} return value.}
+\item{verbose}{Logical. Returns information about success of operation: message and \code{TRUE}/\code{FALSE} return value.}
 
-\item{workspace}{Character. Name of the workspace whose assignments to get.}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{workspace}{Character. Name of the workspace whose assignments to get. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
 
-\item{user}{API user name}
+\item{user}{Character. API user name}
 
-\item{password}{API password}
+\item{password}{Character. API password}
 }
 \value{
 If \code{verbose = FALSE}, no return value. If \code{verbose = TRUE}, return logical outcome: \code{TRUE} if succeeded; \code{FALSE} otherwise

@@ -8,26 +8,26 @@ get_export_file(
   job_id,
   path,
   verbose = FALSE,
-  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
 }
 \arguments{
-\item{job_id}{Export job ID}
+\item{job_id}{Numeric. Export job ID}
 
-\item{path}{File path where export file should be downloaded}
+\item{path}{Character. File path where export file should be downloaded}
 
 \item{verbose}{Logical. If \code{verbose = TRUE}, return a logical value about the outcome. If \code{verbose = FALSE}, the default, simply return a message describing the outcome.}
 
-\item{workspace}{Character. Name of the workspace whose export files to get.}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{workspace}{Character. Name of the workspace whose export files to get. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
 
-\item{user}{API user name}
+\item{user}{Character. API user name}
 
-\item{password}{API password}
+\item{password}{Character. API password}
 }
 \value{
 Logical. \code{TRUE} if file successfully downloaded; \code{FALSE} otherwise.

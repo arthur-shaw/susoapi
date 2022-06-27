@@ -5,23 +5,33 @@
 \title{Get interviews}
 \usage{
 get_interviews(
-  workspace = "primary",
+  nodes = c("id", "key", "assignmentId", "identifyingData", "questionnaireId",
+    "questionnaireVersion", "questionnaireVariable", "responsibleName", "responsibleId",
+    "responsibleRole", "supervisorName", "status", "actionFlags", "wasCompleted",
+    "notAnsweredCount", "errorsCount", "createdDate", "updateDateUtc",
+    "receivedByInterviewerAtUtc", "interviewMode"),
   chunk_size = 100,
   server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
 }
 \arguments{
-\item{workspace}{Character. Name of the workspace whose interviews to get.}
+\item{nodes}{Character vector. Names of attributes to fetch for each interview.}
 
 \item{chunk_size}{Numeric. Number of records to take in one request.}
 
 \item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{user}{Charater. API or admin user name for user that access to the workspace.}
+\item{workspace}{Character. Name of the workspace whose interviews to get. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
 
-\item{password}{API or admin password}
+\item{user}{Character. API or admin user name for user that access to the workspace.}
+
+\item{password}{Character. API or admin password}
+}
+\value{
+Data frame of interviews and their (user-specified) attributes.
 }
 \description{
 Get list of interviews and their attributes

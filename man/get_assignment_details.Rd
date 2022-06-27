@@ -6,8 +6,8 @@
 \usage{
 get_assignment_details(
   id,
-  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
@@ -15,9 +15,9 @@ get_assignment_details(
 \arguments{
 \item{id}{Integer. Assignment ID}
 
-\item{workspace}{Character. Name of the workspace whose assginment details to get.}
-
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})server}
+
+\item{workspace}{Character. Name of the workspace whose assginment details to get. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
 
 \item{user}{API user name}
 

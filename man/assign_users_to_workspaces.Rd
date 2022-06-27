@@ -20,11 +20,11 @@ assign_users_to_workspaces(
 
 \item{action}{Character. One of the following: Assign, Add, Remove.}
 
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{user}{Admin user name}
+\item{user}{Character. Admin user name}
 
-\item{password}{Admin password}
+\item{password}{Character. Admin password}
 }
 \description{
 Manage which users are present in which workspaces. For now, only headquarters and API users may be managed. Actions available: assign, add, and remove. The assign action moves a user to the target workspace (exclusively). The add action adds the user to the workspace while keeping them in previously assigned workspaces. The remove action removes them from the target workspace.

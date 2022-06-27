@@ -5,10 +5,10 @@
 #' 
 #' GraphQL implementation of the deprecated REST `GET​/api​/v1​/questionnaires` endpoint.
 #'
-#' @param workspace Character. Name of the workspace whose questionnaires to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose questionnaires to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Data frame of questionnaires.
 #' 
@@ -131,13 +131,13 @@ get_questionnaires <- function(
 #'
 #' Fetches JSON representation of the questionnaire. Save it to disk. Wrapper for \code{GET ​/api​/v1​/questionnaires​/{id}​/{version}​/document} endpoint
 #'
-#' @param qnr_id Questionnaire ID. GUID from server
-#' @param qnr_version Version number of questionnaire
-#' @param path Directory where export JSON representation of the questionnaire should be downloaded
-#' @param workspace Character. Name of the workspace whose questionnaire document to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param qnr_id Character. Questionnaire ID. GUID from server
+#' @param qnr_version Numeric. Version number of questionnaire
+#' @param path Character. Directory where export JSON representation of the questionnaire should be downloaded
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose questionnaire document to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #' 
 #' @import httr
 #' @importFrom assertthat assert_that is.count
@@ -202,13 +202,13 @@ get_questionnaire_document <- function(
 
 #' Get count of interviews for questionnaire-version
 #' 
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param qnr_id Questionnaire ID. GUID from server.
-#' @param qnr_version Questionnaire version number.
+#' @param qnr_id Character. Questionnaire ID. GUID from server.
+#' @param qnr_version Numeric. Questionnaire version number.
 #' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Charater. API or admin user name for user that access to the workspace.
-#' @param password API or admin password
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API or admin user name for user that access to the workspace.
+#' @param password Character. API or admin password
 #' 
 #' @return List consisting of two element: interviews information and interview count
 #' 
@@ -270,14 +270,14 @@ get_interviews_for_questionnaire_count <- function(
 
 #' Get chuck of interviews returned from the server for the questionnaire-version
 #' 
-#' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param take_n Numeric. Number of interviews to take in one request.
 #' @param skip_n Numeric. Number of interviews to skip when paging through results.
-#' @param qnr_id Questionnaire ID. GUID from server.
-#' @param qnr_version Questionnaire version number.
+#' @param qnr_id Character. Questionnaire ID. GUID from server.
+#' @param qnr_version Numeric. Questionnaire version number.
 #' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Charater. API or admin user name for user that access to the workspace.
-#' @param password API or admin password
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API or admin user name for user that access to the workspace.
+#' @param password Character. API or admin password
 #' 
 #' @return Data frame. Interviews.
 #' 
@@ -459,13 +459,13 @@ get_interviews_for_questionnaire_by_chunk <- function(
 #'
 #' GraphQL implmentation for deprecated REST \code{GET /api/v1/questionnaires/{id}/{version}/interviews} endpoint
 #'
-#' @param workspace Character. Name of the workspace whose questionnaires and associated interviews to get.
 #' @param chunk_size Numeric. Number of records to take in one request.
-#' @param qnr_id Questionnaire ID. GUID from server.
-#' @param qnr_version Questionnaire version number.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param qnr_id Character. Questionnaire ID. GUID from server.
+#' @param qnr_version Numeric. Questionnaire version number.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose questionnaires and associated interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Data frame of interviews.
 #' 
@@ -555,9 +555,9 @@ get_interviews_for_questionnaire <- function(
 #' 
 #' Wrapper for the `GET ​/api​/v1​/questionnaires​/statuses` endpoint.
 #' 
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Character. API user name
+#' @param password Character. API password
 #' 
 #' @return Character vector. Names of all possible interview statuses
 #' 
@@ -604,13 +604,13 @@ get_possible_interview_statuses <- function(
 #'
 #' Sets audio recording enabled setting for provided questionnaire. Wrapper of \code{POST /api/v1/questionnaires/{id}/{version}/recordAudio} endpoint
 #'
-#' @param qnr_id Questionnaire ID. GUID from server.
-#' @param qnr_version Questionnaire version number.
-#' @param workspace Character. Name of the workspace whose questionnaire audio settings to change.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param qnr_id Character. Questionnaire ID. GUID from server.
+#' @param qnr_version Numeric. Questionnaire version number.
 #' @param enable Logical. Whether to enable. Values: c(TRUE, FALSE)
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose questionnaire audio settings to change. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return TRUE/FALSE depending on whether operation succeeded or not.
 #' @export

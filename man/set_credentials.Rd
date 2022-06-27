@@ -4,17 +4,19 @@
 \alias{set_credentials}
 \title{Set server credentials}
 \usage{
-set_credentials(server, user, password)
+set_credentials(server, workspace, user, password)
 }
 \arguments{
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{user}{API user name}
+\item{workspace}{Character. Workspace name. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
 
-\item{password}{API password}
+\item{user}{Character. API user name}
+
+\item{password}{Character. API password}
 }
 \value{
-Environment variables \code{SUSO_SERVER}, \code{SUSO_USER}, \code{SUSO_PASSWORD}
+Environment variables \code{SUSO_SERVER}, \code{SUSO_WORKSPACE}, \code{SUSO_USER}, \code{SUSO_PASSWORD}
 }
 \description{
 Stores server access credentials for later use. For the current session, credentials are accessible in environment variables. For future sessions, credentials are stored in the .Renviron and loaded upon startup. While functions in this package automatically load the credential set in this way, the credentials can also be accessed via the \code{Sys.getenv} function and using the credential name SUSO_SERVER (server address), SUSO_USER (API user name), SUSO_PASSWORD (API user password)

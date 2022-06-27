@@ -5,15 +5,15 @@
 #'
 #' Wrapper for \code{GET /api/v2/export} endpoint
 #'
-#' @param export_type Type of data to export. Values: \code{c("Tabular", "STATA", "SPSS", "Binary", "DDI", "Binary")}
-#' @param interview_status Status of interviews to export. Values: \code{c("All", "SupervisorAssigned", "InterviewerAssigned", "Completed", "RejectedBySupervisor", "ApprovedBySupervisor", "RejectedByHeadquarters", "ApprovedByHeadquarters")}
-#' @param qnr_id Questionnaire ID. Format: \code{qnr_id$version}
-#' @param export_status Status of export process. Values: \code{c("Created", "Running", "Completed", "Fail", "Canceled")}
+#' @param export_type Character. Type of data to export. Values: \code{c("Tabular", "STATA", "SPSS", "Binary", "DDI", "Binary")}
+#' @param interview_status Character. Status of interviews to export. Values: \code{c("All", "SupervisorAssigned", "InterviewerAssigned", "Completed", "RejectedBySupervisor", "ApprovedBySupervisor", "RejectedByHeadquarters", "ApprovedByHeadquarters")}
+#' @param qnr_id Character. Questionnaire ID. Format: \code{qnr_id$version}
+#' @param export_status Character. Status of export process. Values: \code{c("Created", "Running", "Completed", "Fail", "Canceled")}
 #' @param has_file Logical. Whether export file generated. 
 #' @param limit Number of results to return. Values: \code{c(1:40)}
 #' @param offset Offset in list of processes.
-#' @param workspace Character. Name of the workspace whose export jobs to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose export jobs to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
 #' @param user API user name
 #' @param password API password
 #'
@@ -154,20 +154,20 @@ get_export_jobs <- function(
 #'
 #' Wrapper for \code{POST /api/v2/export} endpoint
 #'
-#' @param export_type Type of data to export. Values: \code{c("Tabular", "STATA", "SPSS", "Binary", "DDI", "Paradata")}
-#' @param qnr_id Questionnaire ID. Format: \code{qnr_id$version}
-#' @param interview_status Status of interviews to export. Values: \code{c("All", "SupervisorAssigned", "InterviewerAssigned", "Completed", "RejectedBySupervisor", "ApprovedBySupervisor", "RejectedByHeadquarters", "ApprovedByHeadquarters")}
-#' @param from Start date for interviews to export. date-time, UTC
-#' @param to End date for interviews to export. date-time, UTC
+#' @param qnr_id Character. Questionnaire ID. Format: \code{qnr_id$version}
+#' @param export_type Character. Type of data to export. Values: \code{c("Tabular", "STATA", "SPSS", "Binary", "DDI", "Paradata")}
+#' @param interview_status Character. Status of interviews to export. Values: \code{c("All", "SupervisorAssigned", "InterviewerAssigned", "Completed", "RejectedBySupervisor", "ApprovedBySupervisor", "RejectedByHeadquarters", "ApprovedByHeadquarters")}
+#' @param from Character. Start date for interviews to export. date-time, UTC
+#' @param to Character. End date for interviews to export. date-time, UTC
 #' @param access_token Access token to external storage. Relevant only if external cloud storage is destination for the export file.
 #' @param refresh_token Refresh token to external storage.Relevant only if external cloud storage is destination for the export file.
-#' @param storage_type External storage type, if relevant. Values: \code{c("Dropbox", "OneDrive", "GoogleDrive")}
-#' @param translation_id Translation ID for variable and value labels to include in export files.
+#' @param storage_type Character. External storage type, if relevant. Values: \code{c("Dropbox", "OneDrive", "GoogleDrive")}
+#' @param translation_id Character. Translation ID for variable and value labels to include in export files.
 #' @param include_meta Logical. If `TRUE`, include questionnaire metadata in export file.
-#' @param workspace Character. Name of the workspace whose export jobs to start.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose export jobs to start. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Job ID of export process started.
 #'
@@ -327,11 +327,11 @@ start_export <- function(
 #'
 #' Wrapper for \code{GET /api/v2/export/{id}} endpoint
 #'
-#' @param job_id Export job ID
-#' @param workspace Character. Name of the workspace whose export job details to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param job_id Numeric. Export job ID
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose export job details to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If job found, data frame of export job details. Otherwise, message about why the job was not found.
 #'
@@ -415,19 +415,17 @@ get_export_job_details <- function(
 #'
 #' Wrapper for \code{DELETE /api/v2/export/{id}} endpoint
 #'
-#' @param job_id Export job ID
+#' @param job_id Numeric. Export job ID
 #' @param verbose Logical. If `verbose = TRUE`, return `TRUE` if cancellation successful, `FALSE` otherwise
-#' @param workspace Character. Name of the workspace whose export jobs to cancel.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose export jobs to cancel. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome.
 #' @export
 #'
 #' @import httr
-#'
-#' @examples
 cancel_export <- function(
     job_id,
     verbose = FALSE,
@@ -502,13 +500,13 @@ cancel_export <- function(
 #'
 #' Wrapper for \code{GET /api/v2/export/{id}/file} endpoint
 #'
-#' @param job_id Export job ID
-#' @param path File path where export file should be downloaded
+#' @param job_id Numeric. Export job ID
+#' @param path Character. File path where export file should be downloaded
 #' @param verbose Logical. If `verbose = TRUE`, return a logical value about the outcome. If `verbose = FALSE`, the default, simply return a message describing the outcome.
-#' @param workspace Character. Name of the workspace whose export files to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose export files to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Logical. \code{TRUE} if file successfully downloaded; \code{FALSE} otherwise.
 #'
@@ -518,8 +516,6 @@ cancel_export <- function(
 #' @import httr
 #' @importFrom stringr str_match
 #' @importFrom fs path
-#'
-#' @examples
 get_export_file <- function(
     job_id,
     path,

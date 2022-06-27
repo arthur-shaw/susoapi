@@ -6,22 +6,22 @@
 \usage{
 get_export_job_details(
   job_id,
-  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
 }
 \arguments{
-\item{job_id}{Export job ID}
+\item{job_id}{Numeric. Export job ID}
 
-\item{workspace}{Character. Name of the workspace whose export job details to get.}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{workspace}{Character. Name of the workspace whose export job details to get. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
 
-\item{user}{API user name}
+\item{user}{Character. API user name}
 
-\item{password}{API password}
+\item{password}{Character. API password}
 }
 \value{
 If job found, data frame of export job details. Otherwise, message about why the job was not found.

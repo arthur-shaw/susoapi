@@ -12,13 +12,13 @@
 #' 
 #' Wrapper for \code{GET /api/v1/interviewers/{id}/actions-log} endpoint
 #'
-#' @param user_id User ID. GUID from server.
+#' @param user_id Character. User ID. GUID from server.
 #' @param start Character. Date in "YYYY-MM-DD" format
 #' @param end Character. Date in "YYYY-MM-DD" format
-#' @param workspace Character. Name of the workspace whose users to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Data frame containing the action log.
 #'
@@ -41,7 +41,8 @@ get_user_action_log <- function(
     # user_id
     check_guid(
         guid = user_id, 
-        fail_msg = "User ID in `user_id` is not a valid GUID.")
+        fail_msg = "User ID in `user_id` is not a valid GUID."
+    )
 
     # start
     if (start != "") {
@@ -135,10 +136,10 @@ get_user_action_log <- function(
 #'
 #' Provides count for iterative request for supervisors. Wrapper for \code{GET /api/v1/supervisors} endpoint
 #'
-#' @param workspace Character. Name of the workspace whose users to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Count of supervisors
 #'
@@ -190,10 +191,10 @@ user_get_sups_count <- function(
 #'
 #' @param limit Numeric. Number of records to fetch in one request.
 #' @param offset Numeric. Offset in list of records for current request.
-#' @param workspace Character. Name of the workspace whose users to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Data frame that contains supervisors and their attributes.
 #'

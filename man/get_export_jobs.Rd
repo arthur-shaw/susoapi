@@ -9,33 +9,33 @@ get_export_jobs(
   interview_status = "All",
   qnr_id = "",
   export_status = "",
-  has_file = "",
+  has_file = NA,
   limit = 40,
   offset = 0,
-  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
 }
 \arguments{
-\item{export_type}{Type of data to export. Values: \code{c("Tabular", "STATA", "SPSS", "Binary", "DDI", "Binary")}}
+\item{export_type}{Character. Type of data to export. Values: \code{c("Tabular", "STATA", "SPSS", "Binary", "DDI", "Binary")}}
 
-\item{interview_status}{Status of interviews to export. Values: \code{c("All", "SupervisorAssigned", "InterviewerAssigned", "Completed", "RejectedBySupervisor", "ApprovedBySupervisor", "RejectedByHeadquarters", "ApprovedByHeadquarters")}}
+\item{interview_status}{Character. Status of interviews to export. Values: \code{c("All", "SupervisorAssigned", "InterviewerAssigned", "Completed", "RejectedBySupervisor", "ApprovedBySupervisor", "RejectedByHeadquarters", "ApprovedByHeadquarters")}}
 
-\item{qnr_id}{Questionnaire ID. Format: \code{qnr_id$version}}
+\item{qnr_id}{Character. Questionnaire ID. Format: \code{qnr_id$version}}
 
-\item{export_status}{Status of export process. Values: \code{c("Created", "Running", "Completed", "Fail", "Canceled")}}
+\item{export_status}{Character. Status of export process. Values: \code{c("Created", "Running", "Completed", "Fail", "Canceled")}}
 
-\item{has_file}{Export file generated. Values: \code{c(true, false)}.}
+\item{has_file}{Logical. Whether export file generated.}
 
 \item{limit}{Number of results to return. Values: \code{c(1:40)}}
 
 \item{offset}{Offset in list of processes.}
 
-\item{workspace}{Character. Name of the workspace whose export jobs to get.}
-
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+
+\item{workspace}{Character. Name of the workspace whose export jobs to get. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
 
 \item{user}{API user name}
 

@@ -14,11 +14,11 @@ get_workspace_status(
 \arguments{
 \item{name}{Character. Name identifier of workspace to delete.}
 
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{user}{Admin or API user name}
+\item{user}{Character. Admin or API user name}
 
-\item{password}{Admin or API password}
+\item{password}{Character. Admin or API password}
 }
 \value{
 Data frame. Contains columns: \code{CanBeDeleted}, \code{WorkspaceName}, \code{WorkspaceDisplayName}, \code{ExistingQuestionnairesCount}, \code{InterviewersCount}, \code{SupervisorsCount}, \code{MapsCount}

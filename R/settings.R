@@ -7,10 +7,10 @@
 #' 
 #' Wrapper for the `GET ​/api​/v1​/settings​/globalnotice` endpoint.
 #' 
-#' @param workspace Character. Name of the workspace whose global notice to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user User name
-#' @param password Password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose global notice to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. User name
+#' @param password Character. Password
 #' 
 #' @return Character. Global notice.
 #' 
@@ -71,10 +71,10 @@ get_global_notice <- function(
 #' Wrapper for the `PUT /api​/v1​/settings​/globalnotice` endpoint.
 #' 
 #' @param text Character. Text of the global notice to display.
-#' @param workspace Character. Name of the workspace whose global notice to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user User name
-#' @param password Password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose global notice to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. User name
+#' @param password Character. Password
 #' 
 #' @return Server-side side-effect of setting the global notice text.
 #' 
@@ -152,10 +152,10 @@ set_global_notice <- function(
 #' 
 #' Wrapper for the `DELETE ​/api​/v1​/settings​/globalnotice` endpoint
 #' 
-#' @param workspace Character. Name of the workspace whose global notice to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user User name
-#' @param password Password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose global notice to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. User name
+#' @param password Character. Password
 #' 
 #' @return Server-side side-effect of deleting the global notice text.
 #' 

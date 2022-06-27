@@ -10,10 +10,10 @@ get_assignments(
   qnr_version = "",
   responsible = "",
   supervisor_id = "",
-  show_archive = "",
+  show_archive = FALSE,
   order = "",
-  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
@@ -29,13 +29,13 @@ get_assignments(
 
 \item{supervisor_id}{Character. User ID (GUID) of supervisor.}
 
-\item{show_archive}{Include archived assignments. Values: c("true", "false")}
+\item{show_archive}{Logical. Include archived assignments.}
 
 \item{order}{Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"}
 
-\item{workspace}{Character. Name of the workspace whose assignments to get.}
-
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+
+\item{workspace}{Character. Name of the workspace whose assignments to get. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
 
 \item{user}{User name}
 
@@ -45,5 +45,5 @@ get_assignments(
 Data frame of all assignments that meet search criteria.
 }
 \description{
-Get all assignments for query parameters.
+Get all assignments for query parameters. Wrapper for \code{GET /api/v1/assignments} endpoint.
 }

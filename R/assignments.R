@@ -12,8 +12,8 @@
 #' @param order Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"
 #' @param offset Character. Name of the workspace whose assignments to get.
 #' @param limit Numberic. Number of records to fetch in one request.
-#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose assignments to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
 #' @param user API user name
 #' @param password API password
 #'
@@ -109,8 +109,8 @@ get_assignment_count <- function(
 #' @param order
 #' @param offset
 #' @param limit
-#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose assignments to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
 #' @param user API user name
 #' @param password API password
 #'
@@ -190,7 +190,7 @@ get_assignment_batch <- function(
 
 #' Get all assignments
 #'
-#' Get all assignments for query parameters.
+#' Get all assignments for query parameters. Wrapper for `GET /api/v1/assignments` endpoint.
 #'
 #' @param search_by Character. Search for matching text in identifying questions.
 #' @param qnr_id Questionnaire ID. GUID provided by the server.
@@ -199,8 +199,8 @@ get_assignment_batch <- function(
 #' @param supervisor_id Character. User ID (GUID) of supervisor.
 #' @param show_archive Logical. Include archived assignments.
 #' @param order Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"
-#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose assignments to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
 #' @param user User name
 #' @param password Password
 #'
@@ -359,8 +359,8 @@ get_assignments <- function(
 #' Wrapper for \code{GET /api/v1/assignments/{id}} endpoint
 #'
 #' @param id Integer. Assignment ID
-#' @param workspace Character. Name of the workspace whose assginment details to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})server
+#' @param workspace Character. Name of the workspace whose assginment details to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
 #' @param user API user name
 #' @param password API password
 #'
@@ -446,8 +446,8 @@ get_assignment_details <- function(
 #' Wrapper for \code{GET ​/api​/v1​/assignments​/{id}​/assignmentQuantitySettings} endpoint
 #'
 #' @param id Assignment ID
-#' @param workspace Character. Name of the workspace whose assginment quantity to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})server
+#' @param workspace Character. Name of the workspace whose assginment quantity to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
 #' @param user API user name
 #' @param password API password
 #'
@@ -527,8 +527,8 @@ get_assignment_quantity_setting <- function(
 #' Wrapper for the `GET ​/api​/v1​/assignments​/{id}​/history` endpoint
 #' 
 #' @param id Assignment ID number
-#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose assignments to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
 #' @param user API user name
 #' @param password API password
 #' 
@@ -611,8 +611,8 @@ get_assignment_history <- function(
 #' Informs whether audio audit is enabled for the target assignment. Wrapper for \code{GET ​/api​/v1​/assignments​/{id}​/recordAudio} endpoint
 #'
 #' @param id Assignment ID number
-#' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose assignments to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
 #' @param user API user name
 #' @param password API password
 #'
@@ -705,13 +705,13 @@ check_assignment_audio <- function(
 #'
 #' Wrapper for \code{PATCH ​/api​/v1​/assignments​/{id}​/recordAudio} endpoint
 #'
-#' @param id Assignment ID number
-#' @param enable Whether to enable or disable audio--`TRUE` or `FALSE`, respectively
-#' @param verbose Returns information about success of operation: message and `TRUE`/`FALSE` return value.
-#' @param workspace Character. Name of the workspace whose assignments to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param id Number. Assignment ID number
+#' @param enable Logical. Whether to enable or disable audio--`TRUE` or `FALSE`, respectively
+#' @param verbose Logical. Returns information about success of operation: message and `TRUE`/`FALSE` return value.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose assignments to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome: `TRUE` if succeeded; `FALSE` otherwise
 #'
@@ -785,10 +785,10 @@ set_assignment_audio <- function(
 #'
 #' Wrapper for \code{PATCH /api/v1/assignments/{id}/archive} endpoint
 #'
-#' @param id Assignment ID number
-#' @param workspace Character. Name of the workspace whose assignments to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param verbose Returns information about success of operation: message and `TRUE`/`FALSE` return value.
+#' @param id Numeric. Assignment ID number
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose assignments to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param verbose Logical. Returns information about success of operation: message and `TRUE`/`FALSE` return value.
 #' @param user API user name
 #' @param password API password
 #'
@@ -860,12 +860,12 @@ archive_assignment <- function(
 #' 
 #' Wrapper for `PATCH ​/api​/v1​/assignments​/{id}​/assign`
 #' 
-#' @param id Assignment ID number
+#' @param id Numeric. Assignment ID number
 #' @param responsible Character. Either user name or GUID.
-#' @param workspace Character. Name of the workspace whose assignments to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose assignments to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #' 
 #' @return Server-side side-effect of reassigning an assignment to another user
 #' 
@@ -959,12 +959,12 @@ reassign_assignment <- function(
 #' 
 #' Wrapper for `PATCH ​/api​/v1​/assignments​/{id}​/changeQuantity`
 #' 
-#' @param id Assignment ID number
-#' @param quantity Numeric. 
-#' @param workspace Character. Name of the workspace whose assignments to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param id Numeric. Assignment ID number
+#' @param quantity Numeric. New quantity of interviews to collect for this assignment.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose assignments to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #' 
 #' @return Server-side side-effect of changing assignment quantity.
 #' 
@@ -1044,12 +1044,12 @@ change_assignment_quantity <- function(
 #'
 #' Wrapper for \code{PATCH /api/v1/assignments/{id}/unarchive} endpoint
 #'
-#' @param id Assignment ID number
-#' @param verbose Print whether operation was successful or not
-#' @param workspace Character. Name of the workspace whose assignments to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param id Numeric. Assignment ID number
+#' @param verbose Logical. Print whether operation was successful or not
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose assignments to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome: `TRUE` if succeeded; `FALSE` otherwise
 #'
@@ -1057,8 +1057,6 @@ change_assignment_quantity <- function(
 #'
 #' @importFrom assertthat assert_that is.count
 #' @import httr
-#'
-#' @examples
 unarchive_assignment <- function(
     id,
     verbose = FALSE,
@@ -1119,12 +1117,12 @@ unarchive_assignment <- function(
 #'
 #' Closes assignment by setting Size to the amount of collected interviews. Wrapper for \code{PATCH /api/v1/assignments/{id}/close} endpoint
 #'
-#' @param id Assignment ID number
-#' @param workspace Character. Name of the workspace whose assignments to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
-#' @param verbose Print whether operation was successful or not
+#' @param id Numeric. Assignment ID number
+#' @param verbose Logical. Print whether operation was successful or not
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose assignments to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome: `TRUE` if succeeded; `FALSE` otherwise
 #'

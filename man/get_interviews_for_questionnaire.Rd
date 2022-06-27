@@ -5,29 +5,29 @@
 \title{Get list of interviews for questionnaire-version}
 \usage{
 get_interviews_for_questionnaire(
-  workspace = "primary",
   chunk_size = 100,
   qnr_id,
   qnr_version,
   server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
 }
 \arguments{
-\item{workspace}{Character. Name of the workspace whose questionnaires and associated interviews to get.}
-
 \item{chunk_size}{Numeric. Number of records to take in one request.}
 
-\item{qnr_id}{Questionnaire ID. GUID from server.}
+\item{qnr_id}{Character. Questionnaire ID. GUID from server.}
 
-\item{qnr_version}{Questionnaire version number.}
+\item{qnr_version}{Numeric. Questionnaire version number.}
 
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{user}{API user name}
+\item{workspace}{Character. Name of the workspace whose questionnaires and associated interviews to get. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
 
-\item{password}{API password}
+\item{user}{Character. API user name}
+
+\item{password}{Character. API password}
 }
 \value{
 Data frame of interviews.

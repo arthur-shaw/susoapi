@@ -4,11 +4,9 @@
 \alias{check_credentials}
 \title{Check that server credentials are valid}
 \usage{
-check_credentials(workspace = "primary", verbose = FALSE)
+check_credentials(verbose = FALSE)
 }
 \arguments{
-\item{workspace}{Character. Name of the workspace for which credentials will be checked.}
-
 \item{verbose}{Logical. If \code{TRUE}, function returns logical regarding validity of credentials. If \code{FALSE}, function simply prints information about validity to the console.}
 }
 \value{

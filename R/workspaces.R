@@ -106,11 +106,11 @@ get_workspaces_batch <- function(
 #' 
 #' Wrapper for the `GET ​/api​/v1​/workspaces` endpoint.
 #' 
-#' @param user_id GUID. Searches for workspaces where user with user ID is assigned.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Admin or API user name
-#' @param password Admin or API user password
+#' @param user_id Character. GUID. Searches for workspaces where user with user ID is assigned.
 #' @param include_disabled Logical. Determine whether list of workspaces should include those that have been disabled or not.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Character. Admin or API user name
+#' @param password Character. Admin or API user password
 #' 
 #' @return Data frame of workspaces. Contains columns: `Name`, the name ID; `DisplayName`, the name in the GUI; and `DisabledAtUtc`, when the workspace was disabled or NA if not disabled.
 #' 
@@ -184,8 +184,8 @@ get_workspaces <- function(
 #' @param display_name Character. Name displayed in GUI to describe workspace.
 #' @param verbose Logical. If `TRUE`, return a Boolean value about whether operation succeeded.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Admin user name
-#' @param password Admin password
+#' @param user Character. Admin user name
+#' @param password Character. Admin password
 #' 
 #' @return Server-side side-effect of creating a workspace.
 #' 
@@ -291,9 +291,9 @@ create_workspace <- function(
 #' Wrapper for `GET ​/api​/v1​/workspaces​/{name}` endpoint
 #' 
 #' @param name Character. Name identifier of workspace.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Admin user name
-#' @param password Admin password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Character. Admin user name
+#' @param password Character. Admin password
 #' 
 #' @return Data frame containing workspace details: `Name`, the name ID; `DisplayName`, the name displayed in the GUI; and `DisabledAtUtc`, the time the workspace was disabled or `NA` if not disabled
 #' 
@@ -475,9 +475,9 @@ update_workspace <- function(
 #' Wrapper for `DELETE ​/api​/v1​/workspaces​/{name}` endpoint.
 #' 
 #' @param name Character. Name identifier of workspace to delete.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Admin or API user name
-#' @param password Admin or API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Character. Admin or API user name
+#' @param password Character. Admin or API password
 #' 
 #' @return Server-side side-effect of deleting a workspace.
 #' 
@@ -543,9 +543,9 @@ delete_workspace <- function(
 #' Wrapper for `GET ​/api​/v1​/workspaces​/status​/{name}` endpoint.
 #' 
 #' @param name Character. Name identifier of workspace to delete.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Admin or API user name
-#' @param password Admin or API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Character. Admin or API user name
+#' @param password Character. Admin or API password
 #' 
 #' @return Data frame. Contains columns: `CanBeDeleted`, `WorkspaceName`, `WorkspaceDisplayName`, `ExistingQuestionnairesCount`, `InterviewersCount`, `SupervisorsCount`, `MapsCount`
 #' 
@@ -611,9 +611,9 @@ get_workspace_status <- function(
 #' Wrapper for `POST ​/api​/v1​/workspaces​/{name}​/disable` endpoint.
 #' 
 #' @param name Character. Name identifier of workspace to disable.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Admin user name
-#' @param password Admin password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Character. Admin user name
+#' @param password Character. Admin password
 #' 
 #' @return Server-side side-effect of disabling a workspace.
 #' 
@@ -687,9 +687,9 @@ disable_workspace <- function(
 #' Wrapper for the `POST ​/api​/v1​/workspaces​/{name}​/enable` endpoint.
 #' 
 #' @param name Character. Name identifier of workspace to enable.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Admin user name
-#' @param password Admin password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Character. Admin user name
+#' @param password Character. Admin password
 #' 
 #' @import httr
 #' 
@@ -763,11 +763,12 @@ enable_workspace <- function(
 #' @param users Character vector. GUID for user.
 #' @param workspaces Character vector. Name ID of workspace
 #' @param action Character. One of the following: Assign, Add, Remove.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user Admin user name
-#' @param password Admin password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param user Character. Admin user name
+#' @param password Character. Admin password
 #' 
 #' @import httr
+#' @importFrom rlang is_vector
 #' 
 #' @export 
 assign_users_to_workspaces <- function(

@@ -13,15 +13,15 @@ get_workspaces(
 )
 }
 \arguments{
-\item{user_id}{GUID. Searches for workspaces where user with user ID is assigned.}
+\item{user_id}{Character. GUID. Searches for workspaces where user with user ID is assigned.}
 
-\item{include_disabled}{Boolean. Determine whether list of workspaces should include those that have been disabled or not.}
+\item{include_disabled}{Logical. Determine whether list of workspaces should include those that have been disabled or not.}
 
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{user}{Admin or API user name}
+\item{user}{Character. Admin or API user name}
 
-\item{password}{Admin or API user password}
+\item{password}{Character. Admin or API user password}
 }
 \value{
 Data frame of workspaces. Contains columns: \code{Name}, the name ID; \code{DisplayName}, the name in the GUI; and \code{DisabledAtUtc}, when the workspace was disabled or NA if not disabled.

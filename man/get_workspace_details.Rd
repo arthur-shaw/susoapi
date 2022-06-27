@@ -14,11 +14,11 @@ get_workspace_details(
 \arguments{
 \item{name}{Character. Name identifier of workspace.}
 
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{user}{Admin user name}
+\item{user}{Character. Admin user name}
 
-\item{password}{Admin password}
+\item{password}{Character. Admin password}
 }
 \value{
 Data frame containing workspace details: \code{Name}, the name ID; \code{DisplayName}, the name displayed in the GUI; and \code{DisabledAtUtc}, the time the workspace was disabled or \code{NA} if not disabled

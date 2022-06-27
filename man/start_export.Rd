@@ -15,40 +15,40 @@ start_export(
   storage_type = "",
   translation_id = "",
   include_meta = TRUE,
-  workspace = "primary",
   server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
 }
 \arguments{
-\item{qnr_id}{Questionnaire ID. Format: \code{qnr_id$version}}
+\item{qnr_id}{Character. Questionnaire ID. Format: \code{qnr_id$version}}
 
-\item{export_type}{Type of data to export. Values: \code{c("Tabular", "STATA", "SPSS", "Binary", "DDI", "Paradata")}}
+\item{export_type}{Character. Type of data to export. Values: \code{c("Tabular", "STATA", "SPSS", "Binary", "DDI", "Paradata")}}
 
-\item{interview_status}{Status of interviews to export. Values: \code{c("All", "SupervisorAssigned", "InterviewerAssigned", "Completed", "RejectedBySupervisor", "ApprovedBySupervisor", "RejectedByHeadquarters", "ApprovedByHeadquarters")}}
+\item{interview_status}{Character. Status of interviews to export. Values: \code{c("All", "SupervisorAssigned", "InterviewerAssigned", "Completed", "RejectedBySupervisor", "ApprovedBySupervisor", "RejectedByHeadquarters", "ApprovedByHeadquarters")}}
 
-\item{from}{Start date for interviews to export. date-time, UTC}
+\item{from}{Character. Start date for interviews to export. date-time, UTC}
 
-\item{to}{End date for interviews to export. date-time, UTC}
+\item{to}{Character. End date for interviews to export. date-time, UTC}
 
 \item{access_token}{Access token to external storage. Relevant only if external cloud storage is destination for the export file.}
 
 \item{refresh_token}{Refresh token to external storage.Relevant only if external cloud storage is destination for the export file.}
 
-\item{storage_type}{External storage type, if relevant. Values: \code{c("Dropbox", "OneDrive", "GoogleDrive")}}
+\item{storage_type}{Character. External storage type, if relevant. Values: \code{c("Dropbox", "OneDrive", "GoogleDrive")}}
 
-\item{translation_id}{Translation ID for variable and value labels to include in export files.}
+\item{translation_id}{Character. Translation ID for variable and value labels to include in export files.}
 
 \item{include_meta}{Logical. If \code{TRUE}, include questionnaire metadata in export file.}
 
-\item{workspace}{Character. Name of the workspace whose export jobs to start.}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{workspace}{Character. Name of the workspace whose export jobs to start. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
 
-\item{user}{API user name}
+\item{user}{Character. API user name}
 
-\item{password}{API password}
+\item{password}{Character. API password}
 }
 \value{
 Job ID of export process started.

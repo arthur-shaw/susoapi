@@ -511,7 +511,6 @@ get_interview_stats <- function(
     # - workspace does not exist
     check_workspace_param(workspace = workspace)
 
-
     # form the base URL
     base_url <- paste0(
         server, "/", workspace, 
@@ -576,17 +575,18 @@ get_interview_stats <- function(
 #' 
 #' Wrapper for \code{PATCH /api/v1/interviews/{id}/approve} endpoint.
 #'
-#' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
+#' @param interview_id Character. Interview ID. GUID from server or \code{interview__id} from exported data
 #' @param comment Character. Comment to post upon approval.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome.
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome.
 #'
 #' @import httr
+#' @importFrom dplyr if_else
 #'
 #' @export
 approve_interview_as_sup <- function(
@@ -680,14 +680,14 @@ approve_interview_as_sup <- function(
 #' 
 #' Wrapper for \code{PATCH /api/v1/interviews/{id}/assign} endpoint
 #'
-#' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
-#' @param user_id User ID. GUID from server.
-#' @param user_name User name of target interviewer.
+#' @param interview_id Character. Interview ID. GUID from server or \code{interview__id} from exported data
+#' @param user_id Character. User ID. GUID from server.
+#' @param user_name Character. User name of target interviewer.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome.
 #' 
@@ -695,8 +695,6 @@ approve_interview_as_sup <- function(
 #'
 #' @import httr
 #' @importFrom jsonlite toJSON
-#'
-#' @examples
 assign_interview_to_int <- function(
     interview_id,
     user_id = "",
@@ -817,14 +815,14 @@ assign_interview_to_int <- function(
 #' 
 #' Wrapper for \code{PATCH ​/api​/v1​/interviews​/{id}​/assignsupervisor} endpoint
 #'
-#' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
-#' @param user_id ID of target user. GUID from server.
-#' @param user_name User name of target user.
+#' @param interview_id Character. Interview ID. GUID from server or \code{interview__id} from exported data
+#' @param user_id Character. ID of target user. GUID from server.
+#' @param user_name Character. User name of target user.
 #' @param verbose Logical. If `verbose = TRUE`, return logical outcome and print message. Otherwise, be silent.
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome.
 #'
@@ -955,17 +953,18 @@ assign_interview_to_sup <- function(
 #' 
 #' Wrapper for \code{PATCH /api/v1/interviews/{id}/hqapprove} endpoint
 #'
-#' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
-#' @param comment Comment to post upon approval.
+#' @param interview_id Character. Interview ID. GUID from server or \code{interview__id} from exported data
+#' @param comment Character. Comment to post upon approval.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome.
 #'
 #' @import httr
+#' @importFrom dplyr if_else
 #'
 #' @export
 approve_interview_as_hq <- function(
@@ -1062,18 +1061,19 @@ approve_interview_as_hq <- function(
 #' 
 #' Wrapper for \code{PATCH /api/v1/interviews/{id}/hqreject} endpoint
 #'
-#' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data.
-#' @param comment Comment to post upon rejection.
-#' @param responsible_id User ID. GUID from server or \code{interview__id} from exported data. User ID of the interviewer/supervisor to which the interview should be rejected.
+#' @param interview_id Character. Interview ID. GUID from server or \code{interview__id} from exported data.
+#' @param comment Character. Comment to post upon rejection.
+#' @param responsible_id Character. User ID. GUID from server or \code{interview__id} from exported data. User ID of the interviewer/supervisor to which the interview should be rejected.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome. 
 #'
 #' @import httr
+#' @importFrom dplyr if_else
 #'
 #' @export
 reject_interview_as_hq <- function(
@@ -1180,17 +1180,18 @@ reject_interview_as_hq <- function(
 #' 
 #' Wrapper for \code{PATCH /api/v1/interviews/{id}/hqunapprove} endpoint
 #'
-#' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
-#' @param comment Comment to post upon unapproval
+#' @param interview_id Character. Interview ID. GUID from server or \code{interview__id} from exported data
+#' @param comment Character. Comment to post upon unapproval
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome.
 #'
 #' @import httr
+#' @importFrom dplyr if_else
 #'
 #' @export
 unapprove_interview <- function(
@@ -1287,18 +1288,19 @@ unapprove_interview <- function(
 #' 
 #' Wrapper for \code{PATCH /api/v1/interviews/{id}/reject} endpoint
 #'
-#' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
-#' @param comment Comment to post upon rejection
-#' @param responsible_id User to receive rejected interview. User ID. GUID from server.
+#' @param interview_id Character. Interview ID. GUID from server or \code{interview__id} from exported data
+#' @param comment Character. Comment to post upon rejection
+#' @param responsible_id Character. User to receive rejected interview. User ID. GUID from server.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome. 
 #'
 #' @import httr
+#' @importFrom dplyr if_else
 #'
 #' @export
 reject_interview_as_sup <- function(
@@ -1409,15 +1411,15 @@ reject_interview_as_sup <- function(
 #' 
 #' Wrapper for \code{POST /api/v1/interviews/{id}/comment-by-variable/{variable}} endpoint
 #'
-#' @param interview_id Interview ID. GUID from server or \code{interview__id} from exported data
-#' @param variable_name Variable name. User name from Designer.
+#' @param interview_id Character. Interview ID. GUID from server or \code{interview__id} from exported data
+#' @param variable_name Character. Variable name. User name from Designer.
 #' @param roster_vector Character. Row code(s) of variable. If a single row code, a single character value (e.g., "102"). If multiple row codes, a character containing a comma-separated list (e.g, "1, 2").
-#' @param comment Comment to post.
+#' @param comment Character. Comment to post.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return If `verbose = FALSE`, no return value. If `verbose = TRUE`, return logical outcome. 
 #'
@@ -1531,10 +1533,10 @@ comment_question <- function(
 #' 
 #' @param interview_id Character. GUID for interview.
 #' @param path Character. Path to folder where transcript should be downloaded.
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #' 
 #' @return Side-effect of generating and downloading the interview transcript for the target question.
 #' 
@@ -1645,10 +1647,10 @@ get_interview_transcript <- function(
 #' Wrapper for the `GET ​/api​/v1​/interviews​/{id}​/history` endpoint.
 #' 
 #' @param interview_id Character. GUID for interview.
-#' @param workspace Character. Name of the workspace whose interviews to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose interviews to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #' 
 #' @return List
 #' 

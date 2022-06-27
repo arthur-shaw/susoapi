@@ -14,11 +14,11 @@ enable_workspace(
 \arguments{
 \item{name}{Character. Name identifier of workspace to enable.}
 
-\item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{user}{Admin user name}
+\item{user}{Character. Admin user name}
 
-\item{password}{Admin password}
+\item{password}{Character. Admin password}
 }
 \description{
 Enable a previously disabled workspace with name \code{name}.

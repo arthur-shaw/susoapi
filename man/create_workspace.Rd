@@ -18,13 +18,13 @@ create_workspace(
 
 \item{display_name}{Character. Name displayed in GUI to describe workspace.}
 
-\item{verbose}{Boolean. If \code{TRUE}, return a Boolean value about whether operation succeeded.}
+\item{verbose}{Logical. If \code{TRUE}, return a Boolean value about whether operation succeeded.}
 
 \item{server}{Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{user}{Admin user name}
+\item{user}{Character. Admin user name}
 
-\item{password}{Admin password}
+\item{password}{Character. Admin password}
 }
 \value{
 Server-side side-effect of creating a workspace.

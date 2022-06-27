@@ -625,6 +625,9 @@ approve_interview_as_sup <- function(
         "/api/v1/interviews/", interview_id, "/approve"
     )
 
+    # transform NA comments to empty string
+    comment <- dplyr::if_else(is.na(comment), "", comment)
+
     # form query portion of request
     query <- list(
         comment = comment
@@ -1002,6 +1005,9 @@ approve_interview_as_hq <- function(
         "/api/v1/interviews/", interview_id, "/hqapprove"
     )
 
+    # transform NA comments to empty string
+    comment <- dplyr::if_else(is.na(comment), "", comment)
+
     # form query portion of request
     query <- list(
         id = interview_id,
@@ -1115,6 +1121,9 @@ reject_interview_as_hq <- function(
         "/api/v1/interviews/", interview_id, "/hqreject"
     )
 
+    # transform NA comments to empty string
+    comment <- dplyr::if_else(is.na(comment), "", comment)
+
     # form query portion of request
     query <- list(
         id = interview_id,
@@ -1220,6 +1229,9 @@ unapprove_interview <- function(
         server, "/", workspace,
         "/api/v1/interviews/", interview_id, "/hqunapprove"
     )
+
+    # transform NA comments to empty string
+    comment <- dplyr::if_else(is.na(comment), "", comment)
 
     # form query portion of request
     query <- list(
@@ -1333,6 +1345,9 @@ reject_interview_as_sup <- function(
         server, "/", workspace,
         "/api/v1/interviews/", interview_id, "/reject"
     )
+
+    # transform NA comments to empty string
+    comment <- dplyr::if_else(is.na(comment), "", comment)
 
     # form query portion of request
     query <- list(

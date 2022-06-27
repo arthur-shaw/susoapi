@@ -68,6 +68,22 @@ check_guid <- function(
 
 }
 
+#' Checks whether is a valid user name
+#' 
+#' Returns a Boolean value
+#' 
+#' @param name Character. User name to validate.
+#' 
+#' @importFrom stringr str_detect
+is_user_name <- function(name) {
+
+    # must be between 3 and 15 characters long
+    nchar(name) %in% c(3:15) &&
+    # contains only letters, numbers, and underscore symbol
+    stringr::str_detect(string = name, pattern = "[^A-Za-z0-9_]+", negate = TRUE)
+
+} 
+
 # url exists
 # is_url: string is a valid URL?
 
@@ -142,7 +158,6 @@ is_workspace_display_name <- function(x) {
 #' @importFrom glue glue glue_collapse
 #' 
 #' @noRd 
-check_workspace_param <- function(workspace) {
 check_workspace_param <- function(
     workspace = Sys.getenv("SUSO_WORKSPACE")
 ) {

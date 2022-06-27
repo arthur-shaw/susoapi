@@ -1,3 +1,23 @@
+# susoapi 0.2.0
+
+## New features
+
+- Credentials now include the workspace. `set_credentials()` now has a `workspace` argument. All functions that target workspaces now draw from these credentials (#24, #26, h/t @ashwinikalantri). 
+- Interview attributes can now be user-specified. Through the `nodes` argument of `get_interviews()`, users may specify as few or as many nodes of information about interviews as needed. If nothing is specified, the default is to fetch all nodes. If something is specified, it must include `id` and may include other things (#23).
+
+## Breaking changes
+
+- Credentials used in all functions now expect workspace. Users will need to use `set_credentials()` to add this component to their `.Renviron` file.
+
+## Minor improvements and bug fixes
+
+- Fixed help pages where documentation suggested that logical values be provided as strings rather than as the logical values that the code required (#25, h/t @ashwinikalantri).
+- Fixed issue where failure to specify `qnr_version` in `get_assignments()` lead to the function returning all assignments for all questionnaires (#27, h/t @ashwinikalantri).
+- Added checks for arguments throughout--typically logical values, user names, and dates for time intervals--and tests to ensure those checks work correctly.
+- Convert `NA_character_` comments to empty strings before forming the request in interview functions.
+- Added a private function `is_user_name()` to check whether user-provided user names followed Survey Solutions rules about character length and content.
+- Revised order of arguments and documentation for credentials: server, workspace, user, password.
+
 # susoapi 0.1.3
 
 - Fix `check_credentials()`. Check credentials by getting API user's details rather than fetching workspaces to which the user has access. The former only requires simple API access for the workspace. The latter requires admin API access.

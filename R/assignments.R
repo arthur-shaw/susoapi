@@ -229,8 +229,18 @@ get_assignments <- function(
     # qnr_id
     assertthat::assert_that(
         is_guid(qnr_id) | qnr_id == "",
-        msg = "Invalid `qnr_id`. The value must be either '' or a valid GUID.")
-    
+        msg = "Invalid `qnr_id`. The value must be either '' or a valid GUID."
+    )
+
+    # qnr_version
+    if (qnr_id != "") {
+        assertthat::assert_that(
+            # when coerced to integer, whether the parameter is non-NA
+            !is.na(suppressWarnings(as.integer(qnr_version))),
+            msg = "Invalid `qnr_version`. The value must be an integer value expressed as a character"
+        )
+    }
+
     # responsible
     assertthat::assert_that(
         is_guid(responsible) | assertthat::is.string(responsible), 

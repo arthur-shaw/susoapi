@@ -107,10 +107,10 @@ get_workspaces_batch <- function(
 #' Wrapper for the `GET ​/api​/v1​/workspaces` endpoint.
 #' 
 #' @param user_id GUID. Searches for workspaces where user with user ID is assigned.
-#' @param include_disabled Boolean. Determine whether list of workspaces should include those that have been disabled or not.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user Admin or API user name
 #' @param password Admin or API user password
+#' @param include_disabled Logical. Determine whether list of workspaces should include those that have been disabled or not.
 #' 
 #' @return Data frame of workspaces. Contains columns: `Name`, the name ID; `DisplayName`, the name in the GUI; and `DisabledAtUtc`, when the workspace was disabled or NA if not disabled.
 #' 
@@ -174,7 +174,7 @@ return(df)
 #' 
 #' @param name Character. Name identifier of workspace.
 #' @param display_name Character. Name displayed in GUI to describe workspace.
-#' @param verbose Boolean. If `TRUE`, return a Boolean value about whether operation succeeded.
+#' @param verbose Logical. If `TRUE`, return a Boolean value about whether operation succeeded.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user Admin user name
 #' @param password Admin password

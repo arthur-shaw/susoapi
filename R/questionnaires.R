@@ -606,11 +606,11 @@ get_possible_interview_statuses <- function(
 #'
 #' @param qnr_id Questionnaire ID. GUID from server.
 #' @param qnr_version Questionnaire version number.
-#' @param enable Whether to enable. Values: c(TRUE, FALSE)
 #' @param workspace Character. Name of the workspace whose questionnaire audio settings to change.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user API user name
 #' @param password API password
+#' @param enable Logical. Whether to enable. Values: c(TRUE, FALSE)
 #'
 #' @return TRUE/FALSE depending on whether operation succeeded or not.
 #' @export

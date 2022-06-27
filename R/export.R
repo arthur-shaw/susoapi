@@ -9,7 +9,7 @@
 #' @param interview_status Status of interviews to export. Values: \code{c("All", "SupervisorAssigned", "InterviewerAssigned", "Completed", "RejectedBySupervisor", "ApprovedBySupervisor", "RejectedByHeadquarters", "ApprovedByHeadquarters")}
 #' @param qnr_id Questionnaire ID. Format: \code{qnr_id$version}
 #' @param export_status Status of export process. Values: \code{c("Created", "Running", "Completed", "Fail", "Canceled")}
-#' @param has_file Export file generated. Values: \code{c(true, false)}.
+#' @param has_file Logical. Whether export file generated. 
 #' @param limit Number of results to return. Values: \code{c(1:40)}
 #' @param offset Offset in list of processes.
 #' @param workspace Character. Name of the workspace whose export jobs to get.
@@ -29,7 +29,7 @@ get_export_jobs <- function(
     interview_status = "All", # values: c("All", "SupervisorAssigned", "InterviewerAssigned", "Completed", "RejectedBySupervisor", "ApprovedBySupervisor", "RejectedByHeadquarters", "ApprovedByHeadquarters")
     qnr_id = "", # format qnr_id$version
     export_status = "", # values: c("Created", "Running", "Completed", "Fail", "Canceled")
-    has_file = "", # values: c(true, false)
+    has_file = NA, 
     limit = 40, # limit %in% c(1, 40)
     offset = 0, #
     server = Sys.getenv("SUSO_SERVER"),     # full server address
@@ -83,10 +83,8 @@ get_export_jobs <- function(
     }
 
     # has_file
-    if (has_file != "") {
         assertthat::assert_that(
             assertthat::is.flag(has_file),
-            msg = "`has_file` must be `TRUE` or `FALSE`, or coercible to that."
         )
     }
 

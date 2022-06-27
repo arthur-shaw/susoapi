@@ -197,7 +197,7 @@ get_assignment_batch <- function(
 #' @param qnr_version Questionnaire version. Version number provided by the server.
 #' @param responsible Character. Either user ID (GUID) or user name.
 #' @param supervisor_id Character. User ID (GUID) of supervisor.
-#' @param show_archive Include archived assignments. Values: c("true", "false")
+#' @param show_archive Logical. Include archived assignments.
 #' @param order Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"
 #' @param workspace Character. Name of the workspace whose assignments to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
@@ -216,7 +216,7 @@ get_assignments <- function(
     qnr_version = "",   # questionnaire version
     responsible = "",
     supervisor_id = "",
-    show_archive = "",  # values: c("true", "false")
+    show_archive = FALSE, 
     order = "",         # Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     workspace = Sys.getenv("SUSO_WORKSPACE"),
@@ -244,10 +244,11 @@ get_assignments <- function(
     # search_by
     # TODO: determine what constitutes a valid search. Could simply be any string that has a literal match in identifying questions.
 
-    # show_archive    # values: c("true", "false")
+    # show_archive
     assertthat::assert_that(
-        assertthat::is.flag(show_archive) | show_archive == "",
-        msg = "Boolean value--`TRUE`/`FALSE`--required for `show_archive`.")
+        assertthat::is.flag(show_archive),
+        msg = "Boolean value--`TRUE`/`FALSE`--required for `show_archive`."
+    )
 
     # order
     # columns
@@ -264,10 +265,9 @@ get_assignments <- function(
         msg = "Error in `order` parameter. Please specify a sort column and, optionally, a sort direction. \nColumns: Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc. \nDirections: ASC, DESC")
 
     # show_archive: convert TRUE/FALSE to "true"/"false"
-    show_archive <- case_when(
+    show_archive <- dplyr::case_when(
         show_archive == TRUE ~ "true",
-        show_archive == FALSE ~ "false",
-        show_archive == "" ~ ""
+        show_archive == FALSE ~ "false"
     )
 
     # workspace:

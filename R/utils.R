@@ -75,6 +75,8 @@ check_guid <- function(
 #' @param name Character. User name to validate.
 #' 
 #' @importFrom stringr str_detect
+#' 
+#' @noRd 
 is_user_name <- function(name) {
 
     # must be between 3 and 15 characters long

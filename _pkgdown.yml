@@ -13,7 +13,6 @@ reference:
 - title: "Workspaces"
   desc: >
     Functions for taking actions on workspaces, including assigning users to them
-- contents:
 - subtitle: "Get info"
   contents:
   - get_workspaces
@@ -40,7 +39,6 @@ reference:
 - title: "Interviews"
   desc: >
     Functions for approving, assigning, rejecting, and reviewing interviews.
-- contents:
 - subtitle: "Approve"
   contents:
   - approve_interview_as_sup
@@ -93,7 +91,7 @@ reference:
 
 - title: "Users"
   desc: >
-      Functions for collecting, modifying, and monitoring supervisor and interviewer users
+    Functions for collecting, modifying, and monitoring supervisor and interviewer users
 - subtitle: "Collect"
   contents:
   - get_supervisors
@@ -109,7 +107,7 @@ reference:
 
 - title: "Export"
   desc: >
-      Functions for exporting data: starting an export job, inquiring about its status, and downloading export files
+    Functions for exporting data: starting an export job, inquiring about its status, and downloading export files
 - subtitle: "Start, stop"
   contents:
   - start_export
@@ -125,7 +123,7 @@ reference:
 - title: "Settings"
   desc: >
     Functions for modify the global notice (i.e., the information banner at the top of site).
-- contents:
+  contents:
   - set_global_notice
   - get_global_notice
   - delete_global_notice

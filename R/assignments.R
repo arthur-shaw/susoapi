@@ -798,8 +798,6 @@ set_assignment_audio <- function(
 #'
 #' @importFrom assertthat assert_that is.count
 #' @import httr
-#'
-#' @examples
 archive_assignment <- function(
     id,
     verbose = FALSE,

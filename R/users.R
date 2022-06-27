@@ -169,7 +169,8 @@ user_get_sups_count <- function(
     # compose the full URL: base + query parameters
     url <- httr::modify_url(
         url = base_url,
-        query = query)
+        query = query
+    )
 
     # post request
     response <- httr::GET(
@@ -226,7 +227,8 @@ user_get_list_sups <- function(
     # compose the full URL: base + query parameters
     url <- httr::modify_url(
         url = base_url,
-        query = query)
+        query = query
+    )
 
     # post request
     response <- httr::GET(
@@ -246,10 +248,10 @@ user_get_list_sups <- function(
 #'
 #' Get all supervisors and their attributes. Wrapper for \code{GET /api/v1/supervisors} endpoint
 #'
-#' @param workspace Character. Name of the workspace whose users to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Data frame that contains supervisors and their attributes.
 #'
@@ -268,7 +270,8 @@ user_get_list_sups_all <- function(
         workspace = workspace,
         server = server,
         user = user,
-        password = password)
+        password = password
+    )
 
     # return all assignments as a dataframe
     df <- purrr::map_dfr(
@@ -281,7 +284,8 @@ user_get_list_sups_all <- function(
         workspace = workspace,
         server = server,
         user = user,
-        password = password)
+        password = password
+    )
 
     return(df)
 
@@ -297,13 +301,13 @@ user_get_list_sups_all <- function(
 #'
 #' Wrapper for \code{GET /api/v1/supervisors/{supervisorId}/interviewers} endpoint
 #'
-#' @param sup_id Supervisor's user ID. GUID from server.
-#' @param workspace Character. Name of the workspace whose users to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param sup_id Character. Supervisor's user ID. GUID from server.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
-#' @return
+#' @return Count of interviewers for a given supervisor.
 #'
 #' @import httr
 #' @importFrom jsonlite fromJSON
@@ -321,7 +325,8 @@ user_get_ints_count <-  function(
     # sup_id
     check_guid(
         guid = sup_id, 
-        fail_msg = "Supervisor ID in `sup_id` is not a valid GUID.")
+        fail_msg = "Supervisor ID in `sup_id` is not a valid GUID."
+    )
 
     # form the base URL
     base_url <- paste0(
@@ -338,7 +343,8 @@ user_get_ints_count <-  function(
     # compose the full URL: base + query parameters
     url <- httr::modify_url(
         url = base_url,
-        query = query)
+        query = query
+    )
 
     # post request
     response <- httr::GET(
@@ -361,12 +367,12 @@ user_get_ints_count <-  function(
 #' @param sup_id Supervisor's user ID. GUID from server.
 #' @param limit Numeric. Number of records to fetch in one request.
 #' @param offset Numeric. Offset in list of records for current request.
-#' @param workspace Character. Name of the workspace whose users to get.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
 #' @param user API user name
 #' @param password API password
 #'
-#' @return
+#' @return Data frame of interviewers for a particular supervisor
 #'
 #' @import httr
 #' @importFrom jsonlite fromJSON
@@ -438,11 +444,11 @@ user_get_list_ints <- function(
 #'
 #' Wrapper for \code{GET /api/v1/supervisors/{supervisorId}/interviewers} endpoint
 #'
-#' @param sup_id Supervisor user ID. GUID from server.
-#' @param workspace Character. Name of the workspace whose users to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param sup_id Character. Supervisor user ID. GUID from server.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Data frame of interviewers and their attributes.
 #'
@@ -505,11 +511,11 @@ user_get_list_ints_all <- function(
 #'
 #' Wrapper for \code{GET /api/v1/users/{id}} endpoint
 #'
-#' @param user_id User ID, user name, or email.
-#' @param workspace Character. Name of the workspace whose users to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param user_id Character. User ID, user name, or email.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Data frame of single user's details.
 #' 
@@ -579,10 +585,10 @@ get_user_details <- function(
 #'
 #' Fetch list of all supervisors and their attributes
 #'
-#' @param workspace Character. Name of the workspace whose users to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Data frame of supervisors and their attributes.
 #' 
@@ -652,10 +658,10 @@ get_supervisors <- function(
 #'
 #' Fetch list of all interviewers and their attributes, including their supervisor
 #'
-#' @param workspace Character. Name of the workspace whose users to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Data frame of interviewers and their details.
 #' 
@@ -738,12 +744,12 @@ get_interviewers <- function(
 #'
 #' Wrapper for \code{PATCH /api/v1/users/{id}/archive} endpoint
 #'
-#' @param user_id User ID. GUID from server.
+#' @param user_id Character. User ID. GUID from server.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
-#' @param workspace Character. Name of the workspace whose users to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Side-effect on the server: APPROVE interview. If `verbose == TRUE`, return logical outcome and print message.
 #' 
@@ -836,20 +842,18 @@ archive_user <- function(
 #'
 #' Wrapper for \code{PATCH /api/v1/users/{id}/unarchive} endpoint
 #'
-#' @param user_id User ID. GUID from server.
+#' @param user_id Character. User ID. GUID from server.
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
-#' @param workspace Character. Name of the workspace whose users to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Side-effect on the server: APPROVE interview. If `verbose == TRUE`, return logical outcome and print message.
 #' 
 #' @export
 #'
 #' @import httr
-#'
-#' @examples
 unarchive_user <- function(
     user_id,
     verbose = FALSE,
@@ -944,10 +948,10 @@ unarchive_user <- function(
 #' @param phone_number Character. Phone number for user. (Optional)
 #' @param email Character. Email address for user. (Optional)
 #' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
-#' @param workspace Character. Name of the workspace whose users to get.
-#' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param user API user name
-#' @param password API password
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #'
 #' @return Side-effect on the server: APPROVE interview. If `verbose == TRUE`, return logical outcome and print message.
 #' 
@@ -956,8 +960,6 @@ unarchive_user <- function(
 #' @importFrom assertthat assert_that
 #' @import httr
 #' @importFrom jsonlite toJSON fromJSON
-#'
-#' @examples
 create_user <- function(
     role,
     supervisor = "",

@@ -1,5 +1,9 @@
-home:
-  title: Using Survey Solution's API in R
+url: https://arthur-shaw.github.io/susoapi/
+template:
+  bootstrap: 5
+
+development:
+  mode: auto
 
 reference:
 - title: "Authentication"

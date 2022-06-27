@@ -782,7 +782,7 @@ assign_users_to_workspaces <- function(
     # check inputs
     # users is a character vector
     assertthat::assert_that(
-        (typeof(users) == "character" & is.vector(users)),
+        (typeof(users) == "character" & rlang::is_vector(users)),
         msg = "`users` should be a character vector"
     )
 
@@ -794,7 +794,7 @@ assign_users_to_workspaces <- function(
 
     # workspaces is a character vector
     assertthat::assert_that(
-        (typeof(workspaces) == "character" & is.vector(workspaces)),
+        (typeof(workspaces) == "character" & rlang::is_vector(workspaces)),
         msg = "`workspaces` should be a character vector"
     )
 

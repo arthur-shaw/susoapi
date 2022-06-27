@@ -155,6 +155,7 @@ get_interviews_count <- function(
 #' @param workspace Character. Name of the workspace whose interviews to get.
 #' @param take_n Numeric. Number of interviews to take in one request.
 #' @param skip_n Numeric. Number of interviews to skip when paging through results.
+#' @param nodes Character vector. Names of attributes to fetch for each interview.
 #' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user Charater. API or admin user name for user that access to the workspace.
 #' @param password API or admin password
@@ -174,11 +175,36 @@ get_interviews_count <- function(
 get_interviews_by_chunk <- function(
     take_n = 100,
     skip_n = 0,
+    nodes = c(
+        "id",
+        "key",
+        "assignmentId",
+        "identifyingData",
+        "questionnaireId",
+        "questionnaireVersion",
+        "questionnaireVariable",
+        "responsibleName",
+        "responsibleId",
+        "responsibleRole",
+        "supervisorName",
+        "status",
+        "actionFlags",
+        "wasCompleted",
+        "notAnsweredCount",
+        "errorsCount",
+        "createdDate",
+        "updateDateUtc",
+        "receivedByInterviewerAtUtc",
+        "interviewMode"
+    ),
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
+
+    # determine whether requested identifying data
+    has_identifying <- "identifyingData" %in% nodes
 
     # compose the GraphQL request client
     interviews_request <- ghql::GraphqlClient$new(
@@ -188,62 +214,49 @@ get_interviews_by_chunk <- function(
         )
     )
 
+    # expand identifyingData node if relevant
+    if (any(nodes == "identifyingData") == TRUE) {
+        nodes[which(nodes == "identifyingData")] <- 
+        "identifyingData {
+            answerValue
+            value
+            valueBool
+            valueDate
+            valueLong
+            valueDouble
+            isEnabled
+            entity {
+                identifying
+                label
+                options {
+                    parentValue
+                    title
+                    value
+                }
+                questionText
+                scope
+                type
+                variable
+            }
+        }"
+    }
+
     # compose the query for all interviews
     # use string interpolation to pipe double-quoted workspace name into query
     qry <- ghql::Query$new()
     qry$query("interviews", 
-        glue::glue("{
+        stringr::str_squish((glue::glue("{
             interviews (
                 workspace: <glue::double_quote(workspace)>
                 take: <take_n>
                 skip: <skip_n>
             ) {
                 nodes {
-                    id
-                    key
-                    assignmentId
-                    identifyingData {
-                        answerValue
-                        value
-                        valueBool
-                        valueDate
-                        valueLong
-                        valueDouble
-                        isEnabled
-                        entity {
-                            identifying
-                            label
-                            options {
-                                parentValue
-                                title
-                                value
-                            }
-                            questionText
-                            scope
-                            type
-                            variable
-                        }
-                    }
-                    questionnaireId
-                    questionnaireVersion
-                    questionnaireVariable
-                    responsibleName
-                    responsibleId
-                    responsibleRole
-                    supervisorName
-                    status
-                    actionFlags
-                    wasCompleted
-                    notAnsweredCount
-                    errorsCount
-                    createdDate
-                    updateDateUtc
-                    receivedByInterviewerAtUtc
-                    interviewMode        
+                    <paste0(nodes, collapse = '\\n')>     
                 }
                 filteredCount
             }
-        }", .open = "<", .close = ">")
+        }", .open = "<", .close = ">")))
     )
 
     # send request
@@ -251,7 +264,8 @@ get_interviews_by_chunk <- function(
 
     # convert JSON payload to data frame
     interviews <- jsonlite::fromJSON(interviews_result, flatten = TRUE)
-    
+
+    # extract number of interviews returned in request    
     interviews_count <- interviews$data$interviews$filteredCount
 
      if ("errors" %in% names(interviews)) {
@@ -275,22 +289,15 @@ get_interviews_by_chunk <- function(
             purrr::map_if(is.data.frame, list) %>% 
             tibble::as_tibble()
 
-        # extract interview attributes from the payload
-        interview_attribs_df <- dplyr::select(interviews_df, -.data$identifyingData)
+        if (has_identifying == TRUE) {
 
-        # determine whether contains any identifying data
-        # compute the length of identifying data df for each record
-        has_identifying <- interviews_df %>%
-            dplyr::select(id, .data$identifyingData) %>%
-            dplyr::mutate(has_identifying = purrr::map_int(.data$identifyingData, length))
-        # create summary measure whether any obs has identifying
-        has_any_identifying <- any(has_identifying$has_identifying > 0)
-
-        if (has_any_identifying == TRUE) {
+            # extract interview attributes from the payload
+            id_cols <- names(interviews_df) %in% c("identifyingData")
+            interview_attribs_df <- dplyr::select(interviews_df, -.data$identifyingData)
 
             # extract (nested) identifying data
             identifying_df <- interviews_df %>% 
-                dplyr::select(id, .data$identifyingData) %>%
+                dplyr::select(.data$id, .data$identifyingData) %>%
                 purrr::discard(rlang::is_empty) %>%
                 purrr::map_if(is.data.frame, list) %>% 
                 tibble::as_tibble() %>%
@@ -303,9 +310,9 @@ get_interviews_by_chunk <- function(
                         x = .x
                     )
                 ) %>%
-                dplyr::select(id, .data$value, .data$variable) %>%
+                dplyr::select(.data$id, .data$value, .data$variable) %>%
                 tidyr::pivot_wider(
-                    id_cols = id,
+                    id_cols = .data$id,
                     names_from = .data$variable,
                     values_from = .data$value
                 )
@@ -314,9 +321,9 @@ get_interviews_by_chunk <- function(
             interview_list_df <- interview_attribs_df %>%
                 dplyr::left_join(identifying_df, by = "id")
 
-        } else if (has_any_identifying == FALSE) {
+        } else if (has_identifying == FALSE) {
 
-            interview_list_df <- interview_attribs_df
+            interview_list_df <- interviews_df
 
         }
 
@@ -333,6 +340,7 @@ get_interviews_by_chunk <- function(
 #' GraphQL implementation of deprecated REST `GET ​/api​/v1​/interviews​/{id}` endpoint.
 #' 
 #' @param workspace Character. Name of the workspace whose interviews to get.
+#' @param nodes Character vector. Names of attributes to fetch for each interview.
 #' @param chunk_size Numeric. Number of records to take in one request.
 #' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param user Charater. API or admin user name for user that access to the workspace.
@@ -343,6 +351,28 @@ get_interviews_by_chunk <- function(
 #' 
 #' @export
 get_interviews <- function(
+    nodes = c(
+        "id",
+        "key",
+        "assignmentId",
+        "identifyingData",
+        "questionnaireId",
+        "questionnaireVersion",
+        "questionnaireVariable",
+        "responsibleName",
+        "responsibleId",
+        "responsibleRole",
+        "supervisorName",
+        "status",
+        "actionFlags",
+        "wasCompleted",
+        "notAnsweredCount",
+        "errorsCount",
+        "createdDate",
+        "updateDateUtc",
+        "receivedByInterviewerAtUtc",
+        "interviewMode"
+    ),
     chunk_size = 100,
     server = Sys.getenv("SUSO_SERVER"),     # full server address
     workspace = Sys.getenv("SUSO_WORKSPACE"),
@@ -356,6 +386,39 @@ get_interviews <- function(
     # - invalid name
     # - workspace does not exist
     check_workspace_param(workspace = workspace)
+
+    # nodes in known list
+    nodes_allowed <- c(
+            "id",
+            "key",
+            "assignmentId",
+            "identifyingData",
+            "questionnaireId",
+            "questionnaireVersion",
+            "questionnaireVariable",
+            "responsibleName",
+            "responsibleId",
+            "responsibleRole",
+            "supervisorName",
+            "status",
+            "actionFlags",
+            "wasCompleted",
+            "notAnsweredCount",
+            "errorsCount",
+            "createdDate",
+            "updateDateUtc",
+            "receivedByInterviewerAtUtc",
+            "interviewMode"
+    )
+    assertthat::assert_that(
+        all(nodes %in% nodes_allowed),
+        msg = "Invalid node listed in `node`. See documentation for allowed nodes."
+    )
+
+    # nodes must contain `id`
+    if (!"id" %in% nodes) {
+        stop("The requested nodes must contain `id`.")
+    }
 
     # get total count of interviews
     interviews_info <- get_interviews_count(
@@ -392,6 +455,7 @@ get_interviews <- function(
                 workspace = workspace,
                 take_n = chunk_size,
                 skip_n = .x,
+                nodes = nodes,
                 server = server, 
                 user = user, 
                 password = password            

@@ -44,12 +44,20 @@ get_user_action_log <- function(
         fail_msg = "User ID in `user_id` is not a valid GUID.")
 
     # start
-    # datetime
-    # TODO: add check on input format
+    if (start != "") {
+        assertthat::assert_that(
+            !is.na(suppressWarnings(lubridate::ymd(start))),
+            msg = "Invalid date provided in `start`. Make sure that the date is valid and follows YYYY-MM-DD format."
+        )
+    }
 
     # end
-    # datetime
-    # TODO: add check on input format
+    if (start != "") {
+        assertthat::assert_that(
+            !is.na(suppressWarnings(lubridate::ymd(end))),
+            msg = "Invalid date provided in `end`. Make sure that the date is valid and follows YYYY-MM-DD format."
+        )
+    }
 
     # workspace:
     # - invalid name
@@ -755,7 +763,16 @@ archive_user <- function(
     # user_id
     check_guid(
         guid = user_id, 
-        fail_msg = "User ID in `user_id` is not a valid GUID.")
+        fail_msg = "User ID in `user_id` is not a valid GUID."
+    )
+
+    # verbose
+    if (verbose %in% c(NA, TRUE, FALSE)) {
+        assertthat::assert_that(
+            assertthat::is.flag(verbose),
+            msg = "`verbose` must be `TRUE` or `FALSE` or `NA`."
+        )
+    }
 
     # workspace:
     # - invalid name
@@ -847,6 +864,14 @@ unarchive_user <- function(
     check_guid(
         guid = user_id, 
         fail_msg = "User ID in `user_id` is not a valid GUID.")
+
+    # verbose
+    if (verbose %in% c(NA, TRUE, FALSE)) {
+        assertthat::assert_that(
+            assertthat::is.flag(verbose),
+            msg = "`verbose` must be `TRUE` or `FALSE` or `NA`."
+        )
+    }
 
     # workspace:
     # - invalid name
@@ -960,6 +985,14 @@ create_user <- function(
         assertthat::assert_that(
             supervisor != "",
             msg = "Must specify `supervisor` if `role = 'Interviewer'`"
+        )
+    }
+
+    # verbose
+    if (verbose %in% c(NA, TRUE, FALSE)) {
+        assertthat::assert_that(
+            assertthat::is.flag(verbose),
+            msg = "`verbose` must be `TRUE` or `FALSE` or `NA`."
         )
     }
 

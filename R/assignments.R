@@ -242,14 +242,20 @@ get_assignments <- function(
     }
 
     # responsible
-    assertthat::assert_that(
-        is_guid(responsible) | assertthat::is.string(responsible), 
-        msg = "Responsible ID in `responsible` is not a valid GUID.")
+    if (responsible != "") {
+        assertthat::assert_that(
+            is_guid(responsible) | is_user_name(responsible), 
+            msg = "Responsible ID in `responsible` is not a valid GUID or user name."
+        )
+    }
 
     # supervisor_id
-    assertthat::assert_that(
-        is_guid(qnr_id) | qnr_id == "",
-        msg = "Supervisor ID in `supervisor_id` is not a valid GUID")
+    if (supervisor_id != "") {
+        assertthat::assert_that(
+            is_guid(supervisor_id) | is_user_name(supervisor_id),
+            msg = "Supervisor ID in `supervisor_id` is not a valid GUID"
+        )
+    }
 
     # search_by
     # TODO: determine what constitutes a valid search. Could simply be any string that has a literal match in identifying questions.

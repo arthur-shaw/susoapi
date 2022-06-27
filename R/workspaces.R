@@ -127,37 +127,45 @@ get_workspaces <- function(
     password = Sys.getenv("SUSO_PASSWORD")  # API password        
 ) {
 
-# check inputs
-# interview_id is empty or a GUID
-assertthat::assert_that(
-    (user_id == "" | is_guid(user_id)),
-    msg = "User ID in `user_id` is not a valid GUID."
-)
-
-# get total count of workspaces
-tryCatch(
-    warning = function(cnd) rlang::abort(conditionMessage(cnd)),
-    total_count <- get_workspaces_count(
-        user_id = user_id,
-        include_disabled = include_disabled,
-        server = server,
-        user = user,
-        password = password
+    # check inputs
+    # interview_id is empty or a GUID
+    assertthat::assert_that(
+        (user_id == "" | is_guid(user_id)),
+        msg = "User ID in `user_id` is not a valid GUID."
     )
-)
 
-# return all workspaces as a data frame
-df <- purrr::map_dfr(
-    .x = seq(from = 0, to = total_count, by = 20),
-    .f = get_workspaces_batch,
-        length = 20,
-        user_id = user_id,
-        include_disabled = include_disabled,
-        server = server,
-        user = user,
-        password = password
+    # include_disabled
+    if (!include_disabled %in% c(TRUE, FALSE)) {
+        assertthat::assert_that(
+            assertthat::is.flag(verbose),
+            msg = "`include_disabled` must be `TRUE` or `FALSE`."
+        )
+    }
+
+    # get total count of workspaces
+    tryCatch(
+        warning = function(cnd) rlang::abort(conditionMessage(cnd)),
+        total_count <- get_workspaces_count(
+            user_id = user_id,
+            include_disabled = include_disabled,
+            server = server,
+            user = user,
+            password = password
+        )
     )
-return(df)
+
+    # return all workspaces as a data frame
+    df <- purrr::map_dfr(
+        .x = seq(from = 0, to = total_count, by = 20),
+        .f = get_workspaces_batch,
+            length = 20,
+            user_id = user_id,
+            include_disabled = include_disabled,
+            server = server,
+            user = user,
+            password = password
+        )
+    return(df)
 
 }
 

@@ -83,8 +83,10 @@ get_export_jobs <- function(
     }
 
     # has_file
+    if (!has_file %in% c(NA, TRUE, FALSE)) {
         assertthat::assert_that(
             assertthat::is.flag(has_file),
+            msg = "`has_file` must be `TRUE` or `FALSE` or `NA`."
         )
     }
 
@@ -221,8 +223,20 @@ start_export <- function(
     )
 
     # from
+    if (from != "") {
+        assertthat::assert_that(
+            !is.na(suppressWarnings(lubridate::ymd(from))),
+            msg = "Invalid date provided in `from`. Make sure that the date is valid and follows YYYY-MM-DD format."
+        )
+    }
 
     # to
+    if (from != "") {
+        assertthat::assert_that(
+            !is.na(suppressWarnings(lubridate::ymd(to))),
+            msg = "Invalid date provided in `to`. Make sure that the date is valid and follows YYYY-MM-DD format."
+        )
+    }
 
     # storage_type
     if (storage_type != "") {
@@ -431,6 +445,12 @@ cancel_export <- function(
         msg = "Invalid `job_id` value provided."
     )
 
+    # verbose
+    assertthat::assert_that(
+        verbose %in% c(TRUE, FALSE),
+        msg = "Invalid `verbose` value provided. Must be `TRUE` or `FALSE`."
+    )
+
     # workspace
     check_workspace_param(workspace = workspace)
 
@@ -521,6 +541,12 @@ get_export_file <- function(
     assertthat::assert_that(
         dir.exists(path), # assertthat::is.dir does not seem to work; using base r replacement
         msg = "Download path specified in `path` is not a valid directory."
+    )
+
+    # verbose
+    assertthat::assert_that(
+        verbose %in% c(TRUE, FALSE),
+        msg = "Invalid `verbose` value provided. Must be `TRUE` or `FALSE`."
     )
 
     # workspace

@@ -597,6 +597,14 @@ approve_interview_as_sup <- function(
 
     # check inputs:
 
+    # verbose
+    if (verbose %in% c(NA, TRUE, FALSE)) {
+        assertthat::assert_that(
+            assertthat::is.flag(verbose),
+            msg = "`verbose` must be `TRUE` or `FALSE` or `NA`."
+        )
+    }
+
     # interview_id
     check_guid(
         guid = interview_id, 
@@ -708,7 +716,16 @@ assign_interview_to_int <- function(
     if (user_id != "") {
         check_guid(
             guid = user_id, 
-            fail_msg = "User ID in `user_id` is not a valid GUID.")
+            fail_msg = "User ID in `user_id` is not a valid GUID."
+        )
+    }
+
+    # verbose
+    if (verbose %in% c(NA, TRUE, FALSE)) {
+        assertthat::assert_that(
+            assertthat::is.flag(verbose),
+            msg = "`verbose` must be `TRUE` or `FALSE` or `NA`."
+        )
     }
 
     # workspace:
@@ -836,7 +853,16 @@ assign_interview_to_sup <- function(
     if (user_id != "") {
         check_guid(
             guid = user_id, 
-            fail_msg = "User ID in `user_id` is not a valid GUID.")
+            fail_msg = "User ID in `user_id` is not a valid GUID."
+        )
+    }
+
+    # verbose
+    if (verbose %in% c(NA, TRUE, FALSE)) {
+        assertthat::assert_that(
+            assertthat::is.flag(verbose),
+            msg = "`verbose` must be `TRUE` or `FALSE` or `NA`."
+        )
     }
 
     # workspace:
@@ -950,7 +976,16 @@ approve_interview_as_hq <- function(
     # interview_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
+
+    # verbose
+    if (verbose %in% c(NA, TRUE, FALSE)) {
+        assertthat::assert_that(
+            assertthat::is.flag(verbose),
+            msg = "`verbose` must be `TRUE` or `FALSE` or `NA`."
+        )
+    }
 
     # workspace:
     # - invalid name
@@ -1053,7 +1088,16 @@ reject_interview_as_hq <- function(
     if (responsible_id != "") {
         check_guid(
             guid = responsible_id, 
-            fail_msg = "User ID in `responsible_id` is not a valid GUID.")
+            fail_msg = "User ID in `responsible_id` is not a valid GUID."
+        )
+    }
+
+    # verbose
+    if (verbose %in% c(NA, TRUE, FALSE)) {
+        assertthat::assert_that(
+            assertthat::is.flag(verbose),
+            msg = "`verbose` must be `TRUE` or `FALSE` or `NA`."
+        )
     }
 
     # workspace:
@@ -1151,7 +1195,16 @@ unapprove_interview <- function(
     # qnr_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
+
+    # verbose
+    if (verbose %in% c(NA, TRUE, FALSE)) {
+        assertthat::assert_that(
+            assertthat::is.flag(verbose),
+            msg = "`verbose` must be `TRUE` or `FALSE` or `NA`."
+        )
+    }
 
     # workspace:
     # - invalid name
@@ -1248,7 +1301,16 @@ reject_interview_as_sup <- function(
     # interview_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
+
+    # verbose
+    if (verbose %in% c(NA, TRUE, FALSE)) {
+        assertthat::assert_that(
+            assertthat::is.flag(verbose),
+            msg = "`verbose` must be `TRUE` or `FALSE` or `NA`."
+        )
+    }
 
     # if responsible ID provided, check that valid GUID
     if (responsible_id != "") {
@@ -1372,6 +1434,14 @@ comment_question <- function(
             "- comma-separated list (e.g., '1, 2, 3)'"
         )
     )
+
+    # verbose
+    if (verbose %in% c(NA, TRUE, FALSE)) {
+        assertthat::assert_that(
+            assertthat::is.flag(verbose),
+            msg = "`verbose` must be `TRUE` or `FALSE` or `NA`."
+        )
+    }
 
     # workspace:
     # - invalid name

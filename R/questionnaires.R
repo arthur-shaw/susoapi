@@ -162,12 +162,14 @@ get_questionnaire_document <- function(
     # qnr_id
     check_guid(
         guid = qnr_id, 
-        fail_msg = "Questionnaire ID in `qnr_id` is not a valid GUID.")
+        fail_msg = "Questionnaire ID in `qnr_id` is not a valid GUID."
+    )
 
     # qnr_version
     assertthat::assert_that(
         assertthat::is.count(qnr_version),
-        msg = "Questionnaire version number must be a non-negative integer.")    
+        msg = "Questionnaire version number must be a non-negative integer."
+    )    
 
     # path
     assertthat::assert_that(
@@ -487,12 +489,14 @@ get_interviews_for_questionnaire <- function(
     # qnr_id
     check_guid(
         guid = qnr_id, 
-        fail_msg = "Questionnaire ID in `qnr_id` is not a valid GUID.")
+        fail_msg = "Questionnaire ID in `qnr_id` is not a valid GUID."
+    )
 
     # qnr_version
     assertthat::assert_that(
         assertthat::is.count(qnr_version),
-        msg = "Questionnaire version number must be a non-negative integer.")
+        msg = "Questionnaire version number must be a non-negative integer."
+    )
 
     # get total count of interviews
     interviews_info <- get_interviews_for_questionnaire_count(
@@ -635,17 +639,20 @@ set_questionnaire_audio <- function(
     # qnr_id
     check_guid(
         guid = qnr_id, 
-        fail_msg = "Questionnaire ID in `qnr_id` is not a valid GUID.")
+        fail_msg = "Questionnaire ID in `qnr_id` is not a valid GUID."
+    )
 
     # qnr_version
     assertthat::assert_that(
         assertthat::is.count(qnr_version),
-        msg = "Questionnaire version number, `qnr_id`, must be a non-negative integer.")
+        msg = "Questionnaire version number, `qnr_id`, must be a non-negative integer."
+    )
 
     # enable
     assertthat::assert_that(
         assertthat::is.flag(enable),
-        msg = "Whether to enable/disable audio, `enable`, must be a logical value: `TRUE` or `FALSE`")
+        msg = "Whether to enable/disable audio, `enable`, must be a logical value: `TRUE` or `FALSE`"
+    )
 
     # form the base URL
     base_url <- paste0(server,

@@ -360,7 +360,10 @@ get_export_job_details <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(server, "/", workspace, "/api/v2/export/", job_id)
+    base_url <- paste0(
+        server, "/", workspace, 
+        "/api/v2/export/", job_id
+    )
 
     # send and get response
     response <- httr::GET(
@@ -453,7 +456,10 @@ cancel_export <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(server, "/", workspace, "/api/v2/export/", job_id)
+    base_url <- paste0(
+        server, "/", workspace, 
+        "/api/v2/export/", job_id
+    )
 
     # send request
     response <- httr::DELETE(
@@ -549,7 +555,10 @@ get_export_file <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(server, "/", workspace, "/api/v2/export/", job_id, "/file")
+    base_url <- paste0(
+        server, "/", workspace, 
+        "/api/v2/export/", job_id, "/file"
+    )
 
     # request redirect link
     response_redir <- httr::GET(

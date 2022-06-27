@@ -612,7 +612,8 @@ approve_interview_as_sup <- function(
     # interview_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
 
     # workspace:
     # - invalid name
@@ -710,7 +711,8 @@ assign_interview_to_int <- function(
     # interview_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
 
     # check that either user ID or user name provided
     if (user_id == "" & user_name == "") {
@@ -846,8 +848,8 @@ assign_interview_to_sup <- function(
     # interview_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
-
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
 
     # check that either user ID or user name provided
     if (user_id == "" & user_name == "") {
@@ -1092,7 +1094,8 @@ reject_interview_as_hq <- function(
     # interview_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
 
     # if responsible ID provided, check that valid GUID
     if (responsible_id != "") {
@@ -1559,18 +1562,19 @@ get_interview_transcript <- function(
     # interview_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
-
-    # workspace:
-    # - invalid name
-    # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
 
     # path
     assertthat::assert_that(
         dir.exists(path), # assertthat::is.dir does not seem to work; using base r replacement
         msg = "Download path specified in `path` is not a valid directory."
     )
+
+    # workspace:
+    # - invalid name
+    # - workspace does not exist
+    check_workspace_param(workspace = workspace)
 
     # form base URL
     base_url <- paste0(
@@ -1671,7 +1675,8 @@ get_interview_history <- function(
     # interview_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
 
     # workspace:
     # - invalid name

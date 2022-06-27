@@ -392,7 +392,8 @@ user_get_list_ints <- function(
     # sup_id
     check_guid(
         guid = sup_id, 
-        fail_msg = "Supervisor ID in `sup_id` is not a valid GUID.")
+        fail_msg = "Supervisor ID in `sup_id` is not a valid GUID."
+    )
 
     # form the base URL
     base_url <- paste0(
@@ -409,7 +410,8 @@ user_get_list_ints <- function(
     # compose the full URL: base + query parameters
     url <- httr::modify_url(
         url = base_url,
-        query = query)
+        query = query
+    )
 
     # post request
     response <- httr::GET(
@@ -467,7 +469,8 @@ user_get_list_ints_all <- function(
     # sup_id
     check_guid(
         guid = sup_id, 
-        fail_msg = "Supervisor ID in `sup_id` is not a valid GUID.")
+        fail_msg = "Supervisor ID in `sup_id` is not a valid GUID."
+    )
 
     # get total count of interviewers for supervisor
     total_count <- user_get_ints_count(
@@ -475,7 +478,8 @@ user_get_list_ints_all <- function(
         workspace = workspace,
         server = server,
         user = user,
-        password = password)
+        password = password
+    )
 
     # return all interviewers as a dataframe
     if (total_count > 0) {
@@ -613,14 +617,16 @@ get_supervisors <- function(
         workspace = workspace,
         server = server,
         user = user,
-        password = password)
+        password = password
+    )
 
     # get list all supervisors
     supervisor_list <- user_get_list_sups_all(
         workspace = workspace,
         server = server,
         user = user,
-        password = password)
+        password = password
+    )
 
     # add DeviceId if it does not exist
     if(!"DeviceId" %in% names(supervisor_list)) {

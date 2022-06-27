@@ -387,7 +387,8 @@ get_assignment_details <- function(
     # assignment ID
     assertthat::assert_that(
         assertthat::is.count(id), 
-        msg = "Assignment ID, `id`, must be a non-negative integer")
+        msg = "Assignment ID, `id`, must be a non-negative integer"
+    )
 
     # workspace:
     # - invalid name
@@ -470,7 +471,8 @@ get_assignment_quantity_setting <- function(
     # id
     assertthat::assert_that(
         assertthat::is.count(id), 
-        msg = "Assignment ID must be a non-negative integer")
+        msg = "Assignment ID must be a non-negative integer"
+    )
 
     # workspace:
     # - invalid name
@@ -548,7 +550,8 @@ get_assignment_history <- function(
     # id
     assertthat::assert_that(
         assertthat::is.count(id), 
-        msg = "Assignment ID must be a non-negative integer")
+        msg = "Assignment ID must be a non-negative integer"
+    )
 
     # workspace:
     # - invalid name
@@ -635,7 +638,8 @@ check_assignment_audio <- function(
     # id
     assertthat::assert_that(
         assertthat::is.count(id), 
-        msg = "Assignment ID must be a non-negative integer")
+        msg = "Assignment ID must be a non-negative integer"
+    )
 
     # workspace:
     # - invalid name
@@ -643,7 +647,10 @@ check_assignment_audio <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id, "/recordAudio")
+    base_url <- paste0(
+        server, "/", workspace, 
+        "/api/v1/assignments/", id, "/recordAudio"
+    )
 
     # get audio from the server
     response <- httr::GET(
@@ -734,7 +741,8 @@ set_assignment_audio <- function(
     # id
     assertthat::assert_that(
         assertthat::is.count(id), 
-        msg = "Assignment ID must be a non-negative integer")
+        msg = "Assignment ID must be a non-negative integer"
+    )
 
     # workspace:
     # - invalid name
@@ -812,7 +820,8 @@ archive_assignment <- function(
     # assignment ID
     assertthat::assert_that(
         assertthat::is.count(id), 
-        msg = "Assignment ID must be a non-negative integer")
+        msg = "Assignment ID must be a non-negative integer"
+    )
 
     # workspace:
     # - invalid name
@@ -886,12 +895,14 @@ reassign_assignment <- function(
     # id is a count
     assertthat::assert_that(
         assertthat::is.count(id), 
-        msg = "Assignment ID must be a non-negative integer")
+        msg = "Assignment ID must be a non-negative integer"
+    )
 
     # target_user is a GUID or a user name
     assertthat::assert_that(
         is_guid(responsible) | assertthat::is.string(responsible), 
-        msg = "Responsible ID in `responsible` is not a valid GUID.")
+        msg = "Responsible ID in `responsible` is not a valid GUID."
+    )
 
     # workspace:
     # - invalid name
@@ -899,7 +910,10 @@ reassign_assignment <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id, "/assign")
+    base_url <- paste0(
+        server, "/", workspace, 
+        "/api/v1/assignments/", id, "/assign"
+    )
 
     # compose body of request
     body <- list(Responsible = responsible)
@@ -1069,7 +1083,8 @@ unarchive_assignment <- function(
     # assignment ID
     assertthat::assert_that(
         assertthat::is.count(id), 
-        msg = "Assignment ID must be a non-negative integer")
+        msg = "Assignment ID must be a non-negative integer"
+    )
 
     # workspace:
     # - invalid name
@@ -1142,7 +1157,8 @@ close_assignment <- function(
     # assignment ID
     assertthat::assert_that(
         assertthat::is.count(id), 
-        msg = "Assignment ID must be a non-negative integer")
+        msg = "Assignment ID must be a non-negative integer"
+    )
 
     # workspace:
     # - invalid name

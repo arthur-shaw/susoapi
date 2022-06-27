@@ -34,7 +34,7 @@ There are two ways to provide authentication:
 
 ## Manually
 
-Every `susoapi` function that interacts with a server requires the same core parameters: `server`, `user`, and `password`. 
+Every `susoapi` function that interacts with a server requires the same core parameters: `server`, `workspace`, `user`, and `password`. 
 
 The function user could specify those parameters separately for time such a function is used. For example:
 
@@ -42,6 +42,7 @@ The function user could specify those parameters separately for time such a func
 # first, get all questionnaires
 get_questionnaires(
   server = "https://example.server",
+  workspace = "myworkspace",
   user = "My_API_user1",
   password = "MySecretPassword2Day"
 )
@@ -51,6 +52,7 @@ set_questionnaire_audio(
   qnr_id = "72f7160c-12dc-4dd4-9df1-66af819e434d",
   qnr_version = 1,
   server = "https://example.server",
+  workspace = "myworkspace",
   user = "My_API_user1",
   password = "MySecretPassword2Day"  
 )
@@ -72,6 +74,7 @@ The `susoapi` package offers a better solution that addresses all these problems
 # first, set credentials for connecting with the server
 set_credentials(
   server = "https://example.server",
+  workspace = "myworkspace",
   user = "My_API_user1",
   password = "MySecretPassword2Day"
 )
@@ -87,13 +90,14 @@ set_questionnaire_audio(
 
 ```
 
-The `set_credentials()` function captures authentication and makes it available in two secure places. For the current session, the function loads the parameters to R environment variables: `SUSO_SERVER` for the server address, `SUSO_USER` for the API user name, and `SUSO_PASSWORD` for the API user password. For future sessions, the function writes credentials to the .Renviron and loaded the credentials upon session startup. 
+The `set_credentials()` function captures authentication and makes it available in two secure places. For the current session, the function loads the parameters to R environment variables: `SUSO_SERVER` for the server address, `SUSO_WORKSPACE` for the server workspace, `SUSO_USER` for the API user name, and `SUSO_PASSWORD` for the API user password. For future sessions, the function writes credentials to the .Renviron and loaded the credentials upon session startup. 
 
 The `susoapi` functions that communicate with the server load source those values from R environment variables. For example, see the default arguments for `get_questionnaires`:
 
 ```{r eval=FALSE}
 get_questionnaires(
   server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
   user = Sys.getenv("SUSO_USER"),
   password = Sys.getenv("SUSO_PASSWORD")
 )
@@ -104,7 +108,7 @@ This allows function users to set credentials once an use them several times wit
 
 ## Typical workflow
 
-When setting credentials for server authentification, the typical workflow is to:
+When setting credentials for server authentication, the typical workflow is to:
 
 - Set
 - Inspect
@@ -118,6 +122,7 @@ To set credentials, one simply uses `set_credentials()` as below:
 ```{r, eval=FALSE}
 set_credentials(
   server = "https://example.server",
+  workspace = "myworkspace",
   user = "My_API_user1",
   password = "MySecretPassword2Day"
 )
@@ -138,6 +143,9 @@ Alternatively, one could fetch individual credentials from R environment variabl
 
 # Server address
 Sys.getenv("SUSO_SERVER")
+
+# Workspace
+Sys.getenv("SUSO_WORKSPACE")
 
 # API user name
 Sys.getenv("SUSO_USER")
@@ -167,6 +175,7 @@ To correct incorrect credentials, simply use `set_credentials()` again, specifyi
 # set the correct ones
 set_credentials(
   server = "https://exampleserver.com",
+  workspace = "myworkspace",
   user = "My_API_user10",
   password = "MySecretPassword2Day123"
 )

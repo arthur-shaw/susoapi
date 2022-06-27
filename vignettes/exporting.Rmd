@@ -51,6 +51,7 @@ First, start an export job, by specifying all of the particulars:
 # set server authentication credentials
 set_credentials(
   server = "https://exampleserver.com",
+  workspace = "myworkspace",
   user = "My_API_user10",
   password = "MySecretPassword2Day123"
 )

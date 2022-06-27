@@ -33,6 +33,7 @@ While authentication could be provided separately for each function call as part
 # first, set credentials for connecting with the server
 set_credentials(
   server = "https://example.server",
+  workspace = "myworkspace",
   user = "My_API_user1",
   password = "MySecretPassword2Day"
 )
@@ -81,6 +82,7 @@ First, start an export job, by specifying all of the particulars:
 # set server authentication credentials
 set_credentials(
   server = "https://exampleserver.com",
+  workspace = "myworkspace",
   user = "My_API_user10",
   password = "MySecretPassword2Day123"
 )

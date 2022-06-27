@@ -17,6 +17,7 @@ The package is not yet on CRAN, but can be installed via the following
 command:
 
 ``` r
+# if needed, install `devtools` by uncommenting the immediately below
 # install.packages("devtools")
 devtools::install_github("arthur-shaw/susoapi")
 ```
@@ -44,6 +45,7 @@ credentials for server authentication:
 ``` r
 set_credentials(
   server = "https://example.server",
+  workspace = "myworkspace",
   user = "My_API_user1",
   password = "MySecretPassword2Day"
 )

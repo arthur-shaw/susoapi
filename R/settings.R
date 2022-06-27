@@ -19,8 +19,8 @@
 #' 
 #' @export 
 get_global_notice <- function(
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password        
 ) {
@@ -83,8 +83,8 @@ get_global_notice <- function(
 #' @export 
 set_global_notice <- function(
     text,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password        
 ) {
@@ -163,8 +163,8 @@ set_global_notice <- function(
 #' 
 #' @export 
 delete_global_notice <- function(
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password   
 ) {

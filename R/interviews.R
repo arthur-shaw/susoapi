@@ -21,8 +21,8 @@
 #' @export 
 delete_interview <- function(
     interview_id,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password       
 ) {
@@ -106,8 +106,8 @@ delete_interview <- function(
 #' 
 #' @noRd 
 get_interviews_count <- function(
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -172,10 +172,10 @@ get_interviews_count <- function(
 #' 
 #' @noRd 
 get_interviews_by_chunk <- function(
-    workspace = "primary",
     take_n = 100,
     skip_n = 0,
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -343,9 +343,9 @@ get_interviews_by_chunk <- function(
 #' 
 #' @export
 get_interviews <- function(
-    workspace = "primary",
     chunk_size = 100,
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
 ) {
@@ -426,8 +426,8 @@ get_interviews <- function(
 #' @export
 get_interview_stats <- function(
     interview_id,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -525,8 +525,8 @@ approve_interview_as_sup <- function(
     interview_id,
     comment = "",
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
@@ -623,8 +623,8 @@ assign_interview_to_int <- function(
     user_id = "",
     user_name = "",
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
@@ -749,8 +749,8 @@ assign_interview_to_sup <- function(
     user_id = "",
     user_name = "",
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
@@ -875,8 +875,8 @@ approve_interview_as_hq <- function(
     interview_id,
     comment = "",
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
@@ -972,8 +972,8 @@ reject_interview_as_hq <- function(
     comment = "",
     responsible_id = "",
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
@@ -1076,8 +1076,8 @@ unapprove_interview <- function(
     interview_id,
     comment = "",
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
@@ -1173,8 +1173,8 @@ reject_interview_as_sup <- function(
     comment = "",
     responsible_id = "",
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
@@ -1285,8 +1285,8 @@ comment_question <- function(
     roster_vector = "",
     comment,
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
@@ -1393,8 +1393,8 @@ comment_question <- function(
 get_interview_transcript <- function(
     interview_id,
     path,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password      
 ) {
@@ -1505,8 +1505,8 @@ get_interview_transcript <- function(
 #' @export 
 get_interview_history <- function(
     interview_id,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {

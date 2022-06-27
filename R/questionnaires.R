@@ -20,8 +20,8 @@
 #'
 #' @export
 get_questionnaires <- function(
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
@@ -148,8 +148,8 @@ get_questionnaire_document <- function(
     qnr_id,
     qnr_version,
     path,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password        
 ) {
@@ -220,8 +220,8 @@ get_questionnaire_document <- function(
 get_interviews_for_questionnaire_count <- function(
     qnr_id,
     qnr_version,    
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -292,12 +292,12 @@ get_interviews_for_questionnaire_count <- function(
 #' 
 #' @noRd 
 get_interviews_for_questionnaire_by_chunk <- function(
-    workspace = "primary",
     take_n = 100,
     skip_n = 0,
     qnr_id,
     qnr_version,    
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -474,11 +474,11 @@ get_interviews_for_questionnaire_by_chunk <- function(
 #'
 #' @export
 get_interviews_for_questionnaire <- function(
-    workspace = "primary",
     chunk_size = 100,
     qnr_id,
     qnr_version,
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
@@ -624,8 +624,8 @@ set_questionnaire_audio <- function(
     qnr_id,
     qnr_version,
     enable,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {

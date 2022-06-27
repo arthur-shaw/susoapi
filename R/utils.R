@@ -143,6 +143,9 @@ is_workspace_display_name <- function(x) {
 #' 
 #' @noRd 
 check_workspace_param <- function(workspace) {
+check_workspace_param <- function(
+    workspace = Sys.getenv("SUSO_WORKSPACE")
+) {
 
     # invalid name
     assertthat::assert_that(
@@ -154,7 +157,7 @@ check_workspace_param <- function(workspace) {
     workspace_user <- suppressMessages(
         susoapi::get_user_details(
             user_id = Sys.getenv("SUSO_USER"),
-            workspace = workspace,
+            workspace = workspace
         )
     )
     assertthat::assert_that(

@@ -30,8 +30,8 @@ get_user_action_log <- function(
     user_id, 
     start = "",
     end = "",
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password        
 ) {
@@ -139,8 +139,8 @@ get_user_action_log <- function(
 #'
 #' @noRd
 user_get_sups_count <- function(
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -196,8 +196,8 @@ user_get_sups_count <- function(
 user_get_list_sups <- function(
     limit = 40,
     offset = 1,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -248,8 +248,8 @@ user_get_list_sups <- function(
 #'
 #' @noRd 
 user_get_list_sups_all <- function(
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -302,8 +302,8 @@ user_get_list_sups_all <- function(
 #' @noRd
 user_get_ints_count <-  function(
     sup_id,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -367,8 +367,8 @@ user_get_list_ints <- function(
     sup_id,
     limit = 40,
     offset = 1,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -442,8 +442,8 @@ user_get_list_ints <- function(
 #' @noRd 
 user_get_list_ints_all <- function(
     sup_id,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -510,8 +510,8 @@ user_get_list_ints_all <- function(
 #' @export
 get_user_details <- function(
     user_id,   # accepts: UserId, UserName, or Email
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -582,8 +582,8 @@ get_user_details <- function(
 #'
 #' @export
 get_supervisors <- function(
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -655,8 +655,8 @@ get_supervisors <- function(
 #'
 #' @export
 get_interviewers <- function(
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -744,8 +744,8 @@ get_interviewers <- function(
 archive_user <- function(
     user_id,
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password       
 ) {
@@ -835,8 +835,8 @@ archive_user <- function(
 unarchive_user <- function(
     user_id,
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password       
 ) {
@@ -941,8 +941,8 @@ create_user <- function(
     phone_number = "",
     email = "",
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {

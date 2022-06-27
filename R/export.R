@@ -32,8 +32,8 @@ get_export_jobs <- function(
     has_file = "", # values: c(true, false)
     limit = 40, # limit %in% c(1, 40)
     offset = 0, #
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
 ) {
@@ -186,8 +186,8 @@ start_export <- function(
     storage_type = "",
     translation_id = "",
     include_meta = TRUE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
 ) {
@@ -331,8 +331,8 @@ start_export <- function(
 #' @importFrom purrr list_modify modify_if flatten_df
 get_export_job_details <- function(
     job_id,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
 ) {
@@ -419,8 +419,8 @@ get_export_job_details <- function(
 cancel_export <- function(
     job_id,
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
 ) {
@@ -506,8 +506,8 @@ get_export_file <- function(
     job_id,
     path,
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
 ) {

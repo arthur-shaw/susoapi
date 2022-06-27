@@ -33,8 +33,8 @@ get_assignment_count <- function(
     order = "",         # Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"
     offset = "",        # integer
     limit = 40,         # integer
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password
 ) {
@@ -130,8 +130,8 @@ get_assignment_batch <- function(
     order = "",         # Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"
     offset = "",        # integer
     limit = 40,         # integer
-    workspace = "primary",    
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),    
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -218,8 +218,8 @@ get_assignments <- function(
     supervisor_id = "",
     show_archive = "",  # values: c("true", "false")
     order = "",         # Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password  
 ) {
@@ -360,8 +360,8 @@ get_assignments <- function(
 #' @export
 get_assignment_details <- function(
     id,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -444,8 +444,8 @@ get_assignment_details <- function(
 #' @export
 get_assignment_quantity_setting <- function(
     id,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password       
 ) {
@@ -522,8 +522,8 @@ get_assignment_quantity_setting <- function(
 #' @export 
 get_assignment_history <- function(
     id,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -609,8 +609,8 @@ get_assignment_history <- function(
 #' @export
 check_assignment_audio <- function(
     id,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password     
 ) {
@@ -708,8 +708,8 @@ set_assignment_audio <- function(
     id,
     enable,                                 # TRUE or FALSE
     verbose,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password 
 ) {
@@ -787,8 +787,8 @@ set_assignment_audio <- function(
 archive_assignment <- function(
     id,
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
@@ -861,8 +861,8 @@ archive_assignment <- function(
 reassign_assignment <- function(
     id,
     responsible,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")   # API password         
 ) {
@@ -959,8 +959,8 @@ reassign_assignment <- function(
 change_assignment_quantity <- function(
     id,
     quantity,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")   # API password         
 ) {
@@ -1046,8 +1046,8 @@ change_assignment_quantity <- function(
 unarchive_assignment <- function(
     id,
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")   # API password    
 ) {
@@ -1119,8 +1119,8 @@ unarchive_assignment <- function(
 close_assignment <- function(
     id,
     verbose = FALSE,
-    workspace = "primary",
     server = Sys.getenv("SUSO_SERVER"),     # full server address
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
     user = Sys.getenv("SUSO_USER"),         # API user name
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {

@@ -124,6 +124,13 @@ reference:
   contents:
   - get_export_file
 
+- title: "Maps"
+  desc: >
+    Functions for reviewing maps.
+- subtitle: "Review"
+  contents:
+  - get_maps
+
 - title: "Settings"
   desc: >
     Functions for modify the global notice (i.e., the information banner at the top of site).

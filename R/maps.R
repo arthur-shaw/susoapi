@@ -329,3 +329,130 @@ get_maps <- function(
   }
 
 }
+
+
+
+#' Add user to Maps
+#'
+#' Add an interviewer account ('User') to a map uploaded to workspace
+#'
+#' GraphQL implementation of `addUserToMap(...)` HeadquartersMutation endpoint.
+#'
+#' @param mapfile Character. Full name of map file as uploaded to workspace and listed in [HQ-Maps](https://docs.mysurvey.solutions/headquarters/preloading/survey-setup-tab-import-copy-and-delete-questionnaire-templates-and-create-assignments/#maps). Include file extension ('.tpk', '.mmpk' or '.tiff')
+#' @param mapuser Character. Full name of interviewer account to be added to \code{mapfile}
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace in which map is located. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API or admin user name for user that access to the workspace.
+#' @param password Character. API or admin password
+#'
+#' @importFrom assertthat assert_that
+#'
+#' @return Data frame of map and users linked to it
+#'
+#' @export
+
+add_user_to_map <- function(
+  mapfile="",
+  mapuser="",
+  server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
+  user = Sys.getenv("SUSO_USER"),
+  password = Sys.getenv("SUSO_PASSWORD")
+) {
+
+
+  #Validate parameters
+  # Workspace:
+  check_workspace_param(workspace = workspace)
+  #Mapfile specified
+  assertthat::assert_that(
+    nchar(mapfile)>0,
+    msg = paste0(
+      "'mapfile' not specified."
+    )
+  )
+  #mapuser specified
+  assertthat::assert_that(
+    nchar(mapuser)>0,
+    msg = paste0(
+      "'mapuser' not specified."
+    )
+  )
+
+
+
+
+  #Build Base URL
+  query_url <- httr::parse_url(server)
+  #Add GraphQL path
+  query_url$path <- "graphql"
+
+  #Add Body: The GraphQL mutation. See https://github.com/arthur-shaw/susoapi/issues/28
+  #For now, solely return fileName and users
+  gql_body <-  stringr::str_squish((glue::glue('mutation {
+        addUserToMap(
+            workspace: <glue::double_quote(workspace)>,
+            fileName: <glue::double_quote(mapfile)>
+            userName: <glue::double_quote(mapuser)>
+        )
+        {
+            fileName
+            users {
+              userName
+            }
+        }
+        }', .open = "<", .close = ">")))
+
+  #Post request
+  addUserToMap.request <- httr::POST(
+    url = query_url,
+    httr::add_headers(
+      Authorization = paste0(
+        "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password))
+      )
+    ),
+    body = list(query = gql_body),
+    encode = "json"
+  )
+
+  #Store the response for subsequent analysis
+  addUserToMap.response <- jsonlite::fromJSON(content(addUserToMap.request, as="text"), flatten = TRUE)
+
+  ##Analysis
+  #1) Errors
+  if ("errors" %in% names(addUserToMap.response)) {
+    # extract and display error(s)
+    errors <- dplyr::pull(addUserToMap.response$errors) %>% paste0(collapse = "\n")
+    message(glue::glue(
+      "Attention: {errors}",
+      "Empty data frame returned",
+      .sep = "\n"
+    ))
+    #TODO: Is this actually desirable?
+    result.df <- data.frame(
+      map = NA_character_,
+      users = NA_character_,
+      updateDateUtc=NA_integer_
+    )
+    #2) Success
+  } else {
+    newusers <- paste(addUserToMap.response$data$addUserToMap$users$userName,collapse=",")
+    message(glue::glue(
+      "User {glue::backtick(mapuser)} successfully added to map {glue::backtick(mapfile)}.",
+      "Updated list of users: {newusers} ",
+      .sep = "\n"
+    ))
+
+    #TODO: Do we acutally want to have df returned?
+    result.df <- data.frame(
+      map = addUserToMap.response$data$addUserToMap$fileName,
+      users = newusers,
+      #TODO: Decide if actually useful.
+      updateDateUtc=as.POSIXlt(Sys.time(), tz = "UTC")
+    )
+  }
+
+  return(result.df)
+
+}
+

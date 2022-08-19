@@ -456,3 +456,132 @@ add_user_to_map <- function(
 
 }
 
+
+
+
+
+#' Delete user from Map
+#'
+#' Removes an interviewer account ('User') from a map uploaded to workspace
+#'
+#' GraphQL implementation of `deleteUserFromMap(...)` HeadquartersMutation endpoint.
+#'
+#' @param mapfile Character. Full name of map file as uploaded to workspace and listed in [HQ-Maps](https://docs.mysurvey.solutions/headquarters/preloading/survey-setup-tab-import-copy-and-delete-questionnaire-templates-and-create-assignments/#maps). Include file extension ('.tpk', '.mmpk' or '.tiff')
+#' @param mapuser Character. Full name of interviewer account to be deleted from \code{mapfile}
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace in which map is located. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API or admin user name for user that access to the workspace.
+#' @param password Character. API or admin password
+#'
+#' @importFrom assertthat assert_that
+#'
+#' @return Data frame of map and users linked to it
+#'
+#' @export
+
+
+delete_user_from_map <- function(
+  mapfile="",
+  mapuser="",
+  server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
+  user = Sys.getenv("SUSO_USER"),
+  password = Sys.getenv("SUSO_PASSWORD")
+) {
+
+
+  #Validate parameters
+  # Workspace:
+  check_workspace_param(workspace = workspace)
+  #Mapfile specified
+  assertthat::assert_that(
+    nchar(mapfile)>0,
+    msg = paste0(
+      "'mapfile' not specified."
+    )
+  )
+  #mapuser specified
+  assertthat::assert_that(
+    nchar(mapuser)>0,
+    msg = paste0(
+      "'mapuser' not specified."
+    )
+  )
+
+
+
+
+  #Build Base URL
+  query_url <- httr::parse_url(server)
+  #Add GraphQL path
+  query_url$path <- "graphql"
+
+  #Add Body: The GraphQL mutation. See https://github.com/arthur-shaw/susoapi/issues/28
+  #For now, solely return fileName and users
+  gql_body <-  stringr::str_squish((glue::glue('mutation {
+        deleteUserFromMap(
+            workspace: <glue::double_quote(workspace)>,
+            fileName: <glue::double_quote(mapfile)>
+            userName: <glue::double_quote(mapuser)>
+        )
+        {
+            fileName
+            users {
+              userName
+            }
+        }
+        }', .open = "<", .close = ">")))
+
+  #Post request
+  deleteUserFromMap.request <- httr::POST(
+    url = query_url,
+    httr::add_headers(
+      Authorization = paste0(
+        "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password))
+      )
+    ),
+    body = list(query = gql_body),
+    encode = "json"
+  )
+
+  #Store the response for subsequent analysis
+  deleteUserFromMap.response <- jsonlite::fromJSON(content(deleteUserFromMap.request, as="text"), flatten = TRUE)
+
+  ##Analysis
+  #1) Errors
+  if ("errors" %in% names(deleteUserFromMap.response)) {
+    # extract and display error(s)
+    errors <- dplyr::pull(deleteUserFromMap.response$errors) %>% paste0(collapse = "\n")
+    message(glue::glue(
+      "Attention: {errors}",
+      "Empty data frame returned",
+      .sep = "\n"
+    ))
+    #TODO: Is this actually desirable?
+    result.df <- data.frame(
+      map = NA_character_,
+      users = NA_character_,
+      updateDateUtc=NA_integer_
+    )
+    #2) Success
+  } else {
+    newusers <- paste(deleteUserFromMap.response$data$deleteUserFromMap$users$userName,collapse=",")
+    message(glue::glue(
+      "User {glue::backtick(mapuser)} successfully deleted from map {glue::backtick(mapfile)}.",
+      "Updated list of users: {newusers} ",
+      .sep = "\n"
+    ))
+
+    #TODO: Do we actually want to have df returned?
+    result.df <- data.frame(
+      map = deleteUserFromMap.response$data$deleteUserFromMap$fileName,
+      users = newusers,
+      #TODO: Decide if actually useful.
+      updateDateUtc=as.POSIXlt(Sys.time(), tz = "UTC")
+    )
+  }
+
+  return(result.df)
+
+}
+

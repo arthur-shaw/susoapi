@@ -445,16 +445,13 @@ add_user_to_map <- function(
     newusers <- paste(addUserToMap.response$data$addUserToMap$users$userName,collapse=",")
     message(glue::glue(
       "User {glue::backtick(mapuser)} successfully added to map {glue::backtick(mapfile)}.",
-      "Updated list of users: {newusers} ",
       .sep = "\n"
     ))
 
-    #TODO: Do we acutally want to have df returned?
+    #Return df
     result.df <- data.frame(
       map = addUserToMap.response$data$addUserToMap$fileName,
-      users = newusers,
-      #TODO: Decide if actually useful.
-      updateDateUtc=as.POSIXlt(Sys.time(), tz = "UTC")
+      users = newusers
     )
   }
 

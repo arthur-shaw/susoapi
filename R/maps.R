@@ -175,7 +175,11 @@ get_maps_by_chunk <- function(
       purrr::map_if(is.data.frame, list) %>%
       tibble::as_tibble()
 
-    if (has_users) {
+    #Check if any user assigned
+    any_user <- any(lapply(maps_df$users, length)>0)
+
+
+    if (has_users & any_user) {
 
       # extract maps attributes from the payload
       id_cols <- names(maps_df) %in% c("users")
@@ -195,7 +199,9 @@ get_maps_by_chunk <- function(
       # combine map attributes and identifying data
       map_list_df <- maps_attribs_df %>%
         dplyr::left_join(users_df, by = "fileName")
-
+    } else if (has_users & any_user==FALSE) {
+      map_list_df <- maps_df
+      map_list_df['users'] <- NA_character_
     } else if (has_users == FALSE) {
 
       map_list_df <- maps_df

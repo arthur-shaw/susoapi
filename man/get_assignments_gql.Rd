@@ -40,5 +40,5 @@ get_assignments_gql(
 Data frame of all assignments that meet search criteria.
 }
 \description{
-Get all assignments for query parameters. Wrapper for \code{GET /api/v1/assignments} endpoint.
+Get all assignments for query parameters. (Preliminary) GraphQL implementation of \code{assignments(...)} endpoint.
 }

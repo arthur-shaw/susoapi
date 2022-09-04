@@ -325,13 +325,14 @@ get_assignments_gql <- function(
   #Make conditional 'where' filter since AssignmentsFilter 'QuestionnaireIdentiy-version:' doesn't allow null
   #So either just questionnaire identiy or also version
   #TODO: Beautify, to allow multiple 'where'
-  where_filter <- paste0(c(glue::glue("archived: {eq: <glue::as_glue(archivedql)> }", " questionnaireId: { id: {eq: <glue::double_quote(qnr_id)>}", .open = "<", .close = ">"),
+  where_filter <- paste0(c(glue::glue("archived: {eq: <glue::as_glue(archivedql)> }",
+                                      " questionnaireId: { id: {eq: <glue::double_quote(qnr_id)>}", .open = "<", .close = ">"),
+                            #ADD QNR VERSION
                            ifelse(
-                             test=qnr_version!="",
+                             test=!is.null(qnr_version),
                              yes=glue::glue(" version: {eq: <glue::as_glue(qnr_version)>}}",.open = "<", .close = ">"),
                              no="}")
   ) , collapse = '')
-
 
 
   # get total count of assignments

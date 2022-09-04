@@ -299,10 +299,11 @@ get_assignments_gql <- function(
   )
 
   #Assignment ID Filter
-  assertthat::assert_that(is.list(assignment.ids) & length(assignment.ids)==1,msg="assignment.ids must be a list of length 1")
-  assertthat::assert_that(names(assignment.ids) %in% c("in","nin"),msg="Only 'in' and 'nin' are currently supported to filter assignment.ids. Adjust name of list element")
-  assertthat::assert_that(all(assignment.ids[[1]] <=999999999),msg="Assignment Ids must be <=999999999")
-
+  if (!is.null(assignment.ids)) {
+    assertthat::assert_that(is.list(assignment.ids) & length(assignment.ids)==1,msg="assignment.ids must be a list of length 1")
+    assertthat::assert_that(names(assignment.ids) %in% c("in","nin"),msg="Only 'in' and 'nin' are currently supported to filter assignment.ids. Adjust name of list element")
+    assertthat::assert_that(all(assignment.ids[[1]] <=999999999 & !is.na(assignment.ids[[1]])),msg="Assignment Ids must be <=999999999 and not NA")
+  }
 
   # nodes in known list
   nodes_allowed = c(

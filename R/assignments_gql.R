@@ -249,6 +249,7 @@ get_assignments_by_chunk_gql <- function(
 #' @param qnr_id Questionnaire ID. GUID provided by the server.
 #' @param qnr_version Questionnaire version. Version number provided by the server.
 #' @param nodes Character vector. Names of attributes to fetch for each map
+#' @param assignment.ids List with named object 'in' or 'nin' which contains assignment ids to be filtered.
 #' @param archived Query archived or non-archived assignments
 #' @param chunk_size Numeric. Number of records to take in one request.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
@@ -276,6 +277,7 @@ get_assignments_gql <- function(
     "webMode",
     "calendarEvent"
   ),
+  assignment.ids=NULL,
   archived=FALSE,
   chunk_size = 100,
   server = Sys.getenv("SUSO_SERVER"),     # full server address
@@ -295,6 +297,12 @@ get_assignments_gql <- function(
     is_guid(qnr_id) ,
     msg = "Invalid `qnr_id`. The value must be  a valid GUID."
   )
+
+  #Assignment ID Filter
+  assertthat::assert_that(is.list(assignment.ids) & length(assignment.ids)==1,msg="assignment.ids must be a list of length 1")
+  assertthat::assert_that(names(assignment.ids) %in% c("in","nin"),msg="Only 'in' and 'nin' are currently supported to filter assignment.ids. Adjust name of list element")
+  assertthat::assert_that(all(assignment.ids[[1]] <=999999999),msg="Assignment Ids must be <=999999999")
+
 
   # nodes in known list
   nodes_allowed = c(
@@ -331,7 +339,13 @@ get_assignments_gql <- function(
                            ifelse(
                              test=!is.null(qnr_version),
                              yes=glue::glue(" version: {eq: <glue::as_glue(qnr_version)>}}",.open = "<", .close = ">"),
-                             no="}")
+                             no="}"),
+                           #ADD ASSIGNMENT ID
+                           ifelse(
+                             test=!is.null(assignment.ids),
+                             yes=glue::glue(" id: {<glue::as_glue(names(assignment.ids))>: [<glue::glue_collapse(assignment.ids[[1]],sep=',')>]}",.open = "<", .close = ">"),
+                             no="")
+
   ) , collapse = '')
 
 

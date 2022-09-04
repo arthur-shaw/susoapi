@@ -9,6 +9,7 @@ get_assignments_gql(
   qnr_version = NULL,
   nodes = c("archived", "createdAtUtc", "email", "id", "interviewsNeeded",
     "receivedByTabletAtUtc", "responsibleId", "webMode", "calendarEvent"),
+  assignment.ids = NULL,
   archived = FALSE,
   chunk_size = 100,
   server = Sys.getenv("SUSO_SERVER"),
@@ -23,6 +24,8 @@ get_assignments_gql(
 \item{qnr_version}{Questionnaire version. Version number provided by the server.}
 
 \item{nodes}{Character vector. Names of attributes to fetch for each map}
+
+\item{assignment.ids}{List with named object 'in' or 'nin' which contains assignment ids to be filtered.}
 
 \item{archived}{Query archived or non-archived assignments}
 

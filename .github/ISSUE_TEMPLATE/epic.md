@@ -20,4 +20,4 @@ assignees: ''
 ## Documentation ✍️ 
 
 - [ ] Create section in reference index page
-- [ ] Write vignette on working with calendar events
+- [ ] Write vignette on working with [AREA]

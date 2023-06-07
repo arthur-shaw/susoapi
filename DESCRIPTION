@@ -1,6 +1,6 @@
 Package: susoapi
 Title: Interface for Survey Solutions' APIs
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     person(given = "Arthur",
            family = "Shaw",
@@ -13,7 +13,7 @@ BugReports: https://github.com/arthur-shaw/susoapi/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 Imports: 
     httr,
     purrr,

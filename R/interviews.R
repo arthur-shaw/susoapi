@@ -1491,7 +1491,8 @@ comment_question <- function(
     # interview_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
 
     # row_vector is either empty, a singleton, or a comma-separted list
     assertthat::assert_that(

@@ -23,6 +23,21 @@ test_that("Issues error if `row_vector` is not right content/format", {
 
 })
 
+# comment
+test_that("Message issued if non-character comment provided", {
+
+    expect_message(
+        comment_question(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f", 
+            variable_name = "NOM_PRENOMS", 
+            roster_vector = "abc", 
+            comment = 1
+        )
+        regexp = "^The value provided in `comment` is not a character, "
+    )
+
+})
+
 # verbose
 test_that("Issues error if `verbose` is invalid value", {
 

@@ -31,9 +31,9 @@ get_global_notice <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/settings/globalnotice"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/settings/globalnotice")
     )
 
     # get global notice
@@ -103,9 +103,9 @@ set_global_notice <- function(
     check_workspace_param(workspace = workspace)    
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/settings/globalnotice"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/settings/globalnotice")
     )
 
     # construct body
@@ -175,9 +175,9 @@ delete_global_notice <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/settings/globalnotice"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/settings/globalnotice")
     )
 
     # get global notice

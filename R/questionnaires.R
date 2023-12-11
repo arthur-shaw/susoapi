@@ -178,10 +178,12 @@ get_questionnaire_document <- function(
     )
 
     # form the base URL
-    base_url <- paste0(
-        server,
-        "/", workspace,
-        "/api/v1/questionnaires/", qnr_id, "/", qnr_version, "/document"
+    base_url <- httr::modify_url(
+        url = server,
+        path = paste0(
+            workspace, 
+            "/api/v1/questionnaires/", qnr_id, "/", qnr_version, "/document"
+        )
     )
 
     # post request and download file
@@ -574,7 +576,10 @@ get_possible_interview_statuses <- function(
 ) {
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/questionnaires/statuses")
+    base_url <- httr::modify_url(
+        url = server,
+        path = "/api/v1/questionnaires/statuses"
+    )
 
     # post request
     response <- httr::GET(
@@ -655,9 +660,13 @@ set_questionnaire_audio <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server,
-            "/", workspace,
-            "/api/v1/questionnaires/", qnr_id, "/", qnr_version, "/recordAudio")
+    base_url <- httr::modify_url(
+        url = server,
+        path = paste0(
+            workspace,
+            "/api/v1/questionnaires/", qnr_id, "/", qnr_version, "/recordAudio"
+        )
+    )
 
     # form the body for the request
     audio_val <- ifelse(enable == TRUE, "true", "false")

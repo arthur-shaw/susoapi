@@ -66,9 +66,9 @@ get_user_action_log <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/interviewers/", user_id, "/actions-log"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/interviewers/", user_id, "/actions-log")
     )
 
     # form the query terms
@@ -155,9 +155,9 @@ user_get_sups_count <- function(
 ) {
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/supervisors/"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/supervisors/")
     )
 
     # form the body for the request
@@ -213,9 +213,9 @@ user_get_list_sups <- function(
 ) {
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/supervisors/"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/supervisors/")
     )
 
     # form the body for the request
@@ -329,9 +329,9 @@ user_get_ints_count <-  function(
     )
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/supervisors/", sup_id, "/interviewers"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/supervisors/", sup_id, "/interviewers")
     )
 
     # form the body for the request
@@ -396,9 +396,9 @@ user_get_list_ints <- function(
     )
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/supervisors/", sup_id, "/interviewers"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/supervisors/", sup_id, "/interviewers")
     )
 
     # form the body for the request
@@ -543,9 +543,9 @@ get_user_details <- function(
     )
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/users/", user_id
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/users/", user_id)
     )
 
     # post request
@@ -793,9 +793,9 @@ archive_user <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/users/", user_id, "/archive"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/users/", user_id, "/archive")
     )
 
     # oatch archive status on server
@@ -890,9 +890,9 @@ unarchive_user <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/users/", user_id, "/unarchive"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/users/", user_id, "/unarchive")
     )
 
     # patch archive status on server
@@ -1011,9 +1011,9 @@ create_user <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/users/"
+    base_url <- httr::modify_url(
+        url = server, 
+        path =  paste0(workspace, "/api/v1/users/")
     )
 
     # compose body of post

@@ -41,9 +41,9 @@ delete_interview <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace, 
-        "/api/v1/interviews/", interview_id
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/interviews/", interview_id)
     )
 
     # get stats from the server
@@ -512,9 +512,9 @@ get_interview_stats <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace, 
-        "/api/v1/interviews/", interview_id, "/stats"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/interviews/", interview_id, "/stats")
     )
 
     # get stats from the server
@@ -621,9 +621,9 @@ approve_interview_as_sup <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/interviews/", interview_id, "/approve"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/interviews/", interview_id, "/approve")
     )
 
     # transform NA comments to empty string
@@ -741,9 +741,9 @@ assign_interview_to_int <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/interviews/", interview_id, "/assign"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/interviews/", interview_id, "/assign")
     )
 
     # form the body for the assignment request
@@ -878,9 +878,9 @@ assign_interview_to_sup <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/interviews/", interview_id, "/assignsupervisor"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/interviews/", interview_id, "/assignsupervisor")
     )
 
     # form the body for the assignment request
@@ -1001,9 +1001,9 @@ approve_interview_as_hq <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/interviews/", interview_id, "/hqapprove"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/interviews/", interview_id, "/hqapprove")
     )
 
     # transform NA comments to empty string
@@ -1119,9 +1119,9 @@ reject_interview_as_hq <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/interviews/", interview_id, "/hqreject"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/interviews/", interview_id, "/hqreject")
     )
 
     # transform NA comments to empty string
@@ -1229,9 +1229,9 @@ unapprove_interview <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/interviews/", interview_id, "/hqunapprove"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/interviews/", interview_id, "/hqunapprove")
     )
 
     # transform NA comments to empty string
@@ -1346,9 +1346,9 @@ reject_interview_as_sup <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/interviews/", interview_id, "/reject"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/interviews/", interview_id, "/reject")
     )
 
     # transform NA comments to empty string
@@ -1473,10 +1473,13 @@ comment_question <- function(
     check_workspace_param(workspace = workspace)
 
     # formulate API call
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/interviews/", interview_id, 			# interview
-        "/comment-by-variable/", variable_name 		# variable
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(
+            workspace,
+            "/api/v1/interviews/", interview_id, 			# interview
+            "/comment-by-variable/", variable_name 		# variable
+        )
     )
 
     # form query portion of request
@@ -1577,9 +1580,9 @@ get_interview_transcript <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/interviews/", interview_id, "/pdf"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/interviews/", interview_id, "/pdf")
     )
 
     # make request
@@ -1684,9 +1687,9 @@ get_interview_history <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(
-        server, "/", workspace,
-        "/api/v1/interviews/", interview_id, "/history"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/interviews/", interview_id, "/history")
     )
 
     # make request

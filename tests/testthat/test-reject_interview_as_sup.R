@@ -7,6 +7,19 @@ test_that("Issues error if `interview_id` is invalid form", {
 
 })
 
+# comment
+test_that("Message issued if non-character comment provided", {
+
+    expect_message(
+        reject_interview_as_sup(
+            interview_id = "7bdf95abab1b4d46b818cdf7546e049f",
+            comment = 1
+        ),
+        regexp = "^The value provided in `comment` is not a character, "
+    )
+
+})
+
 # verbose
 test_that("Issues error if `verbose` is invalid value", {
 

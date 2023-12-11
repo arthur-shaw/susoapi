@@ -601,6 +601,21 @@ approve_interview_as_sup <- function(
 
     # check inputs:
 
+    # interview_id
+    check_guid(
+        guid = interview_id, 
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
+
+    # comment
+    if (!is.character(comment)) {
+        message(paste0(
+            "The value provided in `comment` is not a character, ",
+            "but this function has coerced it to be."
+        ))
+        comment <- as.character(comment)
+    }
+
     # verbose
     if (verbose %in% c(NA, TRUE, FALSE)) {
         assertthat::assert_that(
@@ -608,12 +623,6 @@ approve_interview_as_sup <- function(
             msg = "`verbose` must be `TRUE` or `FALSE` or `NA`."
         )
     }
-
-    # interview_id
-    check_guid(
-        guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
-    )
 
     # workspace:
     # - invalid name
@@ -987,6 +996,15 @@ approve_interview_as_hq <- function(
         fail_msg = "Interview ID in `interview_id` is not a valid GUID."
     )
 
+    # comment
+    if (!is.character(comment)) {
+        message(paste0(
+            "The value provided in `comment` is not a character, ",
+            "but this function has coerced it to be."
+        ))
+        comment <- as.character(comment)
+    }
+
     # verbose
     if (verbose %in% c(NA, TRUE, FALSE)) {
         assertthat::assert_that(
@@ -1096,6 +1114,15 @@ reject_interview_as_hq <- function(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID."
     )
+
+    # comment
+    if (!is.character(comment)) {
+        message(paste0(
+            "The value provided in `comment` is not a character, ",
+            "but this function has coerced it to be."
+        ))
+        comment <- as.character(comment)
+    }
 
     # if responsible ID provided, check that valid GUID
     if (responsible_id != "") {
@@ -1209,11 +1236,20 @@ unapprove_interview <- function(
 
     # check inputs:
 
-    # qnr_id
+    # interview_id
     check_guid(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID."
     )
+
+    # comment
+    if (!is.character(comment)) {
+        message(paste0(
+            "The value provided in `comment` is not a character, ",
+            "but this function has coerced it to be."
+        ))
+        comment <- as.character(comment)
+    }
 
     # verbose
     if (verbose %in% c(NA, TRUE, FALSE)) {
@@ -1324,6 +1360,15 @@ reject_interview_as_sup <- function(
         guid = interview_id, 
         fail_msg = "Interview ID in `interview_id` is not a valid GUID."
     )
+
+    # comment
+    if (!is.character(comment)) {
+        message(paste0(
+            "The value provided in `comment` is not a character, ",
+            "but this function has coerced it to be."
+        ))
+        comment <- as.character(comment)
+    }
 
     # verbose
     if (verbose %in% c(NA, TRUE, FALSE)) {
@@ -1446,7 +1491,8 @@ comment_question <- function(
     # interview_id
     check_guid(
         guid = interview_id, 
-        fail_msg = "Interview ID in `interview_id` is not a valid GUID.")
+        fail_msg = "Interview ID in `interview_id` is not a valid GUID."
+    )
 
     # row_vector is either empty, a singleton, or a comma-separted list
     assertthat::assert_that(
@@ -1459,6 +1505,15 @@ comment_question <- function(
         )
     )
 
+    # comment
+    if (!is.character(comment)) {
+        message(paste0(
+            "The value provided in `comment` is not a character, ",
+            "but this function has coerced it to be."
+        ))
+        comment <- as.character(comment)
+    }
+    
     # verbose
     if (verbose %in% c(NA, TRUE, FALSE)) {
         assertthat::assert_that(

@@ -13,7 +13,10 @@ get_workspaces_count <- function(
 ) {
 
 # form the base URL
-base_url <- paste0(server, "/api/v1/workspaces")
+base_url <- httr::modify_url(
+    url = server, 
+    path = "/api/v1/workspaces"
+)
 
 # compose query
 # match function params to expected query params
@@ -67,7 +70,10 @@ get_workspaces_batch <- function(
 ) {
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/workspaces")
+    base_url <- httr::modify_url(
+        url = server, 
+        path = "/api/v1/workspaces"
+    )
 
     # compose query
     # match function params to expected query params
@@ -233,7 +239,10 @@ create_workspace <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/workspaces")
+    base_url <- httr::modify_url(
+        url = server, 
+        path = "/api/v1/workspaces"
+    )
 
     # compose body of post
     # match function params to expected keys in body
@@ -405,7 +414,10 @@ update_workspace <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/workspaces/", name)
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0("/api/v1/workspaces/", name)
+    )
 
     # compose body of post
     # match function params to expected keys in body
@@ -503,7 +515,10 @@ delete_workspace <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/workspaces/", name)
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0("/api/v1/workspaces/", name)
+    )
 
     # request workspace be deleted
     response <- httr::DELETE(
@@ -571,7 +586,10 @@ get_workspace_status <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/workspaces/status/", name)
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0("/api/v1/workspaces/status/", name)
+    )
 
     # request workspace status
     response <- httr::GET(
@@ -639,7 +657,10 @@ disable_workspace <- function(
     )  
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/workspaces/", name, "/disable")
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0("/api/v1/workspaces/", name, "/disable")
+    )
 
     # request workspace be disabled
     response <- httr::POST(
@@ -713,7 +734,10 @@ enable_workspace <- function(
     )   
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/workspaces/", name, "/enable")
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0("/api/v1/workspaces/", name, "/enable")
+    )
 
     # request workspace be disabled
     response <- httr::POST(
@@ -816,7 +840,10 @@ assign_users_to_workspaces <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server, "/api/v1/workspaces/assign")
+    base_url <- httr::modify_url(
+        url = server, 
+        path = "/api/v1/workspaces/assign"
+    )
 
     # compose body of request
     # transform paramters into list of values with escaped double quotes

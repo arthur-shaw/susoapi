@@ -91,7 +91,10 @@ get_export_jobs <- function(
     }
 
     # form base URL
-    base_url <- paste0(server, "/", workspace, "/api/v2/export")
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v2/export")
+    )
 
     # form the query parameters of the request
     query <- list(
@@ -260,7 +263,10 @@ start_export <- function(
     )
 
     # form the base URL
-    base_url <- paste0(server, "/", workspace, "/api/v2/export")
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v2/export")
+    )
 
     # form the body for the export request, excluding empty elements of list
     body <- list(
@@ -360,9 +366,9 @@ get_export_job_details <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace, 
-        "/api/v2/export/", job_id
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v2/export/", job_id)
     )
 
     # send and get response
@@ -456,9 +462,9 @@ cancel_export <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace, 
-        "/api/v2/export/", job_id
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v2/export/", job_id)
     )
 
     # send request
@@ -555,9 +561,9 @@ get_export_file <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(
-        server, "/", workspace, 
-        "/api/v2/export/", job_id, "/file"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v2/export/", job_id, "/file")
     )
 
     # request redirect link

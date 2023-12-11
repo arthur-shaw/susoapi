@@ -47,7 +47,10 @@ get_assignment_count <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(server, "/", workspace, "/api/v1/assignments")
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/assignments")
+    )
 
     # form the questionnaire ID as QuestionnaireID$Version
     qnr_id_full <- ifelse(
@@ -147,7 +150,10 @@ get_assignment_batch <- function(
     check_workspace_param(workspace = workspace)
 
     # form the base URL
-    base_url <- paste0(server, "/", workspace, "/api/v1/assignments")
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/assignments"),
+    )
 
     # form the questionnaire ID as QuestionnaireID$Version
     qnr_id_full <- ifelse(
@@ -396,7 +402,10 @@ get_assignment_details <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id)
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/assignments/", id)
+    )
 
     # get assignments from the server
     response <- httr::GET(
@@ -480,9 +489,11 @@ get_assignment_quantity_setting <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(
-        server, "/", workspace, 
-        "/api/v1/assignments/", id, "/assignmentQuantitySettings"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(
+            workspace, "/api/v1/assignments/", id, "/assignmentQuantitySettings"
+        )
     )
 
     # get assignments from the server
@@ -559,7 +570,10 @@ get_assignment_history <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id, "/history")
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/assignments/", id, "/history")
+    )
 
     # make request
     response <- httr::GET(
@@ -647,9 +661,9 @@ check_assignment_audio <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(
-        server, "/", workspace, 
-        "/api/v1/assignments/", id, "/recordAudio"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/assignments/", id, "/recordAudio")
     )
 
     # get audio from the server
@@ -750,9 +764,9 @@ set_assignment_audio <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(
-        server, "/", workspace, 
-        "/api/v1/assignments/", id, "/recordAudio"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/assignments/", id, "/recordAudio")
     )
 
     # form the body for the request
@@ -829,7 +843,10 @@ archive_assignment <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(server, "/", workspace, "/api/v1/assignments/", id, "/archive")
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/assignments/", id, "/archive")
+    )
 
     # get assignments from the server
     response <- httr::PATCH(
@@ -910,9 +927,9 @@ reassign_assignment <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(
-        server, "/", workspace, 
-        "/api/v1/assignments/", id, "/assign"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/assignments/", id, "/assign")
     )
 
     # compose body of request
@@ -1012,9 +1029,9 @@ change_assignment_quantity <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(
-        server, "/", workspace, 
-        "/api/v1/assignments/", id, "/changeQuantity"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/assignments/", id, "/changeQuantity")
     )
 
     # get assignments from the server
@@ -1092,9 +1109,9 @@ unarchive_assignment <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(
-        server, "/", workspace, 
-        "/api/v1/assignments/", id, "/unarchive"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/assignments/", id, "/unarchive")
     )
 
     # get assignments from the server
@@ -1166,9 +1183,9 @@ close_assignment <- function(
     check_workspace_param(workspace = workspace)
 
     # form base URL
-    base_url <- paste0(
-        server, "/", workspace, 
-        "/api/v1/assignments/", id, "/close"
+    base_url <- httr::modify_url(
+        url = server, 
+        path = paste0(workspace, "/api/v1/assignments/", id, "/close")
     )
 
     # get assignments from the server

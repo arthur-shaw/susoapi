@@ -4,9 +4,23 @@
 \alias{check_credentials}
 \title{Check that server credentials are valid}
 \usage{
-check_credentials(verbose = FALSE)
+check_credentials(
+  server = Sys.getenv("SUSO_SERVER"),
+  workspace = Sys.getenv("SUSO_WORKSPACE"),
+  user = Sys.getenv("SUSO_USER"),
+  password = Sys.getenv("SUSO_PASSWORD"),
+  verbose = FALSE
+)
 }
 \arguments{
+\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+
+\item{workspace}{Character. Name of the workspace whose users to get. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
+
+\item{user}{Character. API user name}
+
+\item{password}{Character. API password}
+
 \item{verbose}{Logical. If \code{TRUE}, function returns logical regarding validity of credentials. If \code{FALSE}, function simply prints information about validity to the console.}
 }
 \value{

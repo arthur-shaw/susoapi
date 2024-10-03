@@ -102,6 +102,11 @@ show_credentials <- function() {
 #' Check that server credentials are valid
 #'
 #' Shows server credentials saved in environment variables and .Renviron.
+#' 
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose users to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param user Character. API user name
+#' @param password Character. API password
 #' @param verbose Logical. If `TRUE`, function returns logical regarding validity of credentials. If `FALSE`, function simply prints information about validity to the console.
 #' 
 #' @return If `verbose = FALSE` (default), side-effect of message printed to the console. If `verbose = TRUE`, logical: `TRUE` if credentials valid; `FALSE` otherwise.
@@ -111,14 +116,12 @@ show_credentials <- function() {
 #' 
 #' @export
 check_credentials <- function(
+    server = Sys.getenv("SUSO_SERVER"),
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
+    user = Sys.getenv("SUSO_USER"),
+    password = Sys.getenv("SUSO_PASSWORD"),
     verbose = FALSE
 ) {
-
-    # extract server, user, and password environment variables
-    server      <- Sys.getenv("SUSO_SERVER")
-    workspace   <- Sys.getenv("SUSO_WORKSPACE")
-    user        <- Sys.getenv("SUSO_USER")
-    password    <- Sys.getenv("SUSO_PASSWORD")
 
     # check whether credentials are completely non-missing
     if (server == "" | workspace == "" | user == "" | password == "") {

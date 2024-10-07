@@ -19,7 +19,7 @@ vcr::use_cassette("get_workspaces_df", {
 
         expect_named(
             object = x,
-            expected = c("Name", "DisplayName", "DisabledAtUtc"),
+            expected = c("Name", "DisplayName", "DisabledAtUtc", "CreatedAtUtc"),
             ignore.order = TRUE
         )
 

@@ -23,7 +23,7 @@ test_that("if workspace exists, returns df with expected columns", {
 
     expect_named(
         object = x,
-        expected = c("Name", "DisplayName", "DisabledAtUtc"),
+        expected = c("Name", "DisplayName", "DisabledAtUtc", "CreatedAtUtc"),
         ignore.order = TRUE
     )
 

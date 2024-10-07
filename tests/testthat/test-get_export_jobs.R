@@ -47,7 +47,7 @@ test_that("Returns df with expected columns", {
 
     expect_s3_class(x, c("tbl_df","tbl","data.frame"))
     expect_named(x, c(
-        "JobId", "ExportStatus", "StartDate", "CompleteDate",
+        "JobId", "ExportStatus", "StartDate", "CompleteDate", "CreateDate",
         "Progress", "ETA", "Error", "Links",
         "HasExportFile", "ExportType", "QuestionnaireId", "InterviewStatus",
         "From", "To", "AccessToken", "RefreshToken",

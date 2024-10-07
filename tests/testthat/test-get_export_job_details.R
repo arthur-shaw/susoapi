@@ -41,7 +41,7 @@ test_that("df if export job found", {
     
     expect_s3_class(x, c("tbl_df","tbl","data.frame"))
     expect_named(x, c(
-        "JobId", "ExportStatus", "StartDate", "CompleteDate", 
+        "JobId", "ExportStatus", "StartDate", "CompleteDate", "CreateDate",
         "Progress", "ETA", "Error", "HasExportFile", 
         "ExportType", "QuestionnaireId", "InterviewStatus", "From",
         "To", "AccessToken", "RefreshToken", "StorageType", 

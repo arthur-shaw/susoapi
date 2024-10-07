@@ -1,0 +1,82 @@
+http_interactions:
+- request:
+    method: get
+    uri: <<<fake_server>>>/<<fake workspace>>/api/v1/users/<<<fake_user>>>
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      Accept: application/json
+      Content-Type: application/json
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      cache-control: no-store, no-cache
+      transfer-encoding: chunked
+      content-type: application/json; charset=utf-8
+      content-encoding: gzip
+      content-language: en-US
+      vary: Accept-Encoding
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Mon, 07 Oct 2024 20:18:24 GMT
+    body:
+      encoding: ''
+      file: no
+      string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
+  recorded_at: 2024-10-07 20:18:29 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0
+- request:
+    method: post
+    uri: <<<fake_server>>>/graphql
+    body:
+      encoding: ''
+      string: '{"query":"{    questionnaires (workspace: \"<<fake workspace>>\") {        nodes
+        {            id            questionnaireId            version            variable            title            defaultLanguageName            translations
+        {                id                name            }        }        filteredCount       }}"}'
+    headers:
+      User-Agent: libcurl/8.3.0 r-curl/5.2.2 crul/1.5.0
+      Content-Type: application/json
+      Accept-Encoding: gzip, deflate
+      Accept: application/json, text/xml, application/xml, */*
+      authorization: Basic YWRtaW46TXlMZXlsYUxvdmVzTWUyRGF5
+  response:
+    status:
+      status_code: '200'
+      message: OK
+      explanation: Request fulfilled, document follows
+    headers:
+      status: HTTP/1.1 200 OK
+      transfer-encoding: chunked
+      content-type: application/graphql-response+json; charset=utf-8
+      content-language: en-US
+      server: Kestrel
+      x-powered-by: ASP.NET
+      date: Mon, 07 Oct 2024 20:18:29 GMT
+    body:
+      encoding: ''
+      file: no
+      string: '{"data":{"questionnaires":{"nodes":[{"id":"5495bfd5f2324b3a8a75c80056f1898e$1","questionnaireId":"5495bfd5-f232-4b3a-8a75-c80056f1898e","version":1,"variable":"menage","title":"EHCVM
+        2 - qnr mod\u00E8le m\u00E9nage","defaultLanguageName":null,"translations":[]},{"id":"5ab793ffc84a4211858df168bbd90cf9$1","questionnaireId":"5ab793ff-c84a-4211-858d-f168bbd90cf9","version":1,"variable":"nesting","title":"nesting
+        test","defaultLanguageName":null,"translations":[]},{"id":"e71bcb42a2aa420fa7e95f0ddc791b91$1","questionnaireId":"e71bcb42-a2aa-420f-a7e9-5f0ddc791b91","version":1,"variable":"GAMBIA_COVID_19Wave5","title":"GAMBIA
+        COVID-19 Wave 5","defaultLanguageName":null,"translations":[]},{"id":"e71bcb42a2aa420fa7e95f0ddc791b91$2","questionnaireId":"e71bcb42-a2aa-420f-a7e9-5f0ddc791b91","version":2,"variable":"GAMBIA_COVID_19Wave5","title":"GAMBIA
+        COVID-19 Wave 5","defaultLanguageName":null,"translations":[]},{"id":"e71bcb42a2aa420fa7e95f0ddc791b91$3","questionnaireId":"e71bcb42-a2aa-420f-a7e9-5f0ddc791b91","version":3,"variable":"GAMBIA_COVID_19Wave5","title":"GAMBIA
+        COVID-19 Wave 5","defaultLanguageName":null,"translations":[]},{"id":"5f9881014a7843aa871444584093c74d$1","questionnaireId":"5f988101-4a78-43aa-8714-44584093c74d","version":1,"variable":"GAMBIA_COVID_19Wave6","title":"GAMBIA
+        COVID-19 Wave 6","defaultLanguageName":null,"translations":[]},{"id":"b4382cca82314e8a87b0b1acf8e1ac6c$1","questionnaireId":"b4382cca-8231-4e8a-87b0-b1acf8e1ac6c","version":1,"variable":"no_interviews","title":"I
+        have no interviews","defaultLanguageName":null,"translations":[]},{"id":"786ed1ce4c2348a9bbaea8af2f9f44b0$1","questionnaireId":"786ed1ce-4c23-48a9-bbae-a8af2f9f44b0","version":1,"variable":"CORE_AG_PP","title":"50x2030
+        V2 CORE-AG PP (Post-Planting (Temporary Crops) )","defaultLanguageName":null,"translations":[]},{"id":"fe23da04bd6346208111ad479e8502a9$1","questionnaireId":"fe23da04-bd63-4620-8111-ad479e8502a9","version":1,"variable":"menage_test","title":"Copy
+        of EHCVM 2 - mod\u00E8le pr\u00E9-collecte, passage 2","defaultLanguageName":null,"translations":[]},{"id":"0c17089ff4d3493291a8d03e2a29d321$1","questionnaireId":"0c17089f-f4d3-4932-91a8-d03e2a29d321","version":1,"variable":"demo_qnr","title":"Demo
+        questionnaire","defaultLanguageName":null,"translations":[]},{"id":"64c86a06b988467e83e0596a770d142d$1","questionnaireId":"64c86a06-b988-467e-83e0-596a770d142d","version":1,"variable":"zimstat","title":"Zimstat
+        demo qnr","defaultLanguageName":null,"translations":[]},{"id":"fabfe7d50ec942919fbcac423b7d7b5d$1","questionnaireId":"fabfe7d5-0ec9-4291-9fbc-ac423b7d7b5d","version":1,"variable":"export_reusable_translation","title":"Export
+        of reusable options and translations","defaultLanguageName":null,"translations":[{"id":"52ad6e51-b64f-b7bf-b9ad-4500316412cd","name":"Fran\u00E7ais"}]},{"id":"e8b230ccb89641b9b6c8654f207d499a$1","questionnaireId":"e8b230cc-b896-41b9-b6c8-654f207d499a","version":1,"variable":"Cambodia_SES19","title":"Copy
+        of LSMS PLUS  CAMBODIA QUESTIONNAIRE 2019","defaultLanguageName":null,"translations":[{"id":"e8a6ac76-29cc-4c11-b752-c72c36fd8e03","name":"LSMS
+        PLUS QUESTIONNAIRE 2019 11o"}]},{"id":"b5ad35ba8a4844e8b92e0f1305efea5a$1","questionnaireId":"b5ad35ba-8a48-44e8-b92e-0f1305efea5a","version":1,"variable":"translation_demo","title":"Translation","defaultLanguageName":null,"translations":[{"id":"6cb3ee41-0e36-994c-a9a9-2e596323f9da","name":"Fran\u00E7ais"}]},{"id":"9e37f1c59e1c47039167928481cf42d2$1","questionnaireId":"9e37f1c5-9e1c-4703-9167-928481cf42d2","version":1,"variable":"questionTypesExample","title":"Question
+        Types","defaultLanguageName":null,"translations":[]},{"id":"e259b6b7405244c9a8dcdc8942120001$1","questionnaireId":"e259b6b7-4052-44c9-a8dc-dc8942120001","version":1,"variable":"ZiHBS_2024_Final","title":"ZiHBS
+        2024 Final","defaultLanguageName":null,"translations":[]},{"id":"2812f1255ffe4792813a8f03cb5026cd$1","questionnaireId":"2812f125-5ffe-4792-813a-8f03cb5026cd","version":1,"variable":"BICS24","title":"Bangladesh
+        Individual Consumption Study (BICS)","defaultLanguageName":"English","translations":[{"id":"1bb5585e-3b35-f78e-07f0-14eb1a0850de","name":"Bangla"}]}],"filteredCount":17}}}'
+  recorded_at: 2024-10-07 20:18:29 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

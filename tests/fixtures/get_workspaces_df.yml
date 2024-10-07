@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: get
-    uri: <<<fake_server>>>api/v1/workspaces?Start=0&Length=1&IncludeDisabled=false
+    uri: <<<fake_server>>>/api/v1/workspaces?Start=0&Length=1&IncludeDisabled=false
     body:
       encoding: ''
       string: ''
@@ -23,16 +23,16 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:35:50 GMT
+      date: Mon, 07 Oct 2024 19:24:23 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
-      string: '{"Workspaces":[{"Name":"another","DisplayName":"Another workspace","DisabledAtUtc":null}],"Order":null,"Limit":1,"TotalCount":7,"Offset":0}'
-  recorded_at: 2022-06-27 13:35:50 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+      string: '{"Workspaces":[{"Name":"50x30","DisplayName":"50x30 Shiny app testing","DisabledAtUtc":null,"CreatedAtUtc":null}],"Order":null,"Limit":1,"TotalCount":13,"Offset":0}'
+  recorded_at: 2024-10-07 19:24:24 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0
 - request:
     method: get
-    uri: <<<fake_server>>>api/v1/workspaces?Start=0&Length=20&IncludeDisabled=false
+    uri: <<<fake_server>>>/api/v1/workspaces?Start=0&Length=20&IncludeDisabled=false
     body:
       encoding: ''
       string: ''
@@ -54,12 +54,17 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:35:50 GMT
+      date: Mon, 07 Oct 2024 19:24:23 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
-      string: '{"Workspaces":[{"Name":"another","DisplayName":"Another workspace","DisabledAtUtc":null},{"Name":"bahamas","DisplayName":"Bahamas","DisabledAtUtc":null},{"Name":"ftf","DisplayName":"FtF","DisabledAtUtc":null},{"Name":"<<fake workspace>>","DisplayName":"Default
-        Workspace","DisabledAtUtc":null},{"Name":"test","DisplayName":"Ce est un test","DisabledAtUtc":null},{"Name":"uemoa","DisplayName":"EHCVM2","DisabledAtUtc":null},{"Name":"unhis","DisplayName":"UHIS
-        testing","DisabledAtUtc":null}],"Order":null,"Limit":20,"TotalCount":7,"Offset":0}'
-  recorded_at: 2022-06-27 13:35:50 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+      string: '{"Workspaces":[{"Name":"50x30","DisplayName":"50x30 Shiny app testing","DisabledAtUtc":null,"CreatedAtUtc":null},{"Name":"another","DisplayName":"Another
+        workspace","DisabledAtUtc":null,"CreatedAtUtc":null},{"Name":"bahamas","DisplayName":"Bahamas","DisabledAtUtc":null,"CreatedAtUtc":null},{"Name":"bangladesh","DisplayName":"Bangladesh","DisabledAtUtc":null,"CreatedAtUtc":null},{"Name":"bizregistry","DisplayName":"Business
+        registry project","DisabledAtUtc":null,"CreatedAtUtc":null},{"Name":"test","DisplayName":"Ce
+        est un test","DisabledAtUtc":null,"CreatedAtUtc":null},{"Name":"<<fake workspace>>","DisplayName":"Default
+        Workspace","DisabledAtUtc":null,"CreatedAtUtc":null},{"Name":"uemoa","DisplayName":"EHCVM2","DisabledAtUtc":null,"CreatedAtUtc":null},{"Name":"ftf","DisplayName":"FtF","DisabledAtUtc":null,"CreatedAtUtc":null},{"Name":"ihs6","DisplayName":"IHS6","DisabledAtUtc":null,"CreatedAtUtc":null},{"Name":"mtf","DisplayName":"MTF
+        Shiny app testing","DisabledAtUtc":null,"CreatedAtUtc":null},{"Name":"unhis","DisplayName":"UHIS
+        testing","DisabledAtUtc":null,"CreatedAtUtc":null},{"Name":"zimstat","DisplayName":"ZIMSTAT
+        demo","DisabledAtUtc":null,"CreatedAtUtc":null}],"Order":null,"Limit":20,"TotalCount":13,"Offset":0}'
+  recorded_at: 2024-10-07 19:24:24 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

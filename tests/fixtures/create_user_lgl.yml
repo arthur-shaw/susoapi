@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: get
-    uri: <<<fake_server>>><<fake workspace>>/api/v1/users/<<<fake_user>>>
+    uri: <<<fake_server>>>/<<fake workspace>>/api/v1/users/<<<fake_user>>>
     body:
       encoding: ''
       string: ''
@@ -23,13 +23,13 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:34:48 GMT
+      date: Mon, 07 Oct 2024 19:23:41 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
       string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
-  recorded_at: 2022-06-27 13:34:49 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+  recorded_at: 2024-10-07 19:23:42 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0
 - request:
     method: post
     uri: <<<fake_server>>>/<<fake workspace>>/api/v1/users/
@@ -47,16 +47,16 @@ http_interactions:
       message: 'Client error: (400) Bad Request'
     headers:
       cache-control: no-store, no-cache
-      content-length: '302'
+      content-length: '290'
       content-type: application/problem+json; charset=utf-8
       content-language: en-US
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:34:48 GMT
+      date: Mon, 07 Oct 2024 19:23:41 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
-      string: '{"Errors":{"DuplicateUserName":["Please choose another username"]},"Type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","Title":"One
-        or more validation errors occurred.","Status":400,"Detail":null,"Instance":null,"Extensions":{"traceId":"00-3744bd77c57d73b159f89a23771338df-d14573072938fab9-00"}}'
-  recorded_at: 2022-06-27 13:34:49 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+      string: '{"Errors":{"Supervisor":["Supervisor was not found"]},"Type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","Title":"One
+        or more validation errors occurred.","Status":400,"Detail":null,"Instance":null,"Extensions":{"traceId":"00-a36dd9b497d6e1ab8d894c7a3957050c-785cc0f0cac18e5a-00"}}'
+  recorded_at: 2024-10-07 19:23:42 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

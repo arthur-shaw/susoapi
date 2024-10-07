@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: get
-    uri: <<<fake_server>>><<fake workspace>>/api/v1/users/<<<fake_user>>>
+    uri: <<<fake_server>>>/<<fake workspace>>/api/v1/users/<<<fake_user>>>
     body:
       encoding: ''
       string: ''
@@ -23,16 +23,16 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:35:07 GMT
+      date: Mon, 07 Oct 2024 19:23:50 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
       string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
-  recorded_at: 2022-06-27 13:35:08 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+  recorded_at: 2024-10-07 19:23:50 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0
 - request:
     method: get
-    uri: <<<fake_server>>><<fake workspace>>/api/v1/users/<<<fake_user>>>
+    uri: <<<fake_server>>>/<<fake workspace>>/api/v1/users/<<<fake_user>>>
     body:
       encoding: ''
       string: ''
@@ -54,16 +54,16 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:35:09 GMT
+      date: Mon, 07 Oct 2024 19:23:50 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
       string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
-  recorded_at: 2022-06-27 13:35:08 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+  recorded_at: 2024-10-07 19:23:50 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0
 - request:
     method: get
-    uri: <<<fake_server>>><<fake workspace>>/api/v1/assignments?SearchBy=no%20match&QuestionnaireId=&Responsible=&SupervisorId=&ShowArchive=false&Order=&Offset=&Limit=40
+    uri: <<<fake_server>>>/<<fake workspace>>/api/v1/assignments?SearchBy=no%20match&QuestionnaireId=&Responsible=&SupervisorId=&ShowArchive=false&Order=&Offset=&Limit=40
     body:
       encoding: ''
       string: ''
@@ -85,16 +85,16 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:35:09 GMT
+      date: Mon, 07 Oct 2024 19:23:50 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
-      string: '{"Assignments":[],"Order":null,"Limit":20,"TotalCount":0,"Offset":1}'
-  recorded_at: 2022-06-27 13:35:08 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+      string: '{"Assignments":[],"Order":null,"Limit":40,"TotalCount":0,"Offset":0}'
+  recorded_at: 2024-10-07 19:23:50 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0
 - request:
     method: get
-    uri: <<<fake_server>>><<fake workspace>>/api/v1/users/<<<fake_user>>>
+    uri: <<<fake_server>>>/<<fake workspace>>/api/v1/users/<<<fake_user>>>
     body:
       encoding: ''
       string: ''
@@ -116,16 +116,16 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:35:09 GMT
+      date: Mon, 07 Oct 2024 19:23:50 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
       string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
-  recorded_at: 2022-06-27 13:35:08 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+  recorded_at: 2024-10-07 19:23:50 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0
 - request:
     method: get
-    uri: <<<fake_server>>><<fake workspace>>/api/v1/assignments?SearchBy=no%20match&QuestionnaireId=&Responsible=&SupervisorId=&ShowArchive=false&Order=&Offset=0&Limit=40
+    uri: <<<fake_server>>>/<<fake workspace>>/api/v1/assignments?SearchBy=no%20match&QuestionnaireId=&Responsible=&SupervisorId=&ShowArchive=false&Order=&Offset=0&Limit=40
     body:
       encoding: ''
       string: ''
@@ -147,10 +147,10 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:35:09 GMT
+      date: Mon, 07 Oct 2024 19:23:50 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
-      string: '{"Assignments":[],"Order":null,"Limit":20,"TotalCount":0,"Offset":1}'
-  recorded_at: 2022-06-27 13:35:08 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+      string: '{"Assignments":[],"Order":null,"Limit":40,"TotalCount":0,"Offset":0}'
+  recorded_at: 2024-10-07 19:23:50 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

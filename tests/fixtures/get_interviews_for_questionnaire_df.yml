@@ -8,7 +8,7 @@ http_interactions:
         {            questionnaireId: {eq: \"5495bfd5-f232-4b3a-8a75-c80056f1898e\"}            questionnaireVersion:
         {eq: 1}        }        take: 1        skip: 0    ) {        filteredCount    }}"}'
     headers:
-      User-Agent: libcurl/7.64.1 r-curl/4.3.2 crul/1.2.0
+      User-Agent: libcurl/8.3.0 r-curl/5.2.2 crul/1.5.0
       Content-Type: application/json
       Accept-Encoding: gzip, deflate
       Accept: application/json, text/xml, application/xml, */*
@@ -21,19 +21,17 @@ http_interactions:
     headers:
       status: HTTP/1.1 200 OK
       transfer-encoding: chunked
-      content-type: application/json; charset=utf-8
-      content-encoding: gzip
+      content-type: application/graphql-response+json; charset=utf-8
       content-language: en-US
-      vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:35:31 GMT
+      date: Mon, 07 Oct 2024 19:24:10 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
       string: '{"data":{"interviews":{"filteredCount":1}}}'
-  recorded_at: 2022-06-27 13:35:33 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+  recorded_at: 2024-10-07 19:24:11 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0
 - request:
     method: post
     uri: <<<fake_server>>>/graphql
@@ -46,7 +44,7 @@ http_interactions:
         {                    identifying                    label                    options
         {                        parentValue                        title                        value                    }                    questionText                    scope                    type                    variable                }            }            questionnaireId            questionnaireVersion            questionnaireVariable            responsibleName            responsibleId            responsibleRole            supervisorName            status            actionFlags            wasCompleted            notAnsweredCount            errorsCount            createdDate            updateDateUtc            receivedByInterviewerAtUtc            interviewMode                }        filteredCount    }}"}'
     headers:
-      User-Agent: libcurl/7.64.1 r-curl/4.3.2 crul/1.2.0
+      User-Agent: libcurl/8.3.0 r-curl/5.2.2 crul/1.5.0
       Content-Type: application/json
       Accept-Encoding: gzip, deflate
       Accept: application/json, text/xml, application/xml, */*
@@ -59,15 +57,13 @@ http_interactions:
     headers:
       status: HTTP/1.1 200 OK
       transfer-encoding: chunked
-      content-type: application/json; charset=utf-8
-      content-encoding: gzip
+      content-type: application/graphql-response+json; charset=utf-8
       content-language: en-US
-      vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:35:33 GMT
+      date: Mon, 07 Oct 2024 19:24:10 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
       string: '{"data":{"interviews":{"nodes":[{"id":"7bdf95abab1b4d46b818cdf7546e049f","key":"15-80-14-14","assignmentId":1,"identifyingData":[{"answerValue":null,"value":"1","valueBool":null,"valueDate":null,"valueLong":1,"valueDouble":null,"isEnabled":true,"entity":{"identifying":true,"label":"grappe","options":[],"questionText":"GRAPPE","scope":"INTERVIEWER","type":"NUMERIC","variable":"grappe"}},{"answerValue":null,"value":"1","valueBool":null,"valueDate":null,"valueLong":1,"valueDouble":null,"isEnabled":true,"entity":{"identifying":true,"label":"Identifiant
         du m\u00E9nage","options":[],"questionText":"MENAGE","scope":"INTERVIEWER","type":"NUMERIC","variable":"id_menage"}},{"answerValue":null,"value":"3","valueBool":null,"valueDate":null,"valueLong":3,"valueDouble":null,"isEnabled":true,"entity":{"identifying":true,"label":"Vague","options":[],"questionText":"VAGUE","scope":"INTERVIEWER","type":"NUMERIC","variable":"vague"}},{"answerValue":null,"value":"Arthur
@@ -76,6 +72,6 @@ http_interactions:
         nom du chef de m\u00E9nage","scope":"INTERVIEWER","type":"TEXT","variable":"nom_prenom_cm"}},{"answerValue":null,"value":"123
         Fake Street","valueBool":null,"valueDate":null,"valueLong":null,"valueDouble":null,"isEnabled":true,"entity":{"identifying":true,"label":"Adresse
         (localisation) du m\u00E9nage","options":[],"questionText":"Adresse (localisation)
-        du m\u00E9nage","scope":"INTERVIEWER","type":"TEXT","variable":"localisation_menage"}}],"questionnaireId":"5495bfd5-f232-4b3a-8a75-c80056f1898e","questionnaireVersion":1,"questionnaireVariable":"menage","responsibleName":"ArthurInt123","responsibleId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","responsibleRole":"INTERVIEWER","supervisorName":"ArthurSup123","status":"APPROVEDBYHEADQUARTERS","actionFlags":["CANBEUNAPPROVEDBYHQ"],"wasCompleted":true,"notAnsweredCount":84,"errorsCount":0,"createdDate":"2021-03-15T17:36:22.702Z","updateDateUtc":"2022-06-27T13:34:17.358Z","receivedByInterviewerAtUtc":null,"interviewMode":"UNKNOWN"}],"filteredCount":1}}}'
-  recorded_at: 2022-06-27 13:35:33 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+        du m\u00E9nage","scope":"INTERVIEWER","type":"TEXT","variable":"localisation_menage"}}],"questionnaireId":"5495bfd5-f232-4b3a-8a75-c80056f1898e","questionnaireVersion":1,"questionnaireVariable":"menage","responsibleName":"ArthurInt123","responsibleId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","responsibleRole":"INTERVIEWER","supervisorName":"ArthurSup123","status":"APPROVEDBYHEADQUARTERS","actionFlags":["CANBEUNAPPROVEDBYHQ"],"wasCompleted":true,"notAnsweredCount":84,"errorsCount":0,"createdDate":"2021-03-15T17:36:22.702Z","updateDateUtc":"2024-10-07T19:23:34.717Z","receivedByInterviewerAtUtc":null,"interviewMode":"UNKNOWN"}],"filteredCount":1}}}'
+  recorded_at: 2024-10-07 19:24:11 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

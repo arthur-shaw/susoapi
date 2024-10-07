@@ -8,7 +8,7 @@ http_interactions:
         {            questionnaireId: {eq: \"5ab793ffc84a4211858df168bbd90cf9\"}            questionnaireVersion:
         {eq: 1}        }        take: 1        skip: 0    ) {        filteredCount    }}"}'
     headers:
-      User-Agent: libcurl/7.64.1 r-curl/4.3.2 crul/1.2.0
+      User-Agent: libcurl/8.3.0 r-curl/5.2.2 crul/1.5.0
       Content-Type: application/json
       Accept-Encoding: gzip, deflate
       Accept: application/json, text/xml, application/xml, */*
@@ -21,19 +21,17 @@ http_interactions:
     headers:
       status: HTTP/1.1 200 OK
       transfer-encoding: chunked
-      content-type: application/json; charset=utf-8
-      content-encoding: gzip
+      content-type: application/graphql-response+json; charset=utf-8
       content-language: en-US
-      vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:35:35 GMT
+      date: Mon, 07 Oct 2024 19:24:11 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
       string: '{"data":{"interviews":{"filteredCount":1}}}'
-  recorded_at: 2022-06-27 13:35:35 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+  recorded_at: 2024-10-07 19:24:12 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0
 - request:
     method: post
     uri: <<<fake_server>>>/graphql
@@ -46,7 +44,7 @@ http_interactions:
         {                    identifying                    label                    options
         {                        parentValue                        title                        value                    }                    questionText                    scope                    type                    variable                }            }            questionnaireId            questionnaireVersion            questionnaireVariable            responsibleName            responsibleId            responsibleRole            supervisorName            status            actionFlags            wasCompleted            notAnsweredCount            errorsCount            createdDate            updateDateUtc            receivedByInterviewerAtUtc            interviewMode                }        filteredCount    }}"}'
     headers:
-      User-Agent: libcurl/7.64.1 r-curl/4.3.2 crul/1.2.0
+      User-Agent: libcurl/8.3.0 r-curl/5.2.2 crul/1.5.0
       Content-Type: application/json
       Accept-Encoding: gzip, deflate
       Accept: application/json, text/xml, application/xml, */*
@@ -59,16 +57,14 @@ http_interactions:
     headers:
       status: HTTP/1.1 200 OK
       transfer-encoding: chunked
-      content-type: application/json; charset=utf-8
-      content-encoding: gzip
+      content-type: application/graphql-response+json; charset=utf-8
       content-language: en-US
-      vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:35:35 GMT
+      date: Mon, 07 Oct 2024 19:24:11 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
-      string: '{"data":{"interviews":{"nodes":[{"id":"441c7836fe014a5c8face4bc873aa232","key":"56-74-48-63","assignmentId":2,"identifyingData":[],"questionnaireId":"5ab793ff-c84a-4211-858d-f168bbd90cf9","questionnaireVersion":1,"questionnaireVariable":"nesting","responsibleName":"ArthurInt123","responsibleId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","responsibleRole":"INTERVIEWER","supervisorName":"ArthurSup123","status":"COMPLETED","actionFlags":["CANBEAPPROVED","CANBEREJECTED","CANBEREASSIGNED"],"wasCompleted":true,"notAnsweredCount":14,"errorsCount":0,"createdDate":"2021-05-11T18:33:30.991Z","updateDateUtc":"2021-05-11T18:38:07.073Z","receivedByInterviewerAtUtc":null,"interviewMode":"UNKNOWN"}],"filteredCount":1}}}'
-  recorded_at: 2022-06-27 13:35:36 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+      string: '{"data":{"interviews":{"nodes":[{"id":"441c7836fe014a5c8face4bc873aa232","key":"56-74-48-63","assignmentId":2,"identifyingData":[],"questionnaireId":"5ab793ff-c84a-4211-858d-f168bbd90cf9","questionnaireVersion":1,"questionnaireVariable":"nesting","responsibleName":"ArthurInt123","responsibleId":"cc78158d-e987-4d7e-9cfb-fb4546d2c895","responsibleRole":"INTERVIEWER","supervisorName":"ArthurSup123","status":"APPROVEDBYHEADQUARTERS","actionFlags":["CANBEUNAPPROVEDBYHQ"],"wasCompleted":true,"notAnsweredCount":14,"errorsCount":0,"createdDate":"2021-05-11T18:33:30.991Z","updateDateUtc":"2022-06-28T02:10:48.840Z","receivedByInterviewerAtUtc":null,"interviewMode":"UNKNOWN"}],"filteredCount":1}}}'
+  recorded_at: 2024-10-07 19:24:12 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: get
-    uri: <<<fake_server>>><<fake workspace>>/api/v1/users/<<<fake_user>>>
+    uri: <<<fake_server>>>/<<fake workspace>>/api/v1/users/<<<fake_user>>>
     body:
       encoding: ''
       string: ''
@@ -23,13 +23,13 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:34:37 GMT
+      date: Mon, 07 Oct 2024 19:23:37 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
       string: '{"IsArchived":false,"UserId":"01e010d6-bfe9-42f0-b21f-8b40027dce03","UserName":"<<<fake_user>>>","Role":"Administrator","IsLocked":false,"CreationDate":"2021-03-15T16:45:49.164263Z","Email":"jshaw@worldbank.org","FullName":"Administrator"}'
-  recorded_at: 2022-06-27 13:34:38 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+  recorded_at: 2024-10-07 19:23:38 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0
 - request:
     method: delete
     uri: <<<fake_server>>>/<<fake workspace>>/api/v2/export/1
@@ -54,10 +54,10 @@ http_interactions:
       vary: Accept-Encoding
       server: Kestrel
       x-powered-by: ASP.NET
-      date: Mon, 27 Jun 2022 13:34:38 GMT
+      date: Mon, 07 Oct 2024 19:23:37 GMT
     body:
-      encoding: UTF-8
+      encoding: ''
       file: no
-      string: '{"JobId":1,"ExportStatus":"Canceled","StartDate":"2021-03-15T17:44:49.521615","CompleteDate":"2022-06-27T04:28:11.430941","Progress":2,"ETA":null,"Error":"","Links":{"Cancel":"","Download":"<<<fake_server>>>/<<fake workspace>>/api/v2/export/1/file"},"HasExportFile":true,"ExportType":"STATA","QuestionnaireId":"5495bfd5f2324b3a8a75c80056f1898e$1","InterviewStatus":"All","From":null,"To":null,"AccessToken":null,"RefreshToken":null,"StorageType":null,"TranslationId":null,"IncludeMeta":null}'
-  recorded_at: 2022-06-27 13:34:38 GMT
-  recorded_with: vcr/1.0.2, webmockr/0.8.0
+      string: '{"JobId":1,"ExportStatus":"Canceled","StartDate":"2021-03-15T17:44:49.521615","CompleteDate":"2022-06-27T13:34:39.846313","CreateDate":"2021-03-15T17:44:49.339012","Progress":2,"ETA":null,"Error":"","Links":{"Cancel":"","Download":"<<<fake_server>>>/<<fake workspace>>/api/v2/export/1/file"},"HasExportFile":true,"ExportType":"STATA","QuestionnaireId":"5495bfd5f2324b3a8a75c80056f1898e$1","InterviewStatus":"All","From":null,"To":null,"AccessToken":null,"RefreshToken":null,"StorageType":null,"TranslationId":null,"IncludeMeta":null}'
+  recorded_at: 2024-10-07 19:23:38 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

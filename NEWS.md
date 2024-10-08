@@ -1,3 +1,9 @@
+# susoapi 0.2.1
+
+- Fix bug where some requests failed when the server URL had a terminal `/`.
+- Allow the user to check credentials provided as arguments in `check_credentials()` rather than as entries in `.Renviron`. This allows checking credentials without setting them. The `check_credentials()` function still defaults to environment variable values if credentials not arguments not provided as function arguments.
+- Update tests and test fixtures to Survey Solutions 24.06.1
+
 # susoapi 0.2.0
 
 ## New features

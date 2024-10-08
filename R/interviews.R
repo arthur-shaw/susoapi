@@ -38,7 +38,12 @@ delete_interview <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -388,7 +393,12 @@ get_interviews <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # nodes in known list
     nodes_allowed <- c(
@@ -509,7 +519,12 @@ get_interview_stats <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -618,7 +633,12 @@ approve_interview_as_sup <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -738,7 +758,12 @@ assign_interview_to_int <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -875,7 +900,12 @@ assign_interview_to_sup <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -998,7 +1028,12 @@ approve_interview_as_hq <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -1116,7 +1151,12 @@ reject_interview_as_hq <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -1226,7 +1266,12 @@ unapprove_interview <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -1343,7 +1388,12 @@ reject_interview_as_sup <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -1470,7 +1520,12 @@ comment_question <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # formulate API call
     base_url <- httr::modify_url(
@@ -1577,7 +1632,12 @@ get_interview_transcript <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(
@@ -1684,7 +1744,12 @@ get_interview_history <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(

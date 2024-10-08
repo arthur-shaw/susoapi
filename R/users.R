@@ -63,7 +63,12 @@ get_user_action_log <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(
@@ -610,7 +615,12 @@ get_supervisors <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # get count of supervisors
     total_count <- user_get_sups_count(
@@ -685,7 +695,12 @@ get_interviewers <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # get supervisors
     sups_list <- user_get_list_sups_all(
@@ -790,7 +805,12 @@ archive_user <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -887,7 +907,12 @@ unarchive_user <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -1008,7 +1033,12 @@ create_user <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(

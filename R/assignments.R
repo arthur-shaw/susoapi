@@ -44,7 +44,12 @@ get_assignment_count <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -147,7 +152,12 @@ get_assignment_batch <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -295,7 +305,12 @@ get_assignments <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # get total count of assignments
     total_count <- get_assignment_count(
@@ -399,7 +414,12 @@ get_assignment_details <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(
@@ -486,7 +506,12 @@ get_assignment_quantity_setting <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(
@@ -567,7 +592,12 @@ get_assignment_history <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(
@@ -658,7 +688,12 @@ check_assignment_audio <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(
@@ -761,7 +796,12 @@ set_assignment_audio <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(
@@ -840,7 +880,12 @@ archive_assignment <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(
@@ -924,7 +969,12 @@ reassign_assignment <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(
@@ -1026,7 +1076,12 @@ change_assignment_quantity <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(
@@ -1106,7 +1161,12 @@ unarchive_assignment <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(
@@ -1180,7 +1240,12 @@ close_assignment <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form base URL
     base_url <- httr::modify_url(

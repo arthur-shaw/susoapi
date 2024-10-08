@@ -154,14 +154,21 @@ is_workspace_display_name <- function(x) {
 #' 
 #' Checks (1) that the workspace has a valid form and (2) that is one that the user is authorized to access
 #' 
+#' @param verbose Logical. If `verbose == TRUE`, return logical outcome and print message. Otherwise, be silent.
+#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param workspace Character. Name of the workspace to check.
+#' @param user Character. API user name
+#' @param password Character. API password
 #' 
 #' @importFrom assertthat assert_that
 #' @importFrom glue glue glue_collapse
 #' 
 #' @noRd 
 check_workspace_param <- function(
-    workspace = Sys.getenv("SUSO_WORKSPACE")
+    server = Sys.getenv("SUSO_SERVER"),
+    workspace = Sys.getenv("SUSO_WORKSPACE"),
+    user = Sys.getenv("SUSO_USER"),         # API user name
+    password = Sys.getenv("SUSO_PASSWORD")  # API password
 ) {
 
     # invalid name
@@ -174,7 +181,10 @@ check_workspace_param <- function(
     workspace_user <- suppressMessages(
         susoapi::get_user_details(
             user_id = Sys.getenv("SUSO_USER"),
-            workspace = workspace
+            server = server,
+            workspace = workspace,
+            user = user,
+            password = password
         )
     )
     assertthat::assert_that(

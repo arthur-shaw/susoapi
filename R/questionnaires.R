@@ -29,7 +29,12 @@ get_questionnaires <- function(
     # check inputs
     # invalid name
     # workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # compose the GraphQL request client
     questionnaires_request <- ghql::GraphqlClient$new(
@@ -157,7 +162,12 @@ get_questionnaire_document <- function(
     # check inputs:
 
     # workspace
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
     
     # qnr_id
     check_guid(
@@ -639,7 +649,12 @@ set_questionnaire_audio <- function(
 
     # check inputs:
     # workspace
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # qnr_id
     check_guid(

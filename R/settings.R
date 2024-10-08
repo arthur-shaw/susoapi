@@ -28,7 +28,12 @@ get_global_notice <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -100,7 +105,12 @@ set_global_notice <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)    
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -172,7 +182,12 @@ delete_global_notice <- function(
     # workspace:
     # - invalid name
     # - workspace does not exist
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(

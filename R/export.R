@@ -40,7 +40,12 @@ get_export_jobs <- function(
 
     # check inputs
     # workspace
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # export_type
     if (export_type != "") {
@@ -198,7 +203,12 @@ start_export <- function(
     # check inputs
 
     # workspace
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # export_type
     assertthat::assert_that(
@@ -363,7 +373,12 @@ get_export_job_details <- function(
     )
 
     # workspace
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -459,7 +474,12 @@ cancel_export <- function(
     )
 
     # workspace
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(
@@ -558,7 +578,12 @@ get_export_file <- function(
     )
 
     # workspace
-    check_workspace_param(workspace = workspace)
+    check_workspace_param(
+        server = server,
+        workspace = workspace,
+        user = user,
+        password = password
+    )
 
     # form the base URL
     base_url <- httr::modify_url(

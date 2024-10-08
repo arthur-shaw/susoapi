@@ -1,3 +1,7 @@
+# susoapi 0.2.2
+
+- When checking the workspace parameter, use the user-provided credentials, which may differ from those currently in the environment/`.Renviron`.
+
 # susoapi 0.2.1
 
 - Fix bug where some requests failed when the server URL had a terminal `/`.

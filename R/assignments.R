@@ -103,15 +103,15 @@ get_assignment_count <- function(
 
 #' Get one batch of assignments
 #'
-#' @param search_by
-#' @param qnr_id
-#' @param qnr_version
-#' @param responsible
-#' @param supervisor_id
-#' @param show_archive
-#' @param order
-#' @param offset
-#' @param limit
+#' @param search_by Character. Search for matching text in identifying questions.
+#' @param qnr_id Questionnaire ID. GUID provided by the server.
+#' @param qnr_version Questionnaire version. Version number provided by the server.
+#' @param responsible Character. Either user ID (GUID) or user name.
+#' @param supervisor_id Character. User ID (GUID) of supervisor.
+#' @param show_archive Include archived assignments. Values: c("true", "false")
+#' @param order Possible values are Id, ResponsibleName, InterviewsCount, Quantity, UpdatedAtUtc, CreatedAtUtc Followed by ordering direction "ASC" or "DESC"
+#' @param offset Character. Name of the workspace whose assignments to get.
+#' @param limit Numberic. Number of records to fetch in one request.
 #' @param server Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
 #' @param workspace Character. Name of the workspace whose assignments to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
 #' @param user API user name

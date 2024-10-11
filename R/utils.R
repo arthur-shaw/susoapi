@@ -180,7 +180,7 @@ check_workspace_param <- function(
     # workspace does not exist
     workspace_user <- suppressMessages(
         susoapi::get_user_details(
-            user_id = Sys.getenv("SUSO_USER"),
+            user_id = user,
             server = server,
             workspace = workspace,
             user = user,
@@ -190,7 +190,7 @@ check_workspace_param <- function(
     assertthat::assert_that(
         !is.null(workspace_user),
         msg = glue::glue(
-            'User `{Sys.getenv("SUSO_USER")}` does not have access to workspace `{workspace}`.'
+            'User `{user}` does not have access to workspace `{workspace}`.'
         )
     )
 

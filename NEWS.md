@@ -1,3 +1,7 @@
+# susoapi 0.2.3
+
+- Fix internal function `check_workspace_param()` to use credentials provided in args rather than environment.
+
 # susoapi 0.2.2
 
 - When checking the workspace parameter, use the user-provided credentials, which may differ from those currently in the environment/`.Renviron`.

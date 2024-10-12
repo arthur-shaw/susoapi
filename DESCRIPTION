@@ -1,6 +1,6 @@
 Package: susoapi
 Title: Interface for Survey Solutions' APIs
-Version: 0.2.2
+Version: 0.2.3
 Authors@R: 
     person(given = "Arthur",
            family = "Shaw",

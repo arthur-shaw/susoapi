@@ -330,7 +330,10 @@ get_workspace_details <- function(
     )
 
     # form the URL
-    url <- paste0(server, "/api/v1/workspaces/", name)
+    url <- httr::modify_url(
+        url = server,
+        path = paste0("api/v1/workspaces/", name)
+    )
 
     # get workspace details from the server
     response <- httr::GET(

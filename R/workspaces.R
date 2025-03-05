@@ -419,7 +419,7 @@ update_workspace <- function(
     # form the base URL
     base_url <- httr::modify_url(
         url = server, 
-        path = paste0("/api/v1/workspaces/", name)
+        path = paste0("api/v1/workspaces/", name)
     )
 
     # compose body of post
@@ -520,7 +520,7 @@ delete_workspace <- function(
     # form the base URL
     base_url <- httr::modify_url(
         url = server, 
-        path = paste0("/api/v1/workspaces/", name)
+        path = paste0("api/v1/workspaces/", name)
     )
 
     # request workspace be deleted
@@ -591,7 +591,7 @@ get_workspace_status <- function(
     # form the base URL
     base_url <- httr::modify_url(
         url = server, 
-        path = paste0("/api/v1/workspaces/status/", name)
+        path = paste0("api/v1/workspaces/status/", name)
     )
 
     # request workspace status
@@ -662,7 +662,7 @@ disable_workspace <- function(
     # form the base URL
     base_url <- httr::modify_url(
         url = server, 
-        path = paste0("/api/v1/workspaces/", name, "/disable")
+        path = paste0("api/v1/workspaces/", name, "/disable")
     )
 
     # request workspace be disabled
@@ -739,7 +739,7 @@ enable_workspace <- function(
     # form the base URL
     base_url <- httr::modify_url(
         url = server, 
-        path = paste0("/api/v1/workspaces/", name, "/enable")
+        path = paste0("api/v1/workspaces/", name, "/enable")
     )
 
     # request workspace be disabled

@@ -107,6 +107,7 @@ delete_interview <- function(
 #' @return List consisting of two element: interviews information and interview count
 #' 
 #' @import ghql
+#' @importFrom httr modify_url
 #' @importFrom jsonlite base64_enc fromJSON
 #' @importFrom glue glue double_quote
 #' 
@@ -120,7 +121,10 @@ get_interviews_count <- function(
 
     # compose the GraphQL request client
     interviews_request <- ghql::GraphqlClient$new(
-        url = paste0(server, "/graphql"), 
+        url = httr::modify_url(
+            url = server,
+            path = "graphql"
+        ),
         headers = list(authorization = paste0(
             "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password)))
         )
@@ -169,6 +173,7 @@ get_interviews_count <- function(
 #' @return Data frame. Interviews.
 #' 
 #' @import ghql
+#' @importFrom httr modify_url
 #' @importFrom jsonlite base64_enc fromJSON
 #' @importFrom glue glue double_quote backtick
 #' @importFrom dplyr `%>%` pull select rename_with starts_with left_join
@@ -214,7 +219,10 @@ get_interviews_by_chunk <- function(
 
     # compose the GraphQL request client
     interviews_request <- ghql::GraphqlClient$new(
-        url = paste0(server, "/graphql"), 
+        url = httr::modify_url(
+            url = server,
+            path = "graphql"
+        ),
         headers = list(authorization = paste0(
             "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password)))
         )

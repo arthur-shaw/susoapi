@@ -206,3 +206,64 @@ check_workspace_param <- function(
     # )
 
 }
+
+#' Compose URL of GraphQL API
+#'
+#' @param server Character. Full server web address
+#' (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#'
+#' @return Character. URL of GraphQL API for the server
+#'
+#' @importFrom httr modify_url
+#'
+#' @noRd
+make_graph_ql_url <- function(
+    server = Sys.getenv("SUSO_SERVER")
+) {
+
+    graphql_url <- httr::modify_url(
+        url = server,
+        path = "graphql"
+    )
+
+    return(graphql_url)
+
+}
+
+#' Send a GraphQL query
+#'
+#' @param graph_ql_url Character. URL of GraphQL API on the server.
+#' @param user Character. API user name.
+#' @param password Character. API user's password.
+#' @param query Character. GraphQL query string
+#'
+#' @return httr request object
+#'
+#' @importFrom httr POST add_headers
+#' @importFrom jsonlite base64_enc
+#'
+#' @noRd
+perform_graph_ql_query <- function(
+    graph_ql_url,
+    user,
+    password,
+    query
+) {
+
+    request <- httr::POST(
+        url = graph_ql_url,
+        # - use `add_headers` so I can add a named list of headers
+        # - encode user-password pair
+        httr::add_headers(
+            Authorization = paste0(
+                "Basic ",
+                jsonlite::base64_enc(input = paste0(user, ":", password))
+            )
+        ),
+        # transmit GraphQL query as the body of the post
+        # consider it a query
+        body = list(query = query),
+        encode = "json"
+    )
+
+}

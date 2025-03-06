@@ -12,9 +12,12 @@ get_questionnaires(
 )
 }
 \arguments{
-\item{server}{Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
+\item{server}{Character. Full server web address
+(e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})}
 
-\item{workspace}{Character. Name of the workspace whose questionnaires to get. In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target workspace.}
+\item{workspace}{Character. Name of the workspace whose questionnaires to get.
+In workspace list, value of \code{NAME}, not \verb{DISPLAY NAME}, for the target
+workspace.}
 
 \item{user}{Character. API user name}
 

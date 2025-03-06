@@ -5,26 +5,28 @@
 #' 
 #' GraphQL implementation of the deprecated REST `GET​/api​/v1​/questionnaires` endpoint.
 #'
-#' @param server Character. Full server web address (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
-#' @param workspace Character. Name of the workspace whose questionnaires to get. In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target workspace.
+#' @param server Character. Full server web address
+#' (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#' @param workspace Character. Name of the workspace whose questionnaires to get.
+#' In workspace list, value of `NAME`, not `DISPLAY NAME`, for the target
+#' workspace.
 #' @param user Character. API user name
 #' @param password Character. API password
 #'
 #' @return Data frame of questionnaires.
 #' 
 #' @importFrom assertthat assert_that
-#' @importFrom httr modify_url
-#' @import ghql
+#' @importFrom httr content
 #' @importFrom jsonlite base64_enc fromJSON
 #' @importFrom glue glue double_quote
 #' @importFrom dplyr pull
 #'
 #' @export
 get_questionnaires <- function(
-    server = Sys.getenv("SUSO_SERVER"),     # full server address
+    server = Sys.getenv("SUSO_SERVER"),
     workspace = Sys.getenv("SUSO_WORKSPACE"),
-    user = Sys.getenv("SUSO_USER"),         # API user name
-    password = Sys.getenv("SUSO_PASSWORD")  # API password  
+    user = Sys.getenv("SUSO_USER"),
+    password = Sys.getenv("SUSO_PASSWORD")
 ) {
 
     # check inputs
@@ -37,22 +39,13 @@ get_questionnaires <- function(
         password = password
     )
 
-    # compose the GraphQL request client
-    questionnaires_request <- ghql::GraphqlClient$new(
-        url = httr::modify_url(
-            url = server,
-            path = "graphql"
-        ),
-        headers = list(authorization = paste0(
-            "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password)))
-        )
-    )
+    # compose the GraphQL URL
+    graph_ql_url <- make_graph_ql_url(server = server)
 
-    # compose the query for all interviews
+    # compose the query
     # use string interpolation to pipe double-quoted workspace name into query
-    qry <- ghql::Query$new()
-    qry$query("questionnaires", 
-        glue::glue("{
+    query <- glue::glue(
+        "{
             questionnaires (workspace: <glue::double_quote(workspace)>) {
                 nodes {
                     id
@@ -68,14 +61,26 @@ get_questionnaires <- function(
                 }
                 filteredCount   
             }
-        }", .open = "<", .close = ">")
+        }",
+        .open = "<",
+        .close = ">"
     )
 
     # send request
-    questionnaires_result <- questionnaires_request$exec(qry$queries$questionnaires)
+    request <- perform_graph_ql_query(
+        graph_ql_url = graph_ql_url,
+        user = user,
+        password = password,
+        query = query
+    )
 
     # convert JSON payload into an R object
-    qnrs <- jsonlite::fromJSON(questionnaires_result, flatten = TRUE)
+    qnrs <- jsonlite::fromJSON(
+        httr::content(request, as = "text"),
+        flatten = TRUE
+    )
+
+    # extract object count
     qnr_count <- qnrs$data$questionnaires$filteredCount
 
     if ("errors" %in% names(qnrs)) {
@@ -230,8 +235,7 @@ get_questionnaire_document <- function(
 #' 
 #' @return List consisting of two element: interviews information and interview count
 #' 
-#' @import ghql
-#' @importFrom httr modify_url
+#' @importFrom httr content
 #' @importFrom jsonlite base64_enc fromJSON
 #' @importFrom glue glue double_quote
 #' 
@@ -245,22 +249,13 @@ get_interviews_for_questionnaire_count <- function(
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
 
-    # compose the GraphQL request client
-    interviews_request <- ghql::GraphqlClient$new(
-        url = httr::modify_url(
-            url = server,
-            path = "graphql"
-        ),
-        headers = list(authorization = paste0(
-            "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password)))
-        )
-    )
+    # compose the GraphQL URL
+    graph_ql_url <- make_graph_ql_url(server = server)
 
-    # compose the query for all interviews
+    # compose the query
     # use string interpolation to pipe double-quoted workspace name into query
-    qry <- ghql::Query$new()
-    qry$query("interviews", 
-        glue::glue("{
+    query <- glue::glue(
+        "{
             interviews (
                 workspace: <glue::double_quote(workspace)>,
                 where: {
@@ -272,14 +267,24 @@ get_interviews_for_questionnaire_count <- function(
             ) {
                 filteredCount
             }
-        }", .open = "<", .close = ">")
+        }",
+        .open = "<",
+        .close = ">"
     )
 
     # send request
-    interviews_result <- interviews_request$exec(qry$queries$interviews)
+    request <- perform_graph_ql_query(
+        graph_ql_url = graph_ql_url,
+        user = user,
+        password = password,
+        query = query
+    )
 
     # convert JSON payload to data frame
-    interviews <- jsonlite::fromJSON(interviews_result, flatten = TRUE)
+    interviews <- jsonlite::fromJSON(
+        httr::content(request, as = "text"),
+        flatten = TRUE
+    )
 
     # extract total number of interviews
     interviews_count <- interviews$data$interviews$filteredCount
@@ -303,8 +308,7 @@ get_interviews_for_questionnaire_count <- function(
 #' 
 #' @return Data frame. Interviews.
 #' 
-#' @import ghql
-#' @importFrom httr modify_url
+#' @importFrom httr content
 #' @importFrom jsonlite base64_enc fromJSON
 #' @importFrom glue glue double_quote backtick
 #' @importFrom dplyr `%>%` pull select rename_with starts_with left_join
@@ -325,22 +329,13 @@ get_interviews_for_questionnaire_by_chunk <- function(
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
 
-    # compose the GraphQL request client
-    interviews_request <- ghql::GraphqlClient$new(
-        url = httr::modify_url(
-            url = server,
-            path = "graphql"
-        ),
-        headers = list(authorization = paste0(
-            "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password)))
-        )
-    )
+    # compose the GraphQL URL
+    graph_ql_url <- make_graph_ql_url(server = server)
 
-    # compose the query for all interviews
+    # compose the query
     # use string interpolation to pipe double-quoted workspace name into query
-    qry <- ghql::Query$new()
-    qry$query("interviews", 
-        glue::glue("{
+    query <- glue::glue(
+        "{
             interviews (
                 workspace: <glue::double_quote(workspace)>,
                 where: {
@@ -395,16 +390,27 @@ get_interviews_for_questionnaire_by_chunk <- function(
                 }
                 filteredCount
             }
-        }", .open = "<", .close = ">")
+        }",
+        .open = "<",
+        .close = ">"
     )
 
     # send request
-    interviews_result <- interviews_request$exec(qry$queries$interviews)
+    request <- perform_graph_ql_query(
+        graph_ql_url = graph_ql_url,
+        user = user,
+        password = password,
+        query = query
+    )
 
     # convert JSON payload to data frame
-    interviews <- jsonlite::fromJSON(interviews_result, flatten = TRUE)
-    
-    interviews_count <- interviews$data$interviews$filteredCount    
+    interviews <- jsonlite::fromJSON(
+        httr::content(request, as = "text"),
+        flatten = TRUE
+    )
+
+    # extract object count
+    interviews_count <- interviews$data$interviews$filteredCount
 
     if ("errors" %in% names(interviews)) {
 

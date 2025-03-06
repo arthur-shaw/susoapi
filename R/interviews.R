@@ -106,8 +106,7 @@ delete_interview <- function(
 #' 
 #' @return List consisting of two element: interviews information and interview count
 #' 
-#' @import ghql
-#' @importFrom httr modify_url
+#' @importFrom httr content
 #' @importFrom jsonlite base64_enc fromJSON
 #' @importFrom glue glue double_quote
 #' 
@@ -119,22 +118,13 @@ get_interviews_count <- function(
     password = Sys.getenv("SUSO_PASSWORD")  # API password    
 ) {
 
-    # compose the GraphQL request client
-    interviews_request <- ghql::GraphqlClient$new(
-        url = httr::modify_url(
-            url = server,
-            path = "graphql"
-        ),
-        headers = list(authorization = paste0(
-            "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password)))
-        )
-    )
+    # compose the GraphQL URL
+    graph_ql_url <- make_graph_ql_url(server = server)
 
-    # compose the query for all interviews
+    # compose the query
     # use string interpolation to pipe double-quoted workspace name into query
-    qry <- ghql::Query$new()
-    qry$query("interviews", 
-        glue::glue("{
+    query <- glue::glue(
+        "{
             interviews (
                 workspace: <glue::double_quote(workspace)>
                 take: 1
@@ -142,14 +132,24 @@ get_interviews_count <- function(
             ) {
                 filteredCount
             }
-        }", .open = "<", .close = ">")
+        }",
+        .open = "<",
+        .close = ">"
     )
 
     # send request
-    interviews_result <- interviews_request$exec(qry$queries$interviews)
+    request <- perform_graph_ql_query(
+        graph_ql_url = graph_ql_url,
+        user = user,
+        password = password,
+        query = query
+    )
 
     # convert JSON payload to data frame
-    interviews <- jsonlite::fromJSON(interviews_result, flatten = TRUE)
+    interviews <- jsonlite::fromJSON(
+        httr::content(request, as = "text"),
+        flatten = TRUE
+    )
 
     # extract total number of interviews
     interviews_count <- interviews$data$interviews$filteredCount
@@ -217,16 +217,8 @@ get_interviews_by_chunk <- function(
     # determine whether requested identifying data
     has_identifying <- "identifyingData" %in% nodes
 
-    # compose the GraphQL request client
-    interviews_request <- ghql::GraphqlClient$new(
-        url = httr::modify_url(
-            url = server,
-            path = "graphql"
-        ),
-        headers = list(authorization = paste0(
-            "Basic ", jsonlite::base64_enc(input = paste0(user, ":", password)))
-        )
-    )
+    # compose the GraphQL URL
+    graph_ql_url <- make_graph_ql_url(server = server)
 
     # expand identifyingData node if relevant
     if (any(nodes == "identifyingData") == TRUE) {
@@ -255,29 +247,42 @@ get_interviews_by_chunk <- function(
         }"
     }
 
-    # compose the query for all interviews
+    # compose the query
     # use string interpolation to pipe double-quoted workspace name into query
-    qry <- ghql::Query$new()
-    qry$query("interviews", 
-        stringr::str_squish((glue::glue("{
-            interviews (
-                workspace: <glue::double_quote(workspace)>
-                take: <take_n>
-                skip: <skip_n>
-            ) {
-                nodes {
-                    <paste0(nodes, collapse = '\\n')>     
-                }
-                filteredCount
-            }
-        }", .open = "<", .close = ">")))
+    query <- stringr::str_squish(
+        (
+            glue::glue(
+                "{
+                    interviews (
+                        workspace: <glue::double_quote(workspace)>
+                        take: <take_n>
+                        skip: <skip_n>
+                    ) {
+                        nodes {
+                            <paste0(nodes, collapse = '\\n')>     
+                        }
+                        filteredCount
+                    }
+                }",
+                .open = "<",
+                .close = ">"
+            )
+        )
     )
 
     # send request
-    interviews_result <- interviews_request$exec(qry$queries$interviews)
+    request <- perform_graph_ql_query(
+        graph_ql_url = graph_ql_url,
+        user = user,
+        password = password,
+        query = query
+    )
 
     # convert JSON payload to data frame
-    interviews <- jsonlite::fromJSON(interviews_result, flatten = TRUE)
+    interviews <- jsonlite::fromJSON(
+        httr::content(request, as = "text"),
+        flatten = TRUE
+    )
 
     # extract number of interviews returned in request    
     interviews_count <- interviews$data$interviews$filteredCount

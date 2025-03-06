@@ -1,3 +1,7 @@
+# susoapi 0.3.1
+
+Fix an issue in the documentation and NAMESPACE. No user-facing changes.
+
 # susoapi 0.3.0
 
 ## New features

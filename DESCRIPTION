@@ -8,7 +8,7 @@ Authors@R:
            email = "jashaw2002@gmail.com")
 Description: Provides a user-friendly interface for Survey Solutions RESTful and GraphQL APIs.
 License: MIT + file LICENSE
-URL: https://github.com/arthur-shaw/susoapi
+URL: https://arthur-shaw.github.io/susoapi/, https://github.com/arthur-shaw/susoapi
 BugReports: https://github.com/arthur-shaw/susoapi/issues
 Encoding: UTF-8
 LazyData: true

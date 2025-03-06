@@ -1,3 +1,22 @@
+# susoapi 0.3.0
+
+## New features
+
+Add functions to get server metadata:
+
+- Survey Solutions version: `get_server_version()`
+- Health status: `get_server_health()`
+
+## Bug fixes
+
+- Fix issue where the GraphQL API URL is malformed for server URLs that end in `/`.
+- Fix potential issue where workspaces endpoint URLs are malformed.
+- Get questionnaires using GraphQL's use of variables in order to [circumvent a Survey Solutions bug for version 25.01](https://github.com/surveysolutions/surveysolutions/issues/3736).
+
+## Improvements
+
+Drop `{ghql}` as a dependency. Use `POST` requests to interact with the GraphQL API.
+
 # susoapi 0.2.3
 
 - Fix internal function `check_workspace_param()` to use credentials provided in args rather than environment.

@@ -172,7 +172,6 @@ get_interviews_count <- function(
 #' 
 #' @return Data frame. Interviews.
 #' 
-#' @import ghql
 #' @importFrom httr modify_url
 #' @importFrom jsonlite base64_enc fromJSON
 #' @importFrom glue glue double_quote backtick

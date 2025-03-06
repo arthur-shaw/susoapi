@@ -131,3 +131,9 @@ reference:
   - set_global_notice
   - get_global_notice
   - delete_global_notice
+
+- title: "Server metadata"
+  desc: >
+    Get server metadata (e.g., reporting issues, assessing health)
+  contents:
+  - get_server_version

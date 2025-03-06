@@ -16,7 +16,7 @@
 #' @return Data frame of questionnaires.
 #' 
 #' @importFrom assertthat assert_that
-#' @importFrom httr content
+#' @importFrom httr content_type_json content
 #' @importFrom jsonlite base64_enc fromJSON
 #' @importFrom glue glue double_quote
 #' @importFrom dplyr pull
@@ -45,8 +45,8 @@ get_questionnaires <- function(
     # compose the query
     # use string interpolation to pipe double-quoted workspace name into query
     query <- glue::glue(
-        "{
-            questionnaires (workspace: <glue::double_quote(workspace)>) {
+        "query ($workspace: String!) {
+            questionnaires (workspace: $workspace) {
                 nodes {
                     id
                     questionnaireId
@@ -67,11 +67,30 @@ get_questionnaires <- function(
     )
 
     # send request
-    request <- perform_graph_ql_query(
-        graph_ql_url = graph_ql_url,
-        user = user,
-        password = password,
-        query = query
+    request <- httr::POST(
+        url = graph_ql_url,
+        # - use `add_headers` so I can add a named list of headers
+        # - encode user-password pair
+        httr::add_headers(
+            Authorization = paste0(
+                "Basic ",
+                jsonlite::base64_enc(input = paste0(user, ":", password))
+            )
+        ),
+        # transmit GraphQL query as the body of the post
+        # variables need to be sent to be interpolated into query string
+        body = list(
+            query = query,
+            # ensures that variables remain a structured list rather than
+            # converted into a string like `query` is
+            variables = list(
+                workspace = workspace
+            )
+        ),
+        # converts a list to a properly formatted JSON object
+        encode = "json",
+        # sets Content-Type header to JSON
+        httr::content_type_json()
     )
 
     # convert JSON payload into an R object

@@ -336,3 +336,69 @@ get_server_version <- function(
 
 }
 
+#' Get the server health status
+#'
+#' @description
+#' Extracts server health status from the `.hc` sub-page
+#'
+#' @param server Character. Full server web address
+#' (e.g., \code{https://demo.mysurvey.solutions}, \code{https://my.domain})
+#'
+#' @return Character. Survey Solutions version
+#'
+#' @importFrom httr modify_url GET status_code content
+#'
+#' @export
+get_server_health <- function(
+    server = Sys.getenv("SUSO_SERVER")
+) {
+
+    # compose URL
+    health_page <- httr::modify_url(
+        url = server,
+        path = ".hc"
+    )
+    
+    # make a response
+    response <- httr::GET(url = health_page)
+
+    # get status code
+    status <- httr::status_code(response)
+
+    if (status == 200) {
+
+        # extract content
+        version <- httr::content(x = response, as = "text", encoding = "UTF-8")
+
+        # if a length 1 character vector, return version
+        if (class(version) == "character" & length(version) == 1) {
+
+            return(version)
+
+        # otherwise, issue error
+        } else {
+
+            stop(
+                paste0(
+                    "Could not extract the server health status ",
+                    "from the server.",
+                    "Please post an issue : ",
+                    "https://github.com/arthur-shaw/susoapi/issues"
+                )
+            )
+           
+        }
+
+    } else {
+
+        stop(
+            paste0(
+                "Survey Solutions health status not found where expected. ",
+                "Please post an issue : ",
+                "https://github.com/arthur-shaw/susoapi/issues"
+            )
+        )
+
+    }
+
+}

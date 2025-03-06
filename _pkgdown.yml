@@ -137,3 +137,4 @@ reference:
     Get server metadata (e.g., reporting issues, assessing health)
   contents:
   - get_server_version
+  - get_server_health

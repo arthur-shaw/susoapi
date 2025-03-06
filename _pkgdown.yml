@@ -1,28 +1,25 @@
-url: https://arthur-shaw.github.io/susoapi
+url: https://arthur-shaw.github.io/susoapi/
 template:
   bootstrap: 5
-
 development:
   mode: auto
-
 reference:
-- title: "Authentication"
-  desc: >
+- title: Authentication
+  desc: |
     Functions for setting up and checking details for connecting with a Survey Solutions server
 - contents:
   - set_credentials
   - show_credentials
   - check_credentials
-
-- title: "Workspaces"
-  desc: >
+- title: Workspaces
+  desc: |
     Functions for taking actions on workspaces, including assigning users to them
-- subtitle: "Get info"
+- subtitle: Get info
   contents:
   - get_workspaces
   - get_workspace_details
   - get_workspace_status
-- subtitle: "Modify"
+- subtitle: Modify
   contents:
   - create_workspace
   - update_workspace
@@ -30,57 +27,51 @@ reference:
   - disable_workspace
   - enable_workspace
   - assign_users_to_workspaces
-
-- title: "Questionnaires"
-  desc: >
+- title: Questionnaires
+  desc: |
     Functions for compiling them, getting associated interviews, setting options, and getting their JSON respresentation.
 - contents:
   - get_questionnaires
   - get_interviews_for_questionnaire
   - get_questionnaire_document
   - set_questionnaire_audio
-
-- title: "Interviews"
-  desc: >
+- title: Interviews
+  desc: |
     Functions for approving, assigning, rejecting, and reviewing interviews.
-- subtitle: "Approve"
+- subtitle: Approve
   contents:
   - approve_interview_as_sup
   - approve_interview_as_hq
-- subtitle: "Assign"
+- subtitle: Assign
   contents:
   - assign_interview_to_int
   - assign_interview_to_sup
-- subtitle: "Reject"
+- subtitle: Reject
   contents:
   - reject_interview_as_sup
   - reject_interview_as_hq
   - unapprove_interview
   - comment_question
-- subtitle: "Review"
+- subtitle: Review
   contents:
   - get_interviews
   - get_interview_stats
   - get_interview_history
   - get_interview_transcript
-- subtitle: "Remove"
-  contents:
-  - delete_interview
-- subtitle: "Info"
-  contents:
-  - get_possible_interview_statuses
-
-- title: "Assignments"
-  desc: >
+- subtitle: Remove
+  contents: delete_interview
+- subtitle: Info
+  contents: get_possible_interview_statuses
+- title: Assignments
+  desc: |
     Functions for creating, inspecting, collecting, modifying, and adjusting the audio of assignments
-- subtitle: "Inspect"
+- subtitle: Inspect
   contents:
   - get_assignment_details
   - get_assignment_history
-- subtitle: "Collect"
-  contents:
-  - get_assignments
-- subtitle: "Modify"
+- subtitle: Collect
+  contents: get_assignments
+- subtitle: Modify
   contents:
   - archive_assignment
   - unarchive_assignment
@@ -88,53 +79,48 @@ reference:
   - get_assignment_quantity_setting
   - change_assignment_quantity
   - reassign_assignment
-- subtitle: "Adjust audio"
+- subtitle: Adjust audio
   contents:
   - check_assignment_audio
   - set_assignment_audio
-
-- title: "Users"
-  desc: >
+- title: Users
+  desc: |
     Functions for collecting, modifying, and monitoring supervisor and interviewer users
-- subtitle: "Collect"
+- subtitle: Collect
   contents:
   - get_supervisors
   - get_interviewers
-- subtitle: "Modify"
+- subtitle: Modify
   contents:
   - create_user
   - archive_user
   - unarchive_user
-- subtitle: "Monitor"
-  contents:
-  - starts_with("get_user_")
-
-- title: "Export"
-  desc: >
+- subtitle: Monitor
+  contents: starts_with("get_user_")
+- title: Export
+  desc: |
     Functions for exporting data: starting an export job, inquiring about its status, and downloading export files
-- subtitle: "Start, stop"
+- subtitle: Start, stop
   contents:
   - start_export
   - cancel_export
-- subtitle: "Monitor"
+- subtitle: Monitor
   contents:
   - get_export_job_details
   - get_export_jobs
-- subtitle: "Download"
-  contents:
-  - get_export_file
-
-- title: "Settings"
-  desc: >
+- subtitle: Download
+  contents: get_export_file
+- title: Settings
+  desc: |
     Functions for modify the global notice (i.e., the information banner at the top of site).
   contents:
   - set_global_notice
   - get_global_notice
   - delete_global_notice
-
-- title: "Server metadata"
-  desc: >
+- title: Server metadata
+  desc: |
     Get server metadata (e.g., reporting issues, assessing health)
   contents:
   - get_server_version
   - get_server_health
+
